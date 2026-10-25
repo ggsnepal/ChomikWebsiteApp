@@ -3,9 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chomik</title>
+  <title>Chomik | Discord utility bot</title>
+  <meta name="description" content="Chomik is a Discord utility bot for Roblox lookups, tracking and information tools.">
+  <meta name="theme-color" content="#ffd3e4">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-  <p>Hi lol</p>
+  <span class="deco d1">✦</span><span class="deco d2">♥</span><span class="deco d3">★</span><span class="deco d4">✿</span>
+  <header class="nav"><div class="nav-in">
+    <a class="brand" href="index.html"><img src="assets/chomik.png" alt="Chomik">Chomik</a>
+    <nav class="nav-links"><a href="index.html" aria-current="page">Home</a><a href="commands.html">Commands</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+    <a class="btn sm pink" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener">Invite</a>
+  </div></header>
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <span class="pill">Discord utility bot</span>
+        <h1>Meet <span>Chomik</span></h1>
+        <p>Chomik Bot is a custom Discord utility bot designed to fetch and display data from various sites, primarily on Roblox lookups, tracking, and information tools.</p>
+        <div class="cta">
+          <a class="btn pink" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener">Add to Discord</a>
+          <a class="btn lav" href="commands.html">Browse commands</a>
+          <a class="btn mint" href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener">Support server</a>
+        </div>
+      </div>
+      <div class="mascot"><div class="blob"></div><img src="assets/chomik.png" alt="Chomik, the bot's mascot holding a magnifying glass"></div>
+    </section>
+
+    <section class="section">
+      <h2>What Chomik does</h2>
+      <p class="lead">Quick answers, right inside Discord.</p>
+      <div class="grid">
+        <div class="card"><div class="ico">✦</div><h3>Lookups</h3><p>Pull up public Roblox profiles, games, groups, avatars and more with a single slash command.</p></div>
+        <div class="card"><div class="ico">♥</div><h3>Tracking</h3><p>Keep an eye on accounts and get notified when something changes.</p></div>
+        <div class="card"><div class="ico">★</div><h3>Info tools</h3><p>Handy utilities like ciphers, link finders, image tools and more.</p></div>
+        <div class="card"><div class="ico">✿</div><h3>Yours to tune</h3><p>Use <code>/settings</code> to make replies private, control DMs and anonymize your reports.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="stats">
+        <div class="stat"><b id="statCount">0</b>commands</div>
+        <div class="stat" style="background:var(--mint);border-color:var(--mint-d)"><b id="statCats">0</b>categories</div>
+        <div class="stat" style="background:var(--butter);border-color:var(--butter-d)"><b>/</b>slash &amp; <b style="display:inline">,</b> prefix</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="panel">
+        <div><h2 style="margin:0">Looking for a command?</h2><p class="lead" style="margin:4px 0 0">Search every command and see how to use it.</p></div>
+        <form action="commands.html" method="get" class="search" style="flex:1 1 300px;max-width:440px"><input name="q" placeholder="try: avatar, cipher, report..." aria-label="Search commands"></form>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap"><div class="foot">
+    <div><strong class="brand" style="font-size:20px">Chomik</strong><div class="small">A Discord utility bot for Roblox lookups, tracking and info tools.</div></div>
+    <nav><a href="commands.html">Commands</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener">Support Server</a><a href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener">Invite</a></nav>
+  </div><p class="small" style="text-align:center">Chomik is not affiliated with or endorsed by Discord or Roblox.</p></div></footer>
+  <script src="assets/app.js"></script>
+  <script src="assets/commands-data.js"></script>
+  <script>
+    (function(){var d=window.CHOMIK_COMMANDS||[];document.getElementById('statCount').textContent=d.length;
+    document.getElementById('statCats').textContent=new Set(d.map(function(c){return c.category})).size;})();
+  </script>
 </body>
 </html>
