@@ -48,6 +48,7 @@
     sheet.innerHTML='<div class="sheet-head"><span class="ico">'+svg(icon(c))+'</span><div><h2 id="m-title">/'+esc(c.name)+'</h2><span class="tag">'+esc(c.category)+'</span></div>'+
       '<button type="button" class="x-btn" aria-label="Close">'+svg('x')+'</button></div><div class="sheet-body">'+
       '<p class="desc">'+esc(c.description)+'</p><h3>Usage</h3><code class="usage">'+esc(usage(c))+'</code>'+
+      (c.prefix&&c.prefix.length?'<h3>Prefix version</h3><code class="usage">'+c.prefix.map(function(p){return esc(','+p)}).join('   ')+'</code>':'')+
       (c.params.length?'<h3>Options</h3>'+plist(req)+plist(opt):'<h3>Options</h3><p class="desc" style="margin:0">No options, just run it.</p>')+
       '<div class="sheet-actions"><button type="button" class="btn copy">'+svg('copy')+'Copy command</button>'+
       '<button type="button" class="btn blue more-cat">'+svg('search')+'More in '+esc(c.category)+'</button></div></div>';

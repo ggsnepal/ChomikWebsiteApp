@@ -10,7 +10,8 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Text to convert"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "accountage",
@@ -22,6 +23,10 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
+  ],
+  "prefix": [
+   "accountage",
+   "age"
   ]
  },
  {
@@ -34,7 +39,8 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Attach a file/image for the bot to send"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "australian",
@@ -46,6 +52,11 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID to check"
    }
+  ],
+  "prefix": [
+   "aussie",
+   "aus",
+   "au"
   ]
  },
  {
@@ -58,6 +69,9 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
+  ],
+  "prefix": [
+   "avatar"
   ]
  },
  {
@@ -75,46 +89,11 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "File format (default: obj)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
-  "name": "blocktanks arm",
-  "description": "Get the full image of an arm by number",
-  "category": "Games",
-  "params": [
-   {
-    "name": "num",
-    "required": true,
-    "description": "Arm number"
-   }
-  ]
- },
- {
-  "name": "blocktanks decal",
-  "description": "Get the full image of a decal by number",
-  "category": "Games",
-  "params": [
-   {
-    "name": "num",
-    "required": true,
-    "description": "Decal number"
-   }
-  ]
- },
- {
-  "name": "blocktanks sticker",
-  "description": "Get the full image of a sticker by number",
-  "category": "Games",
-  "params": [
-   {
-    "name": "num",
-    "required": true,
-    "description": "Sticker number"
-   }
-  ]
- },
- {
-  "name": "blocktanks user",
+  "name": "blocktanks",
   "description": "Fetch BlockTanks user info",
   "category": "Games",
   "params": [
@@ -123,7 +102,8 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "BlockTanks username"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "british",
@@ -135,6 +115,11 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID to check"
    }
+  ],
+  "prefix": [
+   "british",
+   "brit",
+   "britcheck"
   ]
  },
  {
@@ -147,7 +132,8 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "The id or string from a link, e.g. dQw4w9WgXcQ or 1567 (a full link works too)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "bust",
@@ -159,6 +145,9 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
+  ],
+  "prefix": [
+   "bust"
   ]
  },
  {
@@ -171,6 +160,9 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "The text to count"
    }
+  ],
+  "prefix": [
+   "chars"
   ]
  },
  {
@@ -198,7 +190,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Only for ciphers that need one (Vigenère keyword, Caesar shift); with Identify, an optional…"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "cipher encode",
@@ -225,7 +218,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Only for ciphers that need one: Vigenère keyword, Caesar shift number"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "cipher identify",
@@ -242,7 +236,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Optional hint: a cipher name (e.g. morse) or a possible Vigenère key"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "cipher rot",
@@ -254,13 +249,15 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "The text to run through every ROT shift"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "coinflip",
   "description": "Flip a coin — Heads or Tails",
   "category": "Fun",
-  "params": []
+  "params": [],
+  "prefix": []
  },
  {
   "name": "display",
@@ -272,6 +269,11 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Display name to check"
    }
+  ],
+  "prefix": [
+   "display",
+   "displayname",
+   "name"
   ]
  },
  {
@@ -284,6 +286,10 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
+  ],
+  "prefix": [
+   "followers",
+   "follower"
   ]
  },
  {
@@ -296,6 +302,10 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
+  ],
+  "prefix": [
+   "followings",
+   "following"
   ]
  },
  {
@@ -308,6 +318,10 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
+  ],
+  "prefix": [
+   "friends",
+   "friend"
   ]
  },
  {
@@ -330,6 +344,10 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Search the ID as a place ID (default behavior — explicit override)"
    }
+  ],
+  "prefix": [
+   "game",
+   "gameid"
   ]
  },
  {
@@ -342,6 +360,11 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Gamepass ID or gamepass link"
    }
+  ],
+  "prefix": [
+   "gamepass",
+   "gp",
+   "pass"
   ]
  },
  {
@@ -354,6 +377,9 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
+  ],
+  "prefix": [
+   "games"
   ]
  },
  {
@@ -376,7 +402,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Give back one saved/checked username instantly instead of the full batch"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "gif",
@@ -403,7 +430,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Whether to dither the reduced color palette (default on)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "group",
@@ -415,6 +443,13 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox Group ID or name to search"
    }
+  ],
+  "prefix": [
+   "group",
+   "g",
+   "gr",
+   "gid",
+   "groupid"
   ]
  },
  {
@@ -427,6 +462,9 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
+  ],
+  "prefix": [
+   "groups"
   ]
  },
  {
@@ -439,13 +477,17 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
+  ],
+  "prefix": [
+   "headshot"
   ]
  },
  {
   "name": "help",
   "description": "See everything Chomik can do.",
   "category": "General",
-  "params": []
+  "params": [],
+  "prefix": []
  },
  {
   "name": "id",
@@ -462,6 +504,10 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Return the profile info as organized JSON (no embed) instead of the normal profile"
    }
+  ],
+  "prefix": [
+   "id",
+   "uid"
   ]
  },
  {
@@ -484,7 +530,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Blur strength (default 6)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "image gif",
@@ -511,7 +558,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Whether to dither the reduced color palette (default on)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "image greyscale",
@@ -533,7 +581,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "How strong the effect is, 0-100 (default 100 = fully greyscale)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "image invert",
@@ -550,7 +599,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "A direct image link, or a page like a Pinterest pin/tweet"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "image pixelate",
@@ -572,7 +622,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Pixel block size (default 12, bigger = blockier)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "image rotate",
@@ -599,7 +650,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Grow the canvas so nothing gets cropped off (default on)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "invert",
@@ -616,13 +668,15 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "A direct image link, or a page like a Pinterest pin/tweet"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "invite",
   "description": "Get Chomik's invite link.",
   "category": "General",
-  "params": []
+  "params": [],
+  "prefix": []
  },
  {
   "name": "jekivuz",
@@ -639,7 +693,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Make 56, 67, and 78 all equally likely (default off — 67 is 50%)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "language",
@@ -651,6 +706,10 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
+  ],
+  "prefix": [
+   "language",
+   "lang"
   ]
  },
  {
@@ -688,6 +747,11 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Roblox username or User ID (optional)"
    }
+  ],
+  "prefix": [
+   "mutuals",
+   "isfriends",
+   "friendswith"
   ]
  },
  {
@@ -700,6 +764,9 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
+  ],
+  "prefix": [
+   "names"
   ]
  },
  {
@@ -712,7 +779,8 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username to track — no restrictions on what can be added"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "notifier list",
@@ -724,7 +792,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Optional note appended below the list"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "notifier ready",
@@ -741,7 +810,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Optional: seconds between checks, applies to whichever mode is active (default 5s)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "notifier remove",
@@ -753,7 +823,8 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username to remove (not case-sensitive)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "outfits",
@@ -765,13 +836,20 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
+  ],
+  "prefix": [
+   "outfits",
+   "outfit",
+   "avatars",
+   "fits"
   ]
  },
  {
   "name": "ping",
   "description": "Check Chomik's latency.",
   "category": "General",
-  "params": []
+  "params": [],
+  "prefix": []
  },
  {
   "name": "pinterest search",
@@ -783,7 +861,8 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "What to search for"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "report",
@@ -815,6 +894,10 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Hide your name on the moderation update (shows 'Reported Anonymously' instead)"
    }
+  ],
+  "prefix": [
+   "report",
+   "r"
   ]
  },
  {
@@ -832,6 +915,10 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "View the global report stats instead"
    }
+  ],
+  "prefix": [
+   "stats",
+   "reports"
   ]
  },
  {
@@ -844,6 +931,10 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
+  ],
+  "prefix": [
+   "resolve",
+   "re"
   ]
  },
  {
@@ -856,13 +947,17 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
+  ],
+  "prefix": [
+   "ropro"
   ]
  },
  {
   "name": "say",
   "description": "Make the bot say something via a text box",
   "category": "Say",
-  "params": []
+  "params": [],
+  "prefix": []
  },
  {
   "name": "scrape",
@@ -914,13 +1009,15 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Instead of a sequential range, pick `amount` random IDs between start_id and end_id (optional)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "settings",
   "description": "Manage your Chomik usage.",
   "category": "General",
-  "params": []
+  "params": [],
+  "prefix": []
  },
  {
   "name": "subdomain",
@@ -932,7 +1029,8 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "A link or domain, e.g. https://x.com or x.com"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "subplaces",
@@ -949,6 +1047,10 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Search the ID as a universe ID instead of a place ID (default: off)"
    }
+  ],
+  "prefix": [
+   "subplaces",
+   "sp"
   ]
  },
  {
@@ -986,7 +1088,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Your age (optional)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "text anagram",
@@ -998,7 +1101,8 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "The word or phrase to find anagrams of"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "text nutrimatic",
@@ -1010,7 +1114,8 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "The Nutrimatic query (e.g. a set of letters or a pattern)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "tiktok",
@@ -1022,6 +1127,10 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "TikTok username (without @)"
    }
+  ],
+  "prefix": [
+   "tiktok",
+   "tt"
   ]
  },
  {
@@ -1034,6 +1143,9 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox place ID, or a roblox.com game URL"
    }
+  ],
+  "prefix": [
+   "universe"
   ]
  },
  {
@@ -1051,6 +1163,11 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Return the profile info as organized JSON (no embed) instead of the normal profile"
    }
+  ],
+  "prefix": [
+   "user",
+   "u",
+   "uu"
   ]
  },
  {
@@ -1063,6 +1180,9 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username to check"
    }
+  ],
+  "prefix": [
+   "username"
   ]
  },
  {
@@ -1075,13 +1195,15 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Roblox username or User ID"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "whitelist",
   "description": "Whitelist yourself to use Chomik",
   "category": "General",
-  "params": []
+  "params": [],
+  "prefix": []
  },
  {
   "name": "wordbomb search",
@@ -1103,7 +1225,8 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Search the Indonesian dictionary instead of English"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "wordle answer",
@@ -1115,13 +1238,15 @@ window.CHOMIK_COMMANDS = [
     "required": false,
     "description": "Which day? e.g. September 30, 9/30/2026, 9-30-26, 30 September, 9/30 (default: today)"
    }
-  ]
+  ],
+  "prefix": []
  },
  {
   "name": "wordle draw",
   "description": "Draw a color pattern into your Wordle board",
   "category": "Fun",
-  "params": []
+  "params": [],
+  "prefix": []
  },
  {
   "name": "youtube",
@@ -1133,6 +1258,10 @@ window.CHOMIK_COMMANDS = [
     "required": true,
     "description": "Channel handle (e.g. @mrbeast) or channel ID"
    }
+  ],
+  "prefix": [
+   "youtube",
+   "yt"
   ]
  }
 ];
