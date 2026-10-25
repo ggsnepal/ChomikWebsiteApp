@@ -55,7 +55,7 @@
     sheet.querySelector('.more-cat').onclick=function(){state.cat=c.category;state.q='';input.value='';chips();render();closeModal()};
     sheet.querySelector('.x-btn').onclick=closeModal; sheet.querySelector('.sheet-body').scrollTop=0;
     modal.setAttribute('aria-hidden','false'); document.body.classList.add('lock');
-    requestAnimationFrame(function(){modal.classList.add('show'); sheet.querySelector('.x-btn').focus()});
+    requestAnimationFrame(function(){modal.classList.add('show'); sheet.querySelector('.x-btn').focus({preventScroll:true})});
   }
   function closeModal(){
     modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); document.body.classList.remove('lock');
