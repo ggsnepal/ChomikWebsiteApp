@@ -465,28 +465,6 @@ window.CHOMIK_COMMANDS = [
   ]
  },
  {
-  "name": "product",
-  "description": "List the developer products of a Roblox game",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "query",
-    "required": true,
-    "description": "Roblox place/universe ID, or a game name to search"
-   },
-   {
-    "name": "universe",
-    "required": false,
-    "description": "Search the ID as a universe ID instead of a place ID (default: off)"
-   }
-  ],
-  "prefix": [
-   "devproduct",
-   "product",
-   "developerproduct"
-  ]
- },
- {
   "name": "report",
   "description": "Report a Roblox user.",
   "category": "Roblox",
