@@ -1,4 +1,4 @@
-/* /newmain preview - extra styles for the redesigned home page (loaded after style.css) */
+/* home page extras (loaded after style.css) */
 .nm-hero{display:grid; grid-template-columns:1.35fr .65fr; align-items:center; gap:36px; padding:56px 0 28px}
 .nm-hero h1{font-size:clamp(38px,6.4vw,66px); margin-bottom:16px}
 .nm-hero h1 em{font-style:normal; color:var(--orange)}
@@ -58,7 +58,6 @@
 .final{text-align:center; padding:38px 22px; border-radius:28px; background:linear-gradient(135deg,color-mix(in srgb,var(--orange) 22%,var(--card)),color-mix(in srgb,var(--yellow) 16%,var(--card))); border:1px solid color-mix(in srgb,var(--orange) 35%,var(--line)); box-shadow:var(--shadow)}
 .final h2{margin-bottom:8px} .final p{color:var(--soft); margin:0 auto 20px; max-width:560px}
 .final .cta{justify-content:center}
-.preview-bar{background:var(--yellow); color:#2e1f12; text-align:center; font-weight:800; font-size:14px; padding:7px 12px}
 
 .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s, transform .6s var(--spring)}
 .reveal.in{opacity:1; transform:none}
@@ -70,35 +69,3 @@
 }
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none}}
 
-/* race demo */
-.race{margin:20px 0 4px; background:var(--card); border:1px solid var(--line); border-radius:26px; padding:22px; box-shadow:var(--shadow)}
-.race-puzzle{text-align:center; margin-bottom:16px}
-.race-puzzle small{display:block; color:var(--soft); font-weight:700}
-.cipher{display:inline-block; font:800 clamp(22px,4vw,32px) ui-monospace,Menlo,Consolas,monospace; letter-spacing:.04em; background:color-mix(in srgb,var(--green) 14%,var(--bg)); border:2px dashed color-mix(in srgb,var(--green) 55%,var(--line)); border-radius:14px; padding:6px 18px; margin:2px 0 6px}
-.lanes{display:grid; grid-template-columns:1fr 1fr; gap:16px}
-.lane{border:1px solid var(--line); border-radius:20px; overflow:hidden; background:var(--bg); min-height:300px; display:flex; flex-direction:column}
-.lane-head{display:flex; justify-content:space-between; align-items:center; padding:10px 16px; font-size:16px; border-bottom:1px solid var(--line); background:var(--card)}
-.lane-chomik .lane-head{border-top:4px solid var(--green)} .lane-tabs .lane-head{border-top:4px solid #d9534f}
-.timer{font:800 16px ui-monospace,Menlo,Consolas,monospace; color:var(--soft); background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:1px 12px}
-.timer.done{color:#fff; background:var(--green); border-color:var(--green)} .lane-tabs .timer.done{background:#d9534f; border-color:#d9534f}
-.chat{flex:1; padding:14px; display:flex; flex-direction:column; justify-content:flex-end; gap:10px}
-.msg{display:flex; gap:10px; align-items:flex-start; animation:pop .35s var(--spring) both}
-.msg .av{width:34px; height:34px; border-radius:50%; flex:none; display:grid; place-items:center; background:var(--c,var(--blue)); color:#fff; font-weight:800; font-size:14px; overflow:hidden}
-.msg .av img{width:100%; height:100%; object-fit:cover}
-.msg b{font-size:14.5px} .msg .body{font-size:15px; line-height:1.4; min-width:0}
-.msg code{font-size:14px}
-.card-out{margin-top:5px; border-left:4px solid var(--green); background:var(--card); border-radius:8px; padding:8px 12px; font-size:15px; font-weight:700}
-.card-out small{display:block; color:var(--soft); font-weight:700; font-size:12.5px}
-.typing{display:flex; align-items:center; gap:4px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:9px 12px; font:700 14.5px ui-monospace,Menlo,Consolas,monospace; min-height:40px; overflow:hidden; white-space:nowrap}
-.typing .ph{color:var(--soft); font-family:"Nunito",sans-serif} .typing .ph.hide{display:none}
-.caret{width:2px; height:1.1em; background:var(--ink); animation:blink 1s steps(1) infinite} @keyframes blink{50%{opacity:0}}
-.browser{flex:1; display:flex; flex-direction:column}
-.tabstrip{display:flex; gap:3px; padding:8px 8px 0; background:var(--card); overflow:hidden; min-height:38px}
-.tab{flex:1 1 0; min-width:0; max-width:130px; font:700 12px "Nunito",sans-serif; padding:6px 9px; border-radius:9px 9px 0 0; background:var(--bg); border:1px solid var(--line); border-bottom:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--soft); animation:pop .3s var(--spring) both}
-.tab.on{color:var(--ink); background:var(--bg)}
-.addr{margin:0; padding:7px 14px; font:700 13px ui-monospace,Menlo,Consolas,monospace; color:var(--soft); background:var(--bg); border-bottom:1px solid var(--line); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.page{flex:1; padding:16px; display:flex; flex-direction:column; gap:12px}
-.page p{margin:0; font-weight:700; font-size:15px; color:var(--ink)}
-.bar{height:8px; border-radius:99px; background:var(--line); overflow:hidden} .bar i{display:block; height:100%; width:0; border-radius:99px; background:#d9534f; transition:width .9s linear}
-@media (max-width:760px){.lanes{grid-template-columns:1fr} .lane{min-height:260px}}
-.race-puzzle .eyebrow{display:block}

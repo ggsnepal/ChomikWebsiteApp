@@ -6,8 +6,7 @@ const GAMES = {
   'secret-universe': { q: 'Secret Universe', universeId: null },
   'find-the-chomiks': { q: 'Find the Chomiks', universeId: null },
   'find-the-markers': { q: 'Find the Markers', universeId: null },
-  'puzzle-doors': { q: 'Puzzle Doors', universeId: null },
-  'escape-room': { q: 'Escape Room', universeId: null },
+  'secret-staycation': { q: 'Secret Staycation', universeId: null },
 };
 
 const UA = { 'User-Agent': 'ChomikSite/1.0', Accept: 'application/json' };
