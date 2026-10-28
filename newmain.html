@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chomik | Roblox lookups, puzzle tools and OSINT for Discord</title>
-<meta name="description" content="Chomik is a free, transparent, one-person Discord bot: Roblox lookups, puzzle-solving tools, social data fetching and OSINT in one place.">
+<meta name="description" content="Chomik is a free, transparent Discord bot: Roblox lookups, puzzle-solving tools, social data fetching and OSINT in one place.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#fffaf3">
 <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -30,7 +30,6 @@
 <div class="badges">
 <span class="pill-badge" style="--c:var(--green)"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg>Free forever</span>
 <span class="pill-badge" style="--c:var(--blue)"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Fully transparent</span>
-<span class="pill-badge" style="--c:var(--orange)"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg>Made by one person</span>
 </div>
 <h1>The all-in-one bot for <em>Roblox</em>, puzzles &amp; OSINT</h1>
 <p>Chomik pulls data from Roblox and social platforms, decodes ciphers, edits images and helps you chase down the answer to a puzzle, all from Discord and all for free.</p>
@@ -47,7 +46,6 @@
 <section class="facts reveal">
 <div class="fact" style="--c:var(--green)"><span class="ico" style="--c:var(--green)"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg></span><h3>Free, permanently</h3><p>No premium tier and no paywalled features. Every command is available to everyone, and that will not change.</p></div>
 <div class="fact" style="--c:var(--blue)"><span class="ico" style="--c:var(--blue)"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><h3>Transparent by design</h3><p>How Chomik works is open for anyone to know. Ask in the support server and you will get a straight answer.</p></div>
-<div class="fact" style="--c:var(--orange)"><span class="ico" style="--c:var(--orange)"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg></span><h3>One developer</h3><p>Chomik is built and run by a single person, so feedback goes straight to the one who can act on it.</p></div>
 <div class="fact" style="--c:var(--tan)"><span class="ico" style="--c:var(--tan)"><svg class="i" aria-hidden="true"><use href="#i-gear"/></svg></span><h3>Built on free services</h3><p>Every operation Chomik runs uses free services or free trials, so it can stay free for you.</p></div>
 </section>
 
@@ -89,10 +87,22 @@
 <div class="games">
 <div class="game" style="--c:#4fa56a"><div class="art"><span aria-hidden="true">A</span><img src="/api/gameicon?g=anything-could-be-a-secret" alt="Anything Could Be A Secret icon" loading="lazy" onerror="this.remove()"></div><div class="meta"><b>Anything Could Be A Secret</b><small>Secret hunting</small></div></div>
 <div class="game" style="--c:#4a90d9"><div class="art"><span aria-hidden="true">S</span><img src="/api/gameicon?g=secret-universe" alt="Secret Universe icon" loading="lazy" onerror="this.remove()"></div><div class="meta"><b>Secret Universe</b><small>Puzzles and secrets</small></div></div>
-<div class="game" style="--c:#f28c28"><div class="art"><span aria-hidden="true">?</span></div><div class="meta"><b>Roblox ARGs</b><small>Clues hidden in plain sight</small></div></div>
-<div class="game" style="--c:#8c7f70"><div class="art"><span aria-hidden="true">#</span></div><div class="meta"><b>Puzzle games</b><small>Ciphers, codes and riddles</small></div></div>
+<div class="game" style="--c:#f28c28"><div class="art"><span aria-hidden="true">F</span><img src="/api/gameicon?g=find-the-chomiks" alt="Find the Chomiks icon" loading="lazy" onerror="this.remove()"></div><div class="meta"><b>Find the Chomiks</b><small>Find them all</small></div></div>
+<div class="game" style="--c:#d99a0b"><div class="art"><span aria-hidden="true">F</span><img src="/api/gameicon?g=find-the-markers" alt="Find the Markers icon" loading="lazy" onerror="this.remove()"></div><div class="meta"><b>Find the Markers</b><small>Collect every marker</small></div></div>
+<div class="game" style="--c:#6a82cf"><div class="art"><span aria-hidden="true">P</span><img src="/api/gameicon?g=puzzle-doors" alt="Puzzle Doors icon" loading="lazy" onerror="this.remove()"></div><div class="meta"><b>Puzzle Doors</b><small>Door after door of puzzles</small></div></div>
+<div class="game" style="--c:#2fa3a3"><div class="art"><span aria-hidden="true">E</span><img src="/api/gameicon?g=escape-room" alt="Escape Room icon" loading="lazy" onerror="this.remove()"></div><div class="meta"><b>Escape Room</b><small>Solve your way out</small></div></div>
 </div>
-<p class="note">Game icons are loaded live from Roblox. Chomik is not affiliated with these games.</p>
+<p class="note">And plenty more Roblox ARGs and puzzle games where the answer is hiding in plain sight.</p>
+<div class="race reveal" id="race" aria-label="Animated comparison: solving a cipher with Chomik versus using many browser tabs">
+<div class="race-puzzle"><span class="eyebrow" style="--c:var(--green)">The puzzle</span><div class="cipher">Wkh frgh lv 4271</div><small>An unknown cipher turns up in a game. What does it say?</small></div>
+<div class="lanes">
+<div class="lane lane-chomik"><div class="lane-head"><b>With Chomik</b><span class="timer" id="t-chomik">0:00</span></div>
+<div class="chat" id="chat"><div class="typing" id="typing"><span class="ph">Message #puzzles</span><span id="typed"></span><i class="caret"></i></div></div></div>
+<div class="lane lane-tabs"><div class="lane-head"><b>Without Chomik</b><span class="timer" id="t-tabs">0:00</span></div>
+<div class="browser"><div class="tabstrip" id="tabstrip"></div><div class="addr" id="addr">&nbsp;</div><div class="page" id="page"><div class="bar"><i id="pbar"></i></div><p id="ptext">Time to start searching&hellip;</p></div></div></div>
+</div>
+<p class="note" style="text-align:center">Illustrative demo. The clock is sped up so you can see the difference.</p>
+</div>
 <div class="split" style="margin-top:22px">
 <div class="card" style="--c:var(--green)">
 <h3>Crack the code</h3>
@@ -117,18 +127,6 @@
 </div>
 </section>
 
-<section class="section reveal">
-<span class="eyebrow" style="--c:var(--blue)">Principles</span>
-<h2>Free, open and honest</h2>
-<p class="lead">Chomik is a small bot with a few promises.</p>
-<div class="steps">
-<div class="step" style="--c:var(--green)"><b>Free for good</b><p>There are no paid tiers and no locked features. If a command exists, you can use it.</p></div>
-<div class="step" style="--c:var(--blue)"><b>Run with transparency</b><p>Every way Chomik operates is free to know. Just ask in the support server.</p></div>
-<div class="step" style="--c:var(--orange)"><b>Free services only</b><p>Everything runs on free services or free trials, so there is nothing to pay for and nothing to upsell.</p></div>
-<div class="step" style="--c:var(--tan)"><b>Small on purpose</b><p>Right now it is a small bot used by people the developer knows. It opens to the public soon.</p></div>
-</div>
-</section>
-
 <section class="section reveal"><h2>Find a command</h2><p class="lead">80 commands across 7 categories. Search them all or jump into a category.</p>
 <div class="panel" style="margin-bottom:18px"><form action="commands.html" method="get" class="search" style="max-width:none"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><input name="q" placeholder="try: avatar, cipher, report..." aria-label="Search commands" autocomplete="off"></form></div>
 <div class="tiles"><a class="tile c-roblox" href="commands.html?cat=Roblox"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-cube"/></svg></span><span><b>Roblox</b><small>36 commands</small></span></a><a class="tile c-tools" href="commands.html?cat=Tools"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-sliders"/></svg></span><span><b>Tools</b><small>10 commands</small></span></a><a class="tile c-social" href="commands.html?cat=Social"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg></span><span><b>Social</b><small>3 commands</small></span></a><a class="tile c-fun" href="commands.html?cat=Fun"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-sparkle"/></svg></span><span><b>Fun</b><small>5 commands</small></span></a><a class="tile c-games" href="commands.html?cat=Games"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-gamepad"/></svg></span><span><b>Games</b><small>2 commands</small></span></a><a class="tile c-image" href="commands.html?cat=Image"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-image"/></svg></span><span><b>Image</b><small>19 commands</small></span></a><a class="tile c-general" href="commands.html?cat=General"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-gear"/></svg></span><span><b>General</b><small>5 commands</small></span></a></div>
@@ -138,7 +136,6 @@
 <div class="faq">
 <details><summary>Is Chomik really free?</summary><p>Yes. It is free permanently and there are no paywalled features, now or later.</p></details>
 <details><summary>Can I add it to my server?</summary><p>Chomik is currently a small bot for people the developer knows, and it is going public soon. If you want in early, ask in the support server.</p></details>
-<details><summary>Who runs it?</summary><p>One person develops and runs Chomik.</p></details>
 <details><summary>How does it work?</summary><p>The developer is happy to explain how Chomik operates. Join the support server and ask, nothing is kept secret.</p></details>
 <details><summary>How is it free?</summary><p>Everything it uses is built on free services or free trials.</p></details>
 <details><summary>Something is broken, what do I do?</summary><p>Check the status page first, then tell us in the support server.</p></details>

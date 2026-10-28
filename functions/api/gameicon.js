@@ -4,6 +4,10 @@
 const GAMES = {
   'anything-could-be-a-secret': { q: 'Anything Could Be A Secret', universeId: null },
   'secret-universe': { q: 'Secret Universe', universeId: null },
+  'find-the-chomiks': { q: 'Find the Chomiks', universeId: null },
+  'find-the-markers': { q: 'Find the Markers', universeId: null },
+  'puzzle-doors': { q: 'Puzzle Doors', universeId: null },
+  'escape-room': { q: 'Escape Room', universeId: null },
 };
 
 const UA = { 'User-Agent': 'ChomikSite/1.0', Accept: 'application/json' };
