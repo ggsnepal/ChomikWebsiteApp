@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chomik | Roblox lookups, puzzle tools and OSINT for Discord</title>
+<meta name="description" content="Chomik is a free, transparent Discord bot: Roblox lookups, puzzle-solving tools, social data fetching and OSINT in one place.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#ffeebf">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="/preview/assets/site.css">
+<link rel="preload" as="image" href="/assets/chomik.webp" type="image/webp" fetchpriority="high">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="wrap"><div class="nav-in">
+<a class="brand" href="/preview/"><img src="/assets/chomik.webp" alt="" width="40" height="40">Chomik</a>
+<nav class="links" aria-label="Main"><a href="/preview/" aria-current="page">Home</a><a href="/preview/commands">Commands</a><a href="/preview/status">Status</a><a href="/preview/privacy">Privacy</a><a href="/preview/terms">Terms</a></nav>
+<a class="btn sm" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-plus"/></svg>Invite</a>
+<button class="icon-btn" id="theme" type="button" aria-label="Switch between light and dark mode"><span class="sun"><svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-sun"/></svg></span><span class="moon"><svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-moon"/></svg></span></button>
+</div><nav class="mlinks" aria-label="Main mobile"><a href="/preview/" aria-current="page">Home</a><a href="/preview/commands">Commands</a><a href="/preview/status">Status</a><a href="/preview/privacy">Privacy</a><a href="/preview/terms">Terms</a></nav></div></header>
+<main id="main">
+<div class="wrap">
+<section class="hero">
+<div>
+<h1>Stuff your cheeks with data.</h1>
+<p class="lede">Chomik is a free Discord bot for Roblox lookups, puzzle solving and OSINT. Run a slash command and get the answer right in chat.</p>
+<div class="cta">
+<a class="btn" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-plus"/></svg>Add to Discord</a>
+<a class="btn sky" href="/preview/commands"><svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-search"/></svg>Browse commands</a>
+<a class="btn mint" href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-chat"/></svg>Get support</a>
+</div>
+<form class="cmdbar" action="/preview/commands" method="get" role="search"><b aria-hidden="true">/</b><input name="q" placeholder="Try avatar, cipher or badges" aria-label="Search 80 commands" autocomplete="off"><button type="submit" aria-label="Search commands"><svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-search"/></svg></button></form>
+</div>
+<div class="pet">
+<span class="seed s1"><svg  aria-hidden="true"><use href="/preview/assets/icons.svg#i-seed"/></svg></span><span class="seed s2"><svg  aria-hidden="true"><use href="/preview/assets/icons.svg#i-seed"/></svg></span><span class="seed s3"><svg  aria-hidden="true"><use href="/preview/assets/icons.svg#i-seed"/></svg></span>
+<button class="pet-btn" id="pet" type="button" aria-label="Feed Chomik a sunflower seed"><img src="/assets/chomik.webp" alt="Chomik the hamster holding a magnifying glass" width="378" height="378" fetchpriority="high"></button>
+<span class="pet-count" aria-live="polite">Seeds chomped: <b id="pet-n">0</b></span>
+</div>
+</section>
+</div>
+<div class="tape" aria-hidden="true"><div class="tape-track"><span>Free forever<svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-seed"/></svg></span><span>No paywalled features<svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-seed"/></svg></span><span>Open about how it works<svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-seed"/></svg></span><span>Built on free services<svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-seed"/></svg></span><span>80 commands<svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-seed"/></svg></span><span>Free forever<svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-seed"/></svg></span><span>No paywalled features<svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-seed"/></svg></span><span>Open about how it works<svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-seed"/></svg></span><span>Built on free services<svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-seed"/></svg></span><span>80 commands<svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-seed"/></svg></span></div></div>
+<div class="wrap">
+<section class="sec"><h2>What is in the pouch</h2><p class="lead">80 commands in 7 groups. Pick one to see what is inside.</p>
+<div class="bento">
+<a class="tile t-roblox" href="/preview/commands?cat=Roblox"><svg class="i big" aria-hidden="true"><use href="/preview/assets/icons.svg#i-cube"/></svg><h3>Roblox lookups</h3><p>Profiles, avatars, friends, groups, games, badges and gamepasses. Look up a person or place and get the details in one reply.</p><div class="chips"><code>/user</code><code>/game</code><code>/badges</code><code>/gamepasses</code><code>/groups</code><code>/names</code><code>/mutuals</code></div><span class="n">36 commands</span></a>
+<a class="tile t-tools" href="/preview/commands?cat=Tools"><svg class="i big" aria-hidden="true"><use href="/preview/assets/icons.svg#i-lock"/></svg><h3>Puzzle tools</h3><p>Identify, decode and brute-force your way through ciphers, anagrams, subdomains and hidden links.</p><div class="chips"><code>/cipher identify</code><code>/cipher decode</code><code>/text anagram</code></div><span class="n">10 commands</span></a>
+<a class="tile t-image" href="/preview/commands?cat=Image"><svg class="i big" aria-hidden="true"><use href="/preview/assets/icons.svg#i-image"/></svg><h3>Image tools</h3><p>Blur, swirl, deepfry, add speech bubbles, read text with OCR, or turn any result into a GIF.</p><span class="n">19 commands</span></a>
+<a class="tile t-social" href="/preview/commands?cat=Social"><svg class="i big" aria-hidden="true"><use href="/preview/assets/icons.svg#i-globe"/></svg><h3>Social search</h3><p>Search YouTube, TikTok and Pinterest without leaving Discord.</p><span class="n">3 commands</span></a>
+<a class="tile t-fun" href="/preview/commands?cat=Fun"><svg class="i big" aria-hidden="true"><use href="/preview/assets/icons.svg#i-sparkle"/></svg><h3>Fun</h3><p>Wordle and a few silly extras.</p><span class="n">5 commands</span></a>
+<a class="tile t-games" href="/preview/commands?cat=Games"><svg class="i big" aria-hidden="true"><use href="/preview/assets/icons.svg#i-gamepad"/></svg><h3>Games</h3><p>Word Bomb word search and Blocktanks.</p><span class="n">2 commands</span></a>
+<a class="tile t-general" href="/preview/commands?cat=General"><svg class="i big" aria-hidden="true"><use href="/preview/assets/icons.svg#i-gear"/></svg><h3>Everyday basics</h3><p>Help, ping, invite and per-user settings, so you can keep replies private.</p><span class="n">5 commands</span></a>
+</div></section>
+<section class="sec"><div class="hunt">
+<div class="copy"><h2>Made for people who look closer.</h2>
+<p>Roblox ARGs and secret-hunting games hide their answers in odd places. Chomik helps you chase them: resolve accounts and places, check old usernames, read the text off a screenshot, or crack the cipher that just showed up in chat.</p>
+<div class="chips"><code>/cipher identify</code><code>/image ocr</code><code>/names</code><code>/universe</code></div>
+<a class="btn mint" href="/preview/commands?cat=Tools"><svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-lock"/></svg>See puzzle tools</a></div>
+<div class="polaroids"><div class="pola"><div class="art" style="--c:#4fa56a"><span aria-hidden="true">A</span><img src="/api/gameicon?g=anything-could-be-a-secret" alt="Anything Could Be A Secret icon" loading="lazy" width="256" height="256" onerror="this.remove()"></div><b>Anything Could Be A Secret</b></div><div class="pola"><div class="art" style="--c:#4a90d9"><span aria-hidden="true">S</span><img src="/api/gameicon?g=secret-universe" alt="Secret Universe icon" loading="lazy" width="256" height="256" onerror="this.remove()"></div><b>Secret Universe</b></div><div class="pola"><div class="art" style="--c:#f28c28"><span aria-hidden="true">F</span><img src="/api/gameicon?g=find-the-chomiks" alt="Find the Chomiks icon" loading="lazy" width="256" height="256" onerror="this.remove()"></div><b>Find the Chomiks</b></div><div class="pola"><div class="art" style="--c:#d99a0b"><span aria-hidden="true">F</span><img src="/api/gameicon?g=find-the-markers" alt="Find the Markers icon" loading="lazy" width="256" height="256" onerror="this.remove()"></div><b>Find the Markers</b></div><div class="pola"><div class="art" style="--c:#8c7f70"><span aria-hidden="true">S</span><img src="/api/gameicon?g=secret-staycation" alt="Secret Staycation icon" loading="lazy" width="256" height="256" onerror="this.remove()"></div><b>Secret Staycation</b></div><div class="pola"><div class="more">And whatever you are hunting next</div></div></div>
+</div></section>
+<section class="sec"><div class="promise">
+<div class="price" aria-hidden="true"><div><b>$0</b><br><span>forever</span></div></div>
+<div><h2>Free, and open about it.</h2>
+<p>Chomik has no premium tier and no paywalled features, now or later. Everything it runs on is a free service or a free trial.</p>
+<p>How Chomik works is not a secret either. Ask in the support server and you will get a straight answer.</p>
+<p>Right now it is a small bot used by people the developer knows, and it opens to everyone soon.</p>
+<a class="live" id="live" href="/preview/status"><span class="dot"></span><span id="live-text">Checking status</span><small id="live-sub"></small></a></div>
+</div></section>
+<section class="sec"><h2>Questions</h2><p class="lead">Quick answers about Chomik.</p>
+<div class="faq">
+<details><summary>Is Chomik really free?</summary><p>Yes. It is free permanently and has no paywalled features, now or later.</p></details>
+<details><summary>Can I add it to my server?</summary><p>Chomik is a small bot for people the developer knows right now, and it is going public soon. If you want in early, ask in the support server.</p></details>
+<details><summary>How does it work?</summary><p>The developer is happy to explain how Chomik operates. Join the support server and ask, nothing is kept secret.</p></details>
+<details><summary>How can it be free?</summary><p>Everything Chomik uses is built on free services or free trials.</p></details>
+<details><summary>Something is broken. What now?</summary><p>Check the status page first, then tell us in the support server.</p></details>
+</div></section>
+<section class="sec"><div class="final"><h2>Ready to chomp?</h2><p>Add Chomik to your server, or join the support server to see what it can do and ask anything about how it works.</p>
+<div class="cta"><a class="btn" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-plus"/></svg>Add to Discord</a><a class="btn mint" href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="/preview/assets/icons.svg#i-chat"/></svg>Get support</a></div></div></section>
+</div>
+</main>
+<footer><div class="wrap"><div class="foot">
+<div><a class="brand" href="/preview/"><img src="/assets/chomik.webp" alt="" width="40" height="40" loading="lazy">Chomik</a><p>A free Discord bot for Roblox lookups, puzzle solving and OSINT.</p></div>
+<nav aria-label="Footer"><a href="/preview/commands">Commands</a><a href="/preview/status">Status</a><a href="/preview/privacy">Privacy</a><a href="/preview/terms">Terms</a><a href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener">Support server</a></nav>
+<p class="fine">Chomik is not affiliated with or endorsed by Discord or Roblox.</p>
+</div></div></footer>
+<script src="/preview/assets/site.js" defer></script>
+</body>
+</html>
