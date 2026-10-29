@@ -32,6 +32,7 @@
 .games{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); margin-top:8px}
 .game{position:relative; overflow:hidden; border-radius:22px; border:1px solid var(--line); background:var(--card); box-shadow:var(--shadow); transition:transform .3s var(--spring)}
 .game:hover{transform:translateY(-5px) rotate(-.6deg)}
+.game{position:relative; will-change:transform}
 .game .art{aspect-ratio:1; display:grid; place-items:center; background:linear-gradient(135deg,color-mix(in srgb,var(--c) 70%,#000),var(--c)); color:#fff; font:800 64px "Nunito",sans-serif; position:relative}
 .game .art img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
 .game .meta{padding:14px 16px 16px}

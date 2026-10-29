@@ -4,3 +4,5 @@
   Cache-Control: public, max-age=2592000
 /assets/commands-data.js
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/assets/content-deleted.png
+  Cache-Control: public, max-age=2592000
