@@ -29,15 +29,6 @@
 .card li .i{color:var(--green); margin-top:3px}
 .eyebrow{display:inline-block; font:800 13px "Nunito",sans-serif; letter-spacing:.08em; text-transform:uppercase; color:var(--c,var(--orange)); margin-bottom:6px}
 
-.games{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); margin-top:8px}
-.game{position:relative; overflow:hidden; border-radius:22px; border:1px solid var(--line); background:var(--card); box-shadow:var(--shadow); transition:transform .3s var(--spring)}
-.game:hover{transform:translateY(-5px) rotate(-.6deg)}
-.game{position:relative; will-change:transform}
-.game .art{aspect-ratio:1; display:grid; place-items:center; background:linear-gradient(135deg,color-mix(in srgb,var(--c) 70%,#000),var(--c)); color:#fff; font:800 64px "Nunito",sans-serif; position:relative}
-.game .art img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
-.game .meta{padding:14px 16px 16px}
-.game b{display:block; font-size:18px; line-height:1.25}
-.game small{color:var(--soft); font-weight:700}
 .note{font-size:14px; color:var(--soft); margin:14px 0 0}
 
 .cmdlist{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
@@ -70,3 +61,14 @@
 }
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none}}
 
+
+.puzzle{display:grid; grid-template-columns:1fr minmax(240px,360px); gap:48px; align-items:center}
+.stack{position:relative; width:100%; aspect-ratio:1; justify-self:center}
+.slide{position:absolute; inset:0; border-radius:28px; overflow:hidden; display:grid; place-items:center; color:#fff; font:800 80px "Nunito",sans-serif; box-shadow:var(--shadow); border:1px solid var(--line); background:linear-gradient(135deg,color-mix(in srgb,var(--c) 70%,#000),var(--c)); transition:transform .7s var(--spring),opacity .7s ease}
+.slide img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.slide[data-pos="0"]{transform:none; opacity:1; z-index:4}
+.slide[data-pos="1"]{transform:translate(9%,-7%) scale(.88) rotate(4deg); opacity:.55; z-index:3}
+.slide[data-pos="2"]{transform:translate(17%,-13%) scale(.77) rotate(8deg); opacity:.3; z-index:2}
+.slide[data-pos="3"]{transform:translate(-30%,0) scale(.9) rotate(-8deg); opacity:0; z-index:1}
+@media (max-width:760px){.puzzle{grid-template-columns:1fr; gap:28px; text-align:center} .stack{max-width:300px; margin-right:12%}}
+@media (prefers-reduced-motion:reduce){.slide{transition:none}}
