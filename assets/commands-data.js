@@ -52,7 +52,7 @@ window.CHOMIK_COMMANDS = [
    {
     "name": "model",
     "required": false,
-    "description": "Gemini 3.8 Flash or Gemini Flash-Lite Latest (Unfiltered)"
+    "description": "Chomik 3.8 or Chomik Flash Lite"
    }
   ],
   "prefix": []
