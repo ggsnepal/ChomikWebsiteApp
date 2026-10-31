@@ -210,7 +210,7 @@ footer::before{content:""; position:absolute; left:0; right:0; top:-27px; height
 .cmd p{color:var(--soft); font-size:15px; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
 .empty{grid-column:1/-1; text-align:center; padding:40px 16px; background:var(--paper); border:3px dashed var(--line); border-radius:var(--r2)}
 .empty h3{font-size:28px; margin-bottom:6px} .empty p{color:var(--soft)}
-.cat-roblox{--t:var(--orange)} .cat-tools{--t:var(--sky)} .cat-social{--t:var(--pink)} .cat-fun{--t:var(--sun)} .cat-games{--t:var(--mint)} .cat-image{--t:var(--lilac)} .cat-general,.cat-all,.cat-other{--t:var(--taupe)}
+.cat-roblox{--t:var(--orange)} .cat-tools{--t:var(--sky)} .cat-social{--t:var(--pink)} .cat-ai{--t:var(--lilac)} .cat-fun{--t:var(--sun)} .cat-games{--t:var(--mint)} .cat-image{--t:var(--lilac)} .cat-general,.cat-all,.cat-other{--t:var(--taupe)}
 .modal{position:fixed; inset:0; z-index:100; display:grid; place-items:center; padding:20px; background:rgba(36,24,18,.62); opacity:0; visibility:hidden; transition:opacity .18s, visibility 0s .18s}
 .modal.show{opacity:1; visibility:visible; transition:opacity .18s}
 .sheet{width:min(580px,100%); max-height:min(86vh,740px); display:flex; flex-direction:column; overflow:hidden; background:var(--paper); border:3px solid var(--line); border-radius:var(--r1); box-shadow:var(--sh); transform:translateY(24px) scale(.96) rotate(-1deg); transition:transform .28s cubic-bezier(.3,1.5,.5,1)}

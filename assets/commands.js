@@ -1,11 +1,11 @@
 (function(){
   var data=window.CHOMIK_COMMANDS||[];
   var grid=document.getElementById('cmds'), count=document.getElementById('count'), input=document.getElementById('q'), chipsBox=document.getElementById('chips');
-  var CAT={Roblox:'cube',Tools:'sliders',Social:'globe',Fun:'sparkle',Games:'gamepad',Image:'image',General:'gear',Other:'cube'};
-  var ORDER=['Roblox','Tools','Social','Fun','Games','Image','General'];
+  var CAT={Roblox:'cube',Tools:'sliders',Social:'globe',AI:'sparkle',Fun:'sparkle',Games:'gamepad',Image:'image',General:'gear',Other:'cube'};
+  var ORDER=['Roblox','Tools','Social','AI','Fun','Games','Image','General'];
   var KEY=[['avatar','user'],['headshot','user'],['bust','user'],['outfits','user'],['user','user'],['username','id'],['names','id'],['display','id'],['id','id'],['resolve','id'],['accountage','clock'],
     ['friends','heart'],['followers','heart'],['followings','heart'],['mutuals','users'],['group','users'],['groups','users'],['game','gamepad'],['games','gamepad'],['universe','gamepad'],['subplaces','gamepad'],['gamepass','gamepad'],
-    ['report','flag'],['reports','flag'],['say','chat'],['badge','shield'],['badges','shield'],['gamepasses','gamepad'],['support','chat'],['cipher','lock'],['bruteforce','link'],['subdomain','link'],['settings','gear'],['help','search'],['invite','plus'],['wordle','gamepad'],['wordbomb','gamepad']];
+    ['report','flag'],['reports','flag'],['say','chat'],['badge','shield'],['badges','shield'],['gamepasses','gamepad'],['support','chat'],['cipher','lock'],['bruteforce','link'],['translate','chat'],['hanglish','chat'],['ask','chat'],['subdomain','link'],['settings','gear'],['help','search'],['invite','plus'],['wordle','gamepad'],['wordbomb','gamepad']];
   function icon(c){var toks=c.name.split(/[ -]/);for(var i=0;i<KEY.length;i++){if(toks.indexOf(KEY[i][0])>-1)return KEY[i][1]}return CAT[c.category]||'cube'}
   function slug(s){return s.toLowerCase().replace(/[^a-z]/g,'')}
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}

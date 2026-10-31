@@ -1,6 +1,19 @@
 // generated from the bot's live command list
 window.CHOMIK_COMMANDS = [
  {
+  "name": "1337",
+  "description": "Translate your text to leetspeak",
+  "category": "Fun",
+  "params": [
+   {
+    "name": "query",
+    "required": true,
+    "description": "Text to convert"
+   }
+  ],
+  "prefix": []
+ },
+ {
   "name": "accountage",
   "description": "Get a Roblox account's age and creation date (works with erased accounts)",
   "category": "Roblox",
@@ -15,6 +28,34 @@ window.CHOMIK_COMMANDS = [
    "accountage",
    "age"
   ]
+ },
+ {
+  "name": "ai ask",
+  "description": "Ask the AI something",
+  "category": "AI",
+  "params": [
+   {
+    "name": "prompt",
+    "required": false,
+    "description": "Skip the textbox by typing it here"
+   },
+   {
+    "name": "search",
+    "required": false,
+    "description": "Allow the AI to search online (ON for Default)"
+   },
+   {
+    "name": "execute_code",
+    "required": false,
+    "description": "Allow the AI to execute code for complex tasks"
+   },
+   {
+    "name": "model",
+    "required": false,
+    "description": "Gemini 3.8 Flash or Gemini Flash-Lite Latest (Unfiltered)"
+   }
+  ],
+  "prefix": []
  },
  {
   "name": "australian",
@@ -105,6 +146,19 @@ window.CHOMIK_COMMANDS = [
   ]
  },
  {
+  "name": "blocktanks",
+  "description": "Fetch BlockTanks user info",
+  "category": "Games",
+  "params": [
+   {
+    "name": "user",
+    "required": true,
+    "description": "BlockTanks username"
+   }
+  ],
+  "prefix": []
+ },
+ {
   "name": "british",
   "description": "Check if a Roblox account is British",
   "category": "Roblox",
@@ -122,6 +176,19 @@ window.CHOMIK_COMMANDS = [
   ]
  },
  {
+  "name": "bruteforce link",
+  "description": "Find the live links an id or string belongs to.",
+  "category": "Tools",
+  "params": [
+   {
+    "name": "string",
+    "required": true,
+    "description": "The id or string from a link, e.g. dQw4w9WgXcQ or 1567 (a full link works too)"
+   }
+  ],
+  "prefix": []
+ },
+ {
   "name": "bust",
   "description": "Get a Roblox user's avatar bust image",
   "category": "Roblox",
@@ -135,6 +202,115 @@ window.CHOMIK_COMMANDS = [
   "prefix": [
    "bust"
   ]
+ },
+ {
+  "name": "chars",
+  "description": "Count how many characters are in a string",
+  "category": "Tools",
+  "params": [
+   {
+    "name": "text",
+    "required": true,
+    "description": "The text to count"
+   }
+  ],
+  "prefix": [
+   "chars"
+  ]
+ },
+ {
+  "name": "cipher decode",
+  "description": "Decode / decrypt text, or let me identify the cipher",
+  "category": "Tools",
+  "params": [
+   {
+    "name": "type",
+    "required": true,
+    "description": "Which cipher or encoding, or Identify to detect it automatically"
+   },
+   {
+    "name": "text",
+    "required": true,
+    "description": "The text to decode (ignored if you attach a file in use-file)"
+   },
+   {
+    "name": "use-file",
+    "required": false,
+    "description": "A .txt file to use instead of text (max 500 KB)"
+   },
+   {
+    "name": "key",
+    "required": false,
+    "description": "Only for ciphers that need one (Vigenère keyword, Caesar shift); with Identify, an optional…"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "cipher encode",
+  "description": "Encode / encrypt text with a cipher or encoding",
+  "category": "Tools",
+  "params": [
+   {
+    "name": "type",
+    "required": true,
+    "description": "Which cipher or encoding to use"
+   },
+   {
+    "name": "text",
+    "required": true,
+    "description": "The text to encode (ignored if you attach a file in use-file)"
+   },
+   {
+    "name": "use-file",
+    "required": false,
+    "description": "A .txt file to use instead of text (max 500 KB)"
+   },
+   {
+    "name": "key",
+    "required": false,
+    "description": "Only for ciphers that need one: Vigenère keyword, Caesar shift number"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "cipher identify",
+  "description": "Identify what cipher or encoding a text might be",
+  "category": "Tools",
+  "params": [
+   {
+    "name": "query",
+    "required": true,
+    "description": "The ciphertext to identify"
+   },
+   {
+    "name": "clue",
+    "required": false,
+    "description": "Optional hint: a cipher name (e.g. morse) or a possible Vigenère key"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "cipher rot",
+  "description": "Try every ROT shift (ROT-0 to ROT-25) on a text, results come as a .txt file",
+  "category": "Tools",
+  "params": [
+   {
+    "name": "text",
+    "required": true,
+    "description": "The text to run through every ROT shift"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "coinflip",
+  "description": "Flip a coin — Heads or Tails",
+  "category": "Fun",
+  "params": [],
+  "prefix": []
  },
  {
   "name": "display",
@@ -304,6 +480,34 @@ window.CHOMIK_COMMANDS = [
   "prefix": []
  },
  {
+  "name": "gif",
+  "description": "Convert an image to .gif format (so it can be favorited/reused in Discord)",
+  "category": "Image",
+  "params": [
+   {
+    "name": "image",
+    "required": false,
+    "description": "Attach an image to convert"
+   },
+   {
+    "name": "link",
+    "required": false,
+    "description": "A direct image link, or a page like a Pinterest pin/tweet"
+   },
+   {
+    "name": "colors",
+    "required": false,
+    "description": "Color palette size, 2-256 (default 256, lower = smaller file, rougher colors)"
+   },
+   {
+    "name": "dither",
+    "required": false,
+    "description": "Whether to dither the reduced color palette (default on)"
+   }
+  ],
+  "prefix": []
+ },
+ {
   "name": "group",
   "description": "Look up a Roblox group/community by ID or name",
   "category": "Roblox",
@@ -353,6 +557,13 @@ window.CHOMIK_COMMANDS = [
   ]
  },
  {
+  "name": "help",
+  "description": "See everything Chomik can do.",
+  "category": "General",
+  "params": [],
+  "prefix": []
+ },
+ {
   "name": "id",
   "description": "Look up a Roblox account by User ID",
   "category": "Roblox",
@@ -372,690 +583,6 @@ window.CHOMIK_COMMANDS = [
    "id",
    "uid"
   ]
- },
- {
-  "name": "language",
-  "description": "Get the language of a Roblox account",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "user",
-    "required": true,
-    "description": "Roblox username or User ID"
-   }
-  ],
-  "prefix": [
-   "language",
-   "lang"
-  ]
- },
- {
-  "name": "mutuals",
-  "description": "Check if a Roblox account is friends with up to 5 other accounts",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "user",
-    "required": true,
-    "description": "Roblox username or User ID"
-   },
-   {
-    "name": "target1",
-    "required": true,
-    "description": "Roblox username or User ID"
-   },
-   {
-    "name": "target2",
-    "required": false,
-    "description": "Roblox username or User ID (optional)"
-   },
-   {
-    "name": "target3",
-    "required": false,
-    "description": "Roblox username or User ID (optional)"
-   },
-   {
-    "name": "target4",
-    "required": false,
-    "description": "Roblox username or User ID (optional)"
-   },
-   {
-    "name": "target5",
-    "required": false,
-    "description": "Roblox username or User ID (optional)"
-   }
-  ],
-  "prefix": [
-   "mutuals",
-   "isfriends",
-   "friendswith"
-  ]
- },
- {
-  "name": "names",
-  "description": "Get previous usernames of a Roblox user",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "user",
-    "required": true,
-    "description": "Roblox username or User ID"
-   }
-  ],
-  "prefix": [
-   "names"
-  ]
- },
- {
-  "name": "outfits",
-  "description": "Get a Roblox user's avatars and outfits (not supported for erased accounts)",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "user",
-    "required": true,
-    "description": "Roblox username or User ID"
-   }
-  ],
-  "prefix": [
-   "outfits",
-   "outfit",
-   "avatars",
-   "fits"
-  ]
- },
- {
-  "name": "report",
-  "description": "Report a Roblox user.",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "user",
-    "required": true,
-    "description": "Roblox username to report"
-   },
-   {
-    "name": "type",
-    "required": false,
-    "description": "Report the username or the avatar (defaults to username)"
-   },
-   {
-    "name": "category",
-    "required": false,
-    "description": "Report category (defaults to Swearing, or Off-site Links for *YT/YT* names)"
-   },
-   {
-    "name": "reason",
-    "required": false,
-    "description": "Optional reason/comment for the report"
-   },
-   {
-    "name": "anonymous",
-    "required": false,
-    "description": "Hide your name on the moderation update (shows 'Reported Anonymously' instead)"
-   }
-  ],
-  "prefix": [
-   "report",
-   "r"
-  ]
- },
- {
-  "name": "reports",
-  "description": "View report statistics.",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "user",
-    "required": false,
-    "description": "View another user's report stats (defaults to you)"
-   },
-   {
-    "name": "global",
-    "required": false,
-    "description": "View the global report stats instead"
-   }
-  ],
-  "prefix": [
-   "stats",
-   "reports"
-  ]
- },
- {
-  "name": "resolve",
-  "description": "Get a Roblox user's profile link",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "user",
-    "required": true,
-    "description": "Roblox username or User ID"
-   }
-  ],
-  "prefix": [
-   "resolve",
-   "re"
-  ]
- },
- {
-  "name": "ropro",
-  "description": "Look up a Roblox account's RoPro info",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "query",
-    "required": true,
-    "description": "Roblox username or User ID"
-   }
-  ],
-  "prefix": [
-   "ropro"
-  ]
- },
- {
-  "name": "scrape",
-  "description": "Scrape Roblox users",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "start_id",
-    "required": true,
-    "description": "Start ID of where it's checking"
-   },
-   {
-    "name": "amount",
-    "required": true,
-    "description": "Amount of IDs to check, max 100000 (if random=True, this is how many random IDs to pick from the…"
-   },
-   {
-    "name": "end_id",
-    "required": false,
-    "description": "End ID of the range (required only if random=True)"
-   },
-   {
-    "name": "keyword",
-    "required": false,
-    "description": "Only show usernames containing keyword(s), comma-separated. %20 or + = space (optional)"
-   },
-   {
-    "name": "startswith",
-    "required": false,
-    "description": "Only show usernames starting with this (comma-separated, optional)"
-   },
-   {
-    "name": "endswith",
-    "required": false,
-    "description": "Only show usernames ending with this (comma-separated, optional)"
-   },
-   {
-    "name": "blacklist",
-    "required": false,
-    "description": "Words to exclude from matching (e.g. false positives), comma-separated (optional)"
-   },
-   {
-    "name": "excludetermed",
-    "required": false,
-    "description": "Exclude accounts flagged as terminated (isDeleted=true) (optional)"
-   },
-   {
-    "name": "random",
-    "required": false,
-    "description": "Instead of a sequential range, pick `amount` random IDs between start_id and end_id (optional)"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "subplaces",
-  "description": "List a Roblox game's subplaces by universe/place ID or name",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "query",
-    "required": true,
-    "description": "Roblox place/universe ID, or a game name to search"
-   },
-   {
-    "name": "universe",
-    "required": false,
-    "description": "Search the ID as a universe ID instead of a place ID (default: off)"
-   }
-  ],
-  "prefix": [
-   "subplaces",
-   "sp"
-  ]
- },
- {
-  "name": "support",
-  "description": "Send a Roblox support request (30 minute global cooldown)",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "username",
-    "required": true,
-    "description": "Your Roblox username"
-   },
-   {
-    "name": "email",
-    "required": true,
-    "description": "Your email address"
-   },
-   {
-    "name": "platform",
-    "required": true,
-    "description": "Your device"
-   },
-   {
-    "name": "content",
-    "required": true,
-    "description": "Describe your issue"
-   },
-   {
-    "name": "name",
-    "required": false,
-    "description": "Your name (optional)"
-   },
-   {
-    "name": "age",
-    "required": false,
-    "description": "Your age (optional)"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "universe",
-  "description": "Convert a place ID to its universe ID",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "place_id",
-    "required": true,
-    "description": "Roblox place ID, or a roblox.com game URL"
-   }
-  ],
-  "prefix": [
-   "universe"
-  ]
- },
- {
-  "name": "user",
-  "description": "Look up a Roblox account by username",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "username",
-    "required": true,
-    "description": "Roblox username to search"
-   },
-   {
-    "name": "raw",
-    "required": false,
-    "description": "Return the profile info as organized JSON (no embed) instead of the normal profile"
-   }
-  ],
-  "prefix": [
-   "user",
-   "u",
-   "uu"
-  ]
- },
- {
-  "name": "username",
-  "description": "Check if a Roblox username is available",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "username",
-    "required": true,
-    "description": "Roblox username to check"
-   }
-  ],
-  "prefix": [
-   "username"
-  ]
- },
- {
-  "name": "verified",
-  "description": "Check when a user got the email verified items (not supported for erased accounts)",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "user",
-    "required": true,
-    "description": "Roblox username or User ID"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "bruteforce link",
-  "description": "Find the live links an id or string belongs to.",
-  "category": "Tools",
-  "params": [
-   {
-    "name": "string",
-    "required": true,
-    "description": "The id or string from a link, e.g. dQw4w9WgXcQ or 1567 (a full link works too)"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "chars",
-  "description": "Count how many characters are in a string",
-  "category": "Tools",
-  "params": [
-   {
-    "name": "text",
-    "required": true,
-    "description": "The text to count"
-   }
-  ],
-  "prefix": [
-   "chars"
-  ]
- },
- {
-  "name": "cipher decode",
-  "description": "Decode / decrypt text, or let me identify the cipher",
-  "category": "Tools",
-  "params": [
-   {
-    "name": "type",
-    "required": true,
-    "description": "Which cipher or encoding, or Identify to detect it automatically"
-   },
-   {
-    "name": "text",
-    "required": true,
-    "description": "The text to decode (ignored if you attach a file in use-file)"
-   },
-   {
-    "name": "use-file",
-    "required": false,
-    "description": "A .txt file to use instead of text (max 500 KB)"
-   },
-   {
-    "name": "key",
-    "required": false,
-    "description": "Only for ciphers that need one (Vigenère keyword, Caesar shift); with Identify, an optional…"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "cipher encode",
-  "description": "Encode / encrypt text with a cipher or encoding",
-  "category": "Tools",
-  "params": [
-   {
-    "name": "type",
-    "required": true,
-    "description": "Which cipher or encoding to use"
-   },
-   {
-    "name": "text",
-    "required": true,
-    "description": "The text to encode (ignored if you attach a file in use-file)"
-   },
-   {
-    "name": "use-file",
-    "required": false,
-    "description": "A .txt file to use instead of text (max 500 KB)"
-   },
-   {
-    "name": "key",
-    "required": false,
-    "description": "Only for ciphers that need one: Vigenère keyword, Caesar shift number"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "cipher identify",
-  "description": "Identify what cipher or encoding a text might be",
-  "category": "Tools",
-  "params": [
-   {
-    "name": "query",
-    "required": true,
-    "description": "The ciphertext to identify"
-   },
-   {
-    "name": "clue",
-    "required": false,
-    "description": "Optional hint: a cipher name (e.g. morse) or a possible Vigenère key"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "cipher rot",
-  "description": "Try every ROT shift (ROT-0 to ROT-25) on a text, results come as a .txt file",
-  "category": "Tools",
-  "params": [
-   {
-    "name": "text",
-    "required": true,
-    "description": "The text to run through every ROT shift"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "say",
-  "description": "Make the bot say something via a text box",
-  "category": "Tools",
-  "params": [],
-  "prefix": []
- },
- {
-  "name": "subdomain",
-  "description": "Find the known subdomains of a website",
-  "category": "Tools",
-  "params": [
-   {
-    "name": "link",
-    "required": true,
-    "description": "A link or domain, e.g. https://x.com or x.com"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "text anagram",
-  "description": "Find anagrams of a word or phrase",
-  "category": "Tools",
-  "params": [
-   {
-    "name": "query",
-    "required": true,
-    "description": "The word or phrase to find anagrams of"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "text nutrimatic",
-  "description": "Search Nutrimatic for words/phrases matching a query",
-  "category": "Tools",
-  "params": [
-   {
-    "name": "query",
-    "required": true,
-    "description": "The Nutrimatic query (e.g. a set of letters or a pattern)"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "pinterest search",
-  "description": "Search Pinterest for pins (images)",
-  "category": "Social",
-  "params": [
-   {
-    "name": "query",
-    "required": true,
-    "description": "What to search for"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "tiktok",
-  "description": "Look up a TikTok user",
-  "category": "Social",
-  "params": [
-   {
-    "name": "query",
-    "required": true,
-    "description": "TikTok username (without @)"
-   }
-  ],
-  "prefix": [
-   "tiktok",
-   "tt"
-  ]
- },
- {
-  "name": "youtube",
-  "description": "Look up a YouTube channel",
-  "category": "Social",
-  "params": [
-   {
-    "name": "query",
-    "required": true,
-    "description": "Channel handle (e.g. @mrbeast) or channel ID"
-   }
-  ],
-  "prefix": [
-   "youtube",
-   "yt"
-  ]
- },
- {
-  "name": "1337",
-  "description": "Translate your text to leetspeak",
-  "category": "Fun",
-  "params": [
-   {
-    "name": "query",
-    "required": true,
-    "description": "Text to convert"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "coinflip",
-  "description": "Flip a coin — Heads or Tails",
-  "category": "Fun",
-  "params": [],
-  "prefix": []
- },
- {
-  "name": "jekivuz",
-  "description": "Outputs 56, 67, or 78 (67 is twice as likely)",
-  "category": "Fun",
-  "params": [
-   {
-    "name": "disable_distortion",
-    "required": false,
-    "description": "Send just 56, 67, or 78 with no distortion/flourishes (default off)"
-   },
-   {
-    "name": "equal_chances",
-    "required": false,
-    "description": "Make 56, 67, and 78 all equally likely (default off — 67 is 50%)"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "wordle answer",
-  "description": "Get a day's Wordle answer (defaults to today, PHT)",
-  "category": "Fun",
-  "params": [
-   {
-    "name": "day",
-    "required": false,
-    "description": "Which day? e.g. September 30, 9/30/2026, 9-30-26, 30 September, 9/30 (default: today)"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "wordle draw",
-  "description": "Draw a color pattern into your Wordle board",
-  "category": "Fun",
-  "params": [],
-  "prefix": []
- },
- {
-  "name": "blocktanks",
-  "description": "Fetch BlockTanks user info",
-  "category": "Games",
-  "params": [
-   {
-    "name": "user",
-    "required": true,
-    "description": "BlockTanks username"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "wordbomb search",
-  "description": "Search for Word Bomb words",
-  "category": "Games",
-  "params": [
-   {
-    "name": "prompt",
-    "required": true,
-    "description": "The prompt to search for (or '.' to list all)"
-   },
-   {
-    "name": "regex",
-    "required": false,
-    "description": "Use regular expression instead of plain search"
-   },
-   {
-    "name": "indonesian",
-    "required": false,
-    "description": "Search the Indonesian dictionary instead of English"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "gif",
-  "description": "Convert an image to .gif format (so it can be favorited/reused in Discord)",
-  "category": "Image",
-  "params": [
-   {
-    "name": "image",
-    "required": false,
-    "description": "Attach an image to convert"
-   },
-   {
-    "name": "link",
-    "required": false,
-    "description": "A direct image link, or a page like a Pinterest pin/tweet"
-   },
-   {
-    "name": "colors",
-    "required": false,
-    "description": "Color palette size, 2-256 (default 256, lower = smaller file, rougher colors)"
-   },
-   {
-    "name": "dither",
-    "required": false,
-    "description": "Whether to dither the reduced color palette (default on)"
-   }
-  ],
-  "prefix": []
  },
  {
   "name": "image attach",
@@ -1234,6 +761,49 @@ window.CHOMIK_COMMANDS = [
     "name": "togif",
     "required": false,
     "description": "Convert the result to a .gif"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "image generate",
+  "description": "✨ Generate an image with AI",
+  "category": "Image",
+  "params": [
+   {
+    "name": "prompt",
+    "required": true,
+    "description": "What you want the image to be"
+   },
+   {
+    "name": "model",
+    "required": false,
+    "description": "Which AI image model to use (default: automatic)"
+   },
+   {
+    "name": "size",
+    "required": false,
+    "description": "Image size (some models ignore it)"
+   },
+   {
+    "name": "steps",
+    "required": false,
+    "description": "How many steps to run (FLUX.1 schnell caps at 8)"
+   },
+   {
+    "name": "seed",
+    "required": false,
+    "description": "Same seed + same prompt gives the same image"
+   },
+   {
+    "name": "guidance",
+    "required": false,
+    "description": "How closely to follow the prompt (not every model uses it)"
+   },
+   {
+    "name": "negative",
+    "required": false,
+    "description": "What to avoid (Stable Diffusion models only)"
    }
   ],
   "prefix": []
@@ -1562,13 +1132,6 @@ window.CHOMIK_COMMANDS = [
   "prefix": []
  },
  {
-  "name": "help",
-  "description": "See everything Chomik can do.",
-  "category": "General",
-  "params": [],
-  "prefix": []
- },
- {
   "name": "invite",
   "description": "Get Chomik's invite link.",
   "category": "General",
@@ -1576,10 +1139,280 @@ window.CHOMIK_COMMANDS = [
   "prefix": []
  },
  {
+  "name": "jekivuz",
+  "description": "Outputs 56, 67, or 78 (67 is twice as likely)",
+  "category": "Fun",
+  "params": [
+   {
+    "name": "disable_distortion",
+    "required": false,
+    "description": "Send just 56, 67, or 78 with no distortion/flourishes (default off)"
+   },
+   {
+    "name": "equal_chances",
+    "required": false,
+    "description": "Make 56, 67, and 78 all equally likely (default off — 67 is 50%)"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "language",
+  "description": "Get the language of a Roblox account",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "user",
+    "required": true,
+    "description": "Roblox username or User ID"
+   }
+  ],
+  "prefix": [
+   "language",
+   "lang"
+  ]
+ },
+ {
+  "name": "mutuals",
+  "description": "Check if a Roblox account is friends with up to 5 other accounts",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "user",
+    "required": true,
+    "description": "Roblox username or User ID"
+   },
+   {
+    "name": "target1",
+    "required": true,
+    "description": "Roblox username or User ID"
+   },
+   {
+    "name": "target2",
+    "required": false,
+    "description": "Roblox username or User ID (optional)"
+   },
+   {
+    "name": "target3",
+    "required": false,
+    "description": "Roblox username or User ID (optional)"
+   },
+   {
+    "name": "target4",
+    "required": false,
+    "description": "Roblox username or User ID (optional)"
+   },
+   {
+    "name": "target5",
+    "required": false,
+    "description": "Roblox username or User ID (optional)"
+   }
+  ],
+  "prefix": [
+   "mutuals",
+   "isfriends",
+   "friendswith"
+  ]
+ },
+ {
+  "name": "names",
+  "description": "Get previous usernames of a Roblox user",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "user",
+    "required": true,
+    "description": "Roblox username or User ID"
+   }
+  ],
+  "prefix": [
+   "names"
+  ]
+ },
+ {
+  "name": "outfits",
+  "description": "Get a Roblox user's avatars and outfits",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "user",
+    "required": true,
+    "description": "Roblox username or User ID"
+   }
+  ],
+  "prefix": [
+   "outfits",
+   "outfit",
+   "avatars",
+   "fits"
+  ]
+ },
+ {
   "name": "ping",
   "description": "Check Chomik's latency.",
   "category": "General",
   "params": [],
+  "prefix": []
+ },
+ {
+  "name": "pinterest search",
+  "description": "Search Pinterest for pins (images)",
+  "category": "Social",
+  "params": [
+   {
+    "name": "query",
+    "required": true,
+    "description": "What to search for"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "report",
+  "description": "Report a Roblox user.",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "user",
+    "required": true,
+    "description": "Roblox username to report"
+   },
+   {
+    "name": "type",
+    "required": false,
+    "description": "Report the username or the avatar (defaults to username)"
+   },
+   {
+    "name": "category",
+    "required": false,
+    "description": "Report category (defaults to Swearing, or Off-site Links for *YT/YT* names)"
+   },
+   {
+    "name": "reason",
+    "required": false,
+    "description": "Optional reason/comment for the report"
+   },
+   {
+    "name": "anonymous",
+    "required": false,
+    "description": "Hide your name on the moderation update (shows 'Reported Anonymously' instead)"
+   }
+  ],
+  "prefix": [
+   "report",
+   "r"
+  ]
+ },
+ {
+  "name": "reports",
+  "description": "View report statistics.",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "user",
+    "required": false,
+    "description": "View another user's report stats (defaults to you)"
+   },
+   {
+    "name": "global",
+    "required": false,
+    "description": "View the global report stats instead"
+   }
+  ],
+  "prefix": [
+   "stats",
+   "reports"
+  ]
+ },
+ {
+  "name": "resolve",
+  "description": "Get a Roblox user's profile link",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "user",
+    "required": true,
+    "description": "Roblox username or User ID"
+   }
+  ],
+  "prefix": [
+   "resolve",
+   "re"
+  ]
+ },
+ {
+  "name": "ropro",
+  "description": "Look up a Roblox account's RoPro info",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "query",
+    "required": true,
+    "description": "Roblox username or User ID"
+   }
+  ],
+  "prefix": [
+   "ropro"
+  ]
+ },
+ {
+  "name": "say",
+  "description": "Make the bot say something via a text box",
+  "category": "Tools",
+  "params": [],
+  "prefix": []
+ },
+ {
+  "name": "scrape",
+  "description": "Scrape Roblox users",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "start_id",
+    "required": true,
+    "description": "Start ID of where it's checking"
+   },
+   {
+    "name": "amount",
+    "required": true,
+    "description": "Amount of IDs to check, max 100000 (if random=True, this is how many random IDs to pick from the…"
+   },
+   {
+    "name": "end_id",
+    "required": false,
+    "description": "End ID of the range (required only if random=True)"
+   },
+   {
+    "name": "keyword",
+    "required": false,
+    "description": "Only show usernames containing keyword(s), comma-separated. %20 or + = space (optional)"
+   },
+   {
+    "name": "startswith",
+    "required": false,
+    "description": "Only show usernames starting with this (comma-separated, optional)"
+   },
+   {
+    "name": "endswith",
+    "required": false,
+    "description": "Only show usernames ending with this (comma-separated, optional)"
+   },
+   {
+    "name": "blacklist",
+    "required": false,
+    "description": "Words to exclude from matching (e.g. false positives), comma-separated (optional)"
+   },
+   {
+    "name": "excludetermed",
+    "required": false,
+    "description": "Exclude accounts flagged as terminated (isDeleted=true) (optional)"
+   },
+   {
+    "name": "random",
+    "required": false,
+    "description": "Instead of a sequential range, pick `amount` random IDs between start_id and end_id (optional)"
+   }
+  ],
   "prefix": []
  },
  {
@@ -1590,10 +1423,322 @@ window.CHOMIK_COMMANDS = [
   "prefix": []
  },
  {
+  "name": "subdomain",
+  "description": "Find the known subdomains of a website",
+  "category": "Tools",
+  "params": [
+   {
+    "name": "link",
+    "required": true,
+    "description": "A link or domain, e.g. https://x.com or x.com"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "subplaces",
+  "description": "List a Roblox game's subplaces by universe/place ID or name",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "query",
+    "required": true,
+    "description": "Roblox place/universe ID, or a game name to search"
+   },
+   {
+    "name": "universe",
+    "required": false,
+    "description": "Search the ID as a universe ID instead of a place ID (default: off)"
+   }
+  ],
+  "prefix": [
+   "subplaces",
+   "sp"
+  ]
+ },
+ {
+  "name": "support",
+  "description": "Send a Roblox support request (30 minute global cooldown)",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "username",
+    "required": true,
+    "description": "Your Roblox username"
+   },
+   {
+    "name": "email",
+    "required": true,
+    "description": "Your email address"
+   },
+   {
+    "name": "platform",
+    "required": true,
+    "description": "Your device"
+   },
+   {
+    "name": "content",
+    "required": true,
+    "description": "Describe your issue"
+   },
+   {
+    "name": "name",
+    "required": false,
+    "description": "Your name (optional)"
+   },
+   {
+    "name": "age",
+    "required": false,
+    "description": "Your age (optional)"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "text anagram",
+  "description": "Find anagrams of a word or phrase",
+  "category": "Tools",
+  "params": [
+   {
+    "name": "query",
+    "required": true,
+    "description": "The word or phrase to find anagrams of"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "text hanglish",
+  "description": "Turn English into Korean keyboard keystrokes, or keystrokes back into English",
+  "category": "Tools",
+  "params": [
+   {
+    "name": "decode",
+    "required": false,
+    "description": "Korean-keyboard keystrokes to turn back into English (e.g. zldksnflqmtm)"
+   },
+   {
+    "name": "encode",
+    "required": false,
+    "description": "English text to turn into Korean-keyboard keystrokes (e.g. Keanu Reeves)"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "text nutrimatic",
+  "description": "Search Nutrimatic for words/phrases matching a query",
+  "category": "Tools",
+  "params": [
+   {
+    "name": "query",
+    "required": true,
+    "description": "The Nutrimatic query (e.g. a set of letters or a pattern)"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "text translate",
+  "description": "Translate text (or the text in an image) into another language",
+  "category": "Tools",
+  "params": [
+   {
+    "name": "text",
+    "required": false,
+    "description": "The text to translate"
+   },
+   {
+    "name": "image",
+    "required": false,
+    "description": "Attach an image to read the text from it"
+   },
+   {
+    "name": "from",
+    "required": false,
+    "description": "The language it's written in (default: detect it)"
+   },
+   {
+    "name": "to",
+    "required": false,
+    "description": "The language to translate it into (default: English)"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "tiktok",
+  "description": "Look up a TikTok user",
+  "category": "Social",
+  "params": [
+   {
+    "name": "query",
+    "required": true,
+    "description": "TikTok username (without @)"
+   }
+  ],
+  "prefix": [
+   "tiktok",
+   "tt"
+  ]
+ },
+ {
+  "name": "translate",
+  "description": "Translate text (or the text in an image) into another language",
+  "category": "Tools",
+  "params": [
+   {
+    "name": "text",
+    "required": false,
+    "description": "The text to translate"
+   },
+   {
+    "name": "image",
+    "required": false,
+    "description": "Attach an image to read the text from it"
+   },
+   {
+    "name": "from",
+    "required": false,
+    "description": "The language it's written in (default: detect it)"
+   },
+   {
+    "name": "to",
+    "required": false,
+    "description": "The language to translate it into (default: English)"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "universe",
+  "description": "Convert a place ID to its universe ID",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "place_id",
+    "required": true,
+    "description": "Roblox place ID, or a roblox.com game URL"
+   }
+  ],
+  "prefix": [
+   "universe"
+  ]
+ },
+ {
+  "name": "user",
+  "description": "Look up a Roblox account by username",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "username",
+    "required": true,
+    "description": "Roblox username to search"
+   },
+   {
+    "name": "raw",
+    "required": false,
+    "description": "Return the profile info as organized JSON (no embed) instead of the normal profile"
+   }
+  ],
+  "prefix": [
+   "user",
+   "u",
+   "uu"
+  ]
+ },
+ {
+  "name": "username",
+  "description": "Check if a Roblox username is available",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "username",
+    "required": true,
+    "description": "Roblox username to check"
+   }
+  ],
+  "prefix": [
+   "username"
+  ]
+ },
+ {
+  "name": "verified",
+  "description": "Check when a user got the email verified items",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "user",
+    "required": true,
+    "description": "Roblox username or User ID"
+   }
+  ],
+  "prefix": []
+ },
+ {
   "name": "whitelist",
   "description": "Whitelist yourself to use Chomik",
   "category": "General",
   "params": [],
   "prefix": []
+ },
+ {
+  "name": "wordbomb search",
+  "description": "Search for Word Bomb words",
+  "category": "Games",
+  "params": [
+   {
+    "name": "prompt",
+    "required": true,
+    "description": "The prompt to search for (or '.' to list all)"
+   },
+   {
+    "name": "regex",
+    "required": false,
+    "description": "Use regular expression instead of plain search"
+   },
+   {
+    "name": "indonesian",
+    "required": false,
+    "description": "Search the Indonesian dictionary instead of English"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "wordle answer",
+  "description": "Get a day's Wordle answer (defaults to today, PHT)",
+  "category": "Fun",
+  "params": [
+   {
+    "name": "day",
+    "required": false,
+    "description": "Which day? e.g. September 30, 9/30/2026, 9-30-26, 30 September, 9/30 (default: today)"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "wordle draw",
+  "description": "Draw a color pattern into your Wordle board",
+  "category": "Fun",
+  "params": [],
+  "prefix": []
+ },
+ {
+  "name": "youtube",
+  "description": "Look up a YouTube channel",
+  "category": "Social",
+  "params": [
+   {
+    "name": "query",
+    "required": true,
+    "description": "Channel handle (e.g. @mrbeast) or channel ID"
+   }
+  ],
+  "prefix": [
+   "youtube",
+   "yt"
+  ]
  }
 ];

@@ -117,7 +117,7 @@ footer{margin-top:56px; border-top:2px dashed var(--line); padding:26px 0 30px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important; transition:none !important}}
 /* categories colours */
 .c-roblox{--c:#f28c28} .c-reports{--c:#b9783f} .c-say{--c:#4a90d9} .c-fun{--c:#d99a0b} .c-games{--c:#4fa56a}
-.c-image{--c:#2fa3a3} .c-tools{--c:#6a82cf} .c-social{--c:#e5683c} .c-notifier{--c:#8fb52f} .c-general{--c:#8c7f70} .c-other{--c:#8c7f70}
+.c-image{--c:#2fa3a3} .c-tools{--c:#6a82cf} .c-social{--c:#e5683c} .c-ai{--c:#9b6be0} .c-notifier{--c:#8fb52f} .c-general{--c:#8c7f70} .c-other{--c:#8c7f70}
 
 /* command details modal */
 .modal{position:fixed; inset:0; z-index:100; display:grid; place-items:center; padding:20px; background:rgba(12,8,4,.68); opacity:0; pointer-events:none; visibility:hidden; transition:opacity .2s, visibility 0s .2s}
