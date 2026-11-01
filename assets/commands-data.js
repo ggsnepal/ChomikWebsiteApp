@@ -288,6 +288,60 @@ window.CHOMIK_COMMANDS = [
   ]
  },
  {
+  "name": "card cscd",
+  "description": "Caleb's Soul Crushing Domain stats card for a Roblox user",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "user",
+    "required": false,
+    "description": "Roblox username"
+   },
+   {
+    "name": "id",
+    "required": false,
+    "description": "Roblox User ID (used if no username is given)"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "card etoh",
+  "description": "Eternal Towers of Hell stats card for a Roblox user",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "user",
+    "required": false,
+    "description": "Roblox username"
+   },
+   {
+    "name": "id",
+    "required": false,
+    "description": "Roblox User ID (used if no username is given)"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "card tea",
+  "description": "The Eternal Abyss stats card for a Roblox user",
+  "category": "Roblox",
+  "params": [
+   {
+    "name": "user",
+    "required": false,
+    "description": "Roblox username"
+   },
+   {
+    "name": "id",
+    "required": false,
+    "description": "Roblox User ID (used if no username is given)"
+   }
+  ],
+  "prefix": []
+ },
+ {
   "name": "chars",
   "description": "Count how many characters are in a string",
   "category": "Tools",
