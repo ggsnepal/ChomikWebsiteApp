@@ -129,9 +129,9 @@ window.CHOMIK_COMMANDS = [
     "description": "Who reads it: Ashley, Grando, Lumino, Maine or Enzo (default: Grando)"
    },
    {
-    "name": "style",
+    "name": "file_type",
     "required": false,
-    "description": "How it sounds: whisper, narration or friendly (default: friendly)"
+    "description": "The audio file to send (default: wav)"
    },
    {
     "name": "text",
@@ -1506,6 +1506,19 @@ window.CHOMIK_COMMANDS = [
     "name": "random",
     "required": false,
     "description": "Instead of a sequential range, pick `amount` random IDs between start_id and end_id (optional)"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "scratch",
+  "description": "Look up a Scratch user",
+  "category": "Social",
+  "params": [
+   {
+    "name": "username",
+    "required": true,
+    "description": "Scratch username"
    }
   ],
   "prefix": []
