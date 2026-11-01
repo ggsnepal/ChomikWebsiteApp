@@ -120,23 +120,53 @@ window.CHOMIK_COMMANDS = [
  },
  {
   "name": "ai tts",
-  "description": "✨ Turn text into speech with Chomik 3.8 TTS",
+  "description": "✨ Turn text into speech with Chomik Flash TTS",
   "category": "AI",
   "params": [
+   {
+    "name": "text",
+    "required": false,
+    "description": "What to say, with expressions in brackets like [laughs] or [whispers] (leave empty to get a textbox)"
+   },
    {
     "name": "speaker",
     "required": false,
     "description": "Who reads it: Ashley, Grando, Lumino, Maine or Enzo (default: Grando)"
    },
    {
-    "name": "file_type",
+    "name": "context",
     "required": false,
-    "description": "The audio file to send (default: wav)"
+    "description": "What is happening around the line"
    },
    {
-    "name": "text",
+    "name": "scene",
     "required": false,
-    "description": "What to say (leave empty to get a textbox)"
+    "description": "Where it is said"
+   },
+   {
+    "name": "personality",
+    "required": false,
+    "description": "Who the voice is"
+   },
+   {
+    "name": "style",
+    "required": false,
+    "description": "Vocal Smile, Newscaster, Whisper, Empathetic, Hype or Deadpan"
+   },
+   {
+    "name": "pace",
+    "required": false,
+    "description": "Natural, Rapid Fire, The Drift or Staccato"
+   },
+   {
+    "name": "accent",
+    "required": false,
+    "description": "American, British, Australian and more"
+   },
+   {
+    "name": "file_type",
+    "required": false,
+    "description": "wav, mp3, ogg, flac or m4a (default: wav)"
    }
   ],
   "prefix": []
