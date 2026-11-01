@@ -31,13 +31,18 @@ window.CHOMIK_COMMANDS = [
  },
  {
   "name": "ai ask",
-  "description": "Ask the AI something",
+  "description": "✨ Ask the AI something",
   "category": "AI",
   "params": [
    {
     "name": "prompt",
     "required": false,
     "description": "Skip the textbox by typing it here"
+   },
+   {
+    "name": "image",
+    "required": false,
+    "description": "Attach an image for the AI to look at"
    },
    {
     "name": "search",
@@ -53,6 +58,85 @@ window.CHOMIK_COMMANDS = [
     "name": "model",
     "required": false,
     "description": "Chomik 3.8 or Chomik Flash Lite"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "ai imagine",
+  "description": "✨ Generate an image with AI",
+  "category": "AI",
+  "params": [
+   {
+    "name": "prompt",
+    "required": true,
+    "description": "What you want the image to be"
+   },
+   {
+    "name": "model",
+    "required": false,
+    "description": "Which AI image model to use (default: automatic)"
+   },
+   {
+    "name": "size",
+    "required": false,
+    "description": "Image size (some models ignore it)"
+   },
+   {
+    "name": "steps",
+    "required": false,
+    "description": "How many steps to run (FLUX.1 schnell caps at 8)"
+   },
+   {
+    "name": "seed",
+    "required": false,
+    "description": "Same seed + same prompt gives the same image"
+   },
+   {
+    "name": "guidance",
+    "required": false,
+    "description": "How closely to follow the prompt (not every model uses it)"
+   },
+   {
+    "name": "negative",
+    "required": false,
+    "description": "What to avoid (Stable Diffusion models only)"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "ai transcribe",
+  "description": "✨ Turn an audio or video file into text",
+  "category": "AI",
+  "params": [
+   {
+    "name": "upload",
+    "required": true,
+    "description": "The audio or video file to turn into text"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "ai tts",
+  "description": "✨ Turn text into speech with Chomik 3.8 TTS",
+  "category": "AI",
+  "params": [
+   {
+    "name": "speaker",
+    "required": false,
+    "description": "Who reads it: Ashley, Grando, Lumino, Maine or Enzo (default: Grando)"
+   },
+   {
+    "name": "style",
+    "required": false,
+    "description": "How it sounds: whisper, narration or friendly (default: friendly)"
+   },
+   {
+    "name": "text",
+    "required": false,
+    "description": "What to say (leave empty to get a textbox)"
    }
   ],
   "prefix": []
@@ -761,49 +845,6 @@ window.CHOMIK_COMMANDS = [
     "name": "togif",
     "required": false,
     "description": "Convert the result to a .gif"
-   }
-  ],
-  "prefix": []
- },
- {
-  "name": "image generate",
-  "description": "✨ Generate an image with AI",
-  "category": "Image",
-  "params": [
-   {
-    "name": "prompt",
-    "required": true,
-    "description": "What you want the image to be"
-   },
-   {
-    "name": "model",
-    "required": false,
-    "description": "Which AI image model to use (default: automatic)"
-   },
-   {
-    "name": "size",
-    "required": false,
-    "description": "Image size (some models ignore it)"
-   },
-   {
-    "name": "steps",
-    "required": false,
-    "description": "How many steps to run (FLUX.1 schnell caps at 8)"
-   },
-   {
-    "name": "seed",
-    "required": false,
-    "description": "Same seed + same prompt gives the same image"
-   },
-   {
-    "name": "guidance",
-    "required": false,
-    "description": "How closely to follow the prompt (not every model uses it)"
-   },
-   {
-    "name": "negative",
-    "required": false,
-    "description": "What to avoid (Stable Diffusion models only)"
    }
   ],
   "prefix": []
