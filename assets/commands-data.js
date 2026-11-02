@@ -126,47 +126,7 @@ window.CHOMIK_COMMANDS = [
    {
     "name": "text",
     "required": false,
-    "description": "What to say, with expressions in brackets like [laughs] or [whispers] (leave empty to get a textbox)"
-   },
-   {
-    "name": "speaker",
-    "required": false,
-    "description": "Who reads it: Ashley, Grando, Lumino, Maine or Enzo (default: Grando)"
-   },
-   {
-    "name": "context",
-    "required": false,
-    "description": "What is happening around the line"
-   },
-   {
-    "name": "scene",
-    "required": false,
-    "description": "Where it is said"
-   },
-   {
-    "name": "personality",
-    "required": false,
-    "description": "Who the voice is"
-   },
-   {
-    "name": "style",
-    "required": false,
-    "description": "Vocal Smile, Newscaster, Whisper, Empathetic, Hype or Deadpan"
-   },
-   {
-    "name": "pace",
-    "required": false,
-    "description": "Natural, Rapid Fire, The Drift or Staccato"
-   },
-   {
-    "name": "accent",
-    "required": false,
-    "description": "American, British, Australian and more"
-   },
-   {
-    "name": "file_type",
-    "required": false,
-    "description": "wav, mp3, ogg, flac or m4a (default: wav)"
+    "description": "What to say, with expressions in brackets like [laughs] (leave empty to get a textbox)"
    }
   ],
   "prefix": []
