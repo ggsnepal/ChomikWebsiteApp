@@ -1,4 +1,4 @@
-/preview/assets/*
+/assets/cat.webp
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 /assets/chomik.webp
   Cache-Control: public, max-age=2592000

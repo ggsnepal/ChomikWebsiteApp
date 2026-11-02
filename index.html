@@ -1,99 +1,686 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Chomik | Discord utility bot</title>
-<meta name="description" content="Chomik Bot is a custom discord utility bot designed to fetch and display data from various sites, primarily on Roblox lookups, tracking, and information tools.">
+<meta name="description" content="Chomik is a free Discord bot for Roblox lookups, puzzle solving and OSINT.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chomik">
 <meta property="og:title" content="Chomik | Discord utility bot">
-<meta property="og:description" content="Chomik Bot is a custom discord utility bot designed to fetch and display data from various sites, primarily on Roblox lookups, tracking, and information tools.">
-<meta property="og:image" content="https://chomik-bot.pages.dev/assets/chomik.webp">
+<meta property="og:description" content="Chomik is a free Discord bot for Roblox lookups, puzzle solving and OSINT.">
+<meta property="og:image" content="https://chomik.pages.dev/assets/chomik.webp">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chomik | Discord utility bot">
-<meta name="twitter:description" content="Chomik Bot is a custom discord utility bot designed to fetch and display data from various sites, primarily on Roblox lookups, tracking, and information tools.">
-<meta name="theme-color" content="#fffaf3">
-<link rel="icon" type="image/png" href="assets/favicon.png">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
-<script>try{var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
-<link rel="stylesheet" href="assets/style.css">
-<link rel="stylesheet" href="assets/home.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="/assets/cat.webp" type="image/webp">
+<style>
+:root{
+  --bg:#000; --panel:#0f0f0f; --raise:#171717; --raise2:#1f1f1f;
+  --line:rgba(255,255,255,.12); --line2:rgba(255,255,255,.07);
+  --ink:#f5f5f5; --soft:#a6a6a6; --dim:#6f6f6f; --red:#ff5252;
+  --r:14px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --ease2:cubic-bezier(.2,.9,.25,1);
+  --spring:cubic-bezier(.3,1.5,.5,1);
+  --font:"Segoe UI Variable","Segoe UI",Inter,system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+a{color:inherit}
+:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
+/* ---------- wallpaper: kitten + script text (static) ---------- */
+.scene{position:fixed;inset:0;z-index:0;overflow:hidden;background:#000 url(/assets/cat.webp) no-repeat left bottom / auto 100%}
+.scene::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 90% 90% at 30% 60%,transparent 55%,rgba(0,0,0,.6) 100%)}
+.legal{position:fixed;right:16px;bottom:12px;z-index:1;max-width:min(560px,calc(100vw - 32px));text-align:right;font-size:12px;line-height:1.45;color:rgba(255,255,255,.5);text-shadow:0 1px 6px #000;pointer-events:none}
+@media (max-aspect-ratio:1/1){.scene{background-size:auto 62%;background-position:-6% 88%}}
+
+/* ---------- desktop icons ---------- */
+.icons{position:fixed;top:14px;right:14px;z-index:2;display:flex;gap:2px}
+.icon{
+  width:62px;padding:7px 2px 6px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:6px;
+  font-size:11px;font-weight:500;letter-spacing:.01em;color:#fff;text-shadow:0 1px 8px #000;
+  transition:background .15s;
+}
+.icon:hover{background:rgba(255,255,255,.1)}
+.tile{
+  position:relative;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;overflow:hidden;flex:none;
+  background:var(--raise);border:1px solid rgba(255,255,255,.18);transition:background .15s,border-color .15s,transform .15s;
+}
+.tile svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:stroke .15s}
+.tile img{width:100%;height:100%;object-fit:cover;display:block}
+.icon:hover .tile{background:#fff;border-color:#fff;transform:translateY(-1px)}
+.icon:hover .tile svg{stroke:#000}
+.tile.sm{width:20px;height:20px;border-radius:6px}
+.tile.sm svg{width:11px;height:11px;stroke-width:2}
+.tile.cat{background:var(--c);border-color:transparent}
+.tile.cat svg{stroke:#000}
+
+/* ---------- windows ---------- */
+.win{
+  position:fixed;left:0;top:0;z-index:10;display:flex;flex-direction:column;overflow:hidden;
+  border-radius:var(--r);background:var(--panel);border:1px solid var(--line);
+  box-shadow:0 18px 50px rgba(0,0,0,.65);
+  max-width:calc(100vw - 16px);max-height:calc(100vh - 16px);
+  animation:pop .2s ease-out;
+}
+.win.closing{animation:out .12s ease forwards}
+.win.dragging{will-change:translate}
+.win.min{display:none}
+.win.max{max-width:none;max-height:none}
+.win.maxr{border-radius:0;border-color:transparent}
+@keyframes pop{from{opacity:.3;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes out{to{opacity:0;transform:scale(.97)}}
+
+.bar{display:flex;align-items:center;height:40px;padding-left:12px;gap:9px;cursor:grab;touch-action:none;flex:none;font-size:12.5px;font-weight:500;color:var(--soft);border-bottom:1px solid var(--line2)}
+.win.dragging .bar{cursor:grabbing}
+.bar .ttl{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctl{display:flex;height:100%}
+.ctl button{width:44px;display:grid;place-items:center;color:var(--soft);transition:background .12s,color .12s}
+.ctl button:hover{background:rgba(255,255,255,.09);color:#fff}
+.ctl button.x:hover{background:#e5342b;color:#fff}
+.ctl svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:1.3}
+.body{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:8px 22px 22px;user-select:text;-webkit-user-select:text;cursor:auto}
+.body::-webkit-scrollbar{width:10px}
+.body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:10px;border:3px solid transparent;background-clip:content-box}
+
+/* maximized apps: content centers and scales up instead of hugging the corners */
+.win.max .body>*{max-width:880px;margin-left:auto;margin-right:auto}
+.win.max .body>.chead,.win.max .body>.cmds,.win.max .body>.count{max-width:1200px}
+.win.max .body>.home{max-width:1040px;min-height:calc(100vh - 110px);align-content:center;grid-template-columns:1fr 320px;gap:48px}
+.win.max .home .pet{width:320px}
+.win.max .home .hero h1{font-size:92px;margin-bottom:20px}
+.win.max .home .hero p{font-size:18px;max-width:440px}
+
+/* ---------- minimized dock (no taskbar, just the icons) ---------- */
+.dock{position:fixed;left:50%;bottom:14px;translate:-50% 0;z-index:2147483000;display:flex;align-items:flex-end;gap:12px;pointer-events:none}
+.dk{
+  position:relative;pointer-events:auto;display:flex;flex-direction:column;align-items:center;gap:7px;padding:8px 4px 0;
+  animation:dkIn .4s var(--spring) both;
+}
+.dk .tile{width:46px;height:46px;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,.7);transform-origin:50% 100%;transition:transform .3s var(--spring),border-color .2s}
+.dk .tile svg{width:22px;height:22px}
+.dk:hover .tile{transform:translateY(-8px) scale(1.3);border-color:rgba(255,255,255,.55)}
+.dk i{display:block;width:5px;height:5px;border-radius:99px;background:#fff;opacity:.7;transition:width .3s var(--spring),opacity .2s}
+.dk:hover i{width:22px;opacity:1}
+.dk::before{
+  content:attr(data-t);position:absolute;bottom:calc(100% + 22px);left:50%;translate:-50% 6px;white-space:nowrap;
+  padding:5px 10px;border-radius:8px;background:#fff;color:#000;font-size:12px;font-weight:600;
+  opacity:0;pointer-events:none;transition:opacity .18s,translate .25s var(--spring);
+}
+.dk:hover::before{opacity:1;translate:-50% 0}
+.dk.out{animation:dkOut .2s ease forwards;pointer-events:none}
+@keyframes dkIn{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
+@keyframes dkOut{to{opacity:0;translate:0 10px}}
+
+/* chomik app */
+.home{display:grid;grid-template-columns:1fr 224px;gap:28px;align-items:center;padding:6px 0 2px}
+.hero h1{font-size:58px;line-height:1;font-weight:700;letter-spacing:-.04em;margin:6px 0 14px;background:linear-gradient(180deg,#fff 30%,#8a8a8a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{font-size:15.5px;line-height:1.6;color:var(--soft);max-width:340px}
+.actions{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+.pet{
+  width:224px;aspect-ratio:1;border-radius:20px;overflow:hidden;background:#fff;
+  box-shadow:0 0 0 1px rgba(255,255,255,.25),0 18px 50px rgba(255,255,255,.1);
+}
+.pet img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:12px;
+  font-weight:600;font-size:14.5px;text-decoration:none;transition:transform .15s,background .15s,border-color .15s;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:none}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn.go{background:#fff;color:#000;box-shadow:0 0 0 1px #fff,0 8px 24px rgba(255,255,255,.12)}
+.btn.go:hover{background:#e8e8e8}
+.btn.alt{border:1px solid rgba(255,255,255,.22);color:#fff}
+.btn.alt:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.4)}
+.btn.sm{height:36px;padding:0 15px;font-size:13.5px}
+
+/* commands: sticky header, list / gallery */
+.chead{position:sticky;top:0;z-index:3;background:var(--panel);padding:8px 0 6px}
+.srow{display:flex;gap:8px;margin-bottom:10px}
+.search{position:relative;flex:1;min-width:0}
+.search svg{position:absolute;left:13px;top:50%;width:16px;height:16px;transform:translateY(-50%);fill:none;stroke:var(--dim);stroke-width:2;stroke-linecap:round}
+.search input{width:100%;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--raise);padding:0 14px 0 38px;font:inherit;font-size:14.5px;color:#fff;outline:none;user-select:text;-webkit-user-select:text}
+.search input::placeholder{color:var(--dim)}
+.search input:focus{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.14)}
+.seg{position:relative;display:flex;flex:none;padding:3px;border-radius:12px;background:var(--raise);border:1px solid var(--line)}
+.seg .thumb{position:absolute;left:3px;top:3px;width:36px;height:32px;border-radius:9px;background:#fff;transition:transform .32s cubic-bezier(.3,1.4,.5,1)}
+.seg[data-v=gallery] .thumb{transform:translateX(36px)}
+.seg button{position:relative;z-index:1;width:36px;height:32px;display:grid;place-items:center;color:var(--soft);transition:color .25s}
+.seg button[aria-pressed=true]{color:#000}
+.seg svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cats{display:flex;gap:6px;flex-wrap:wrap}
+.cats button{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px 0 10px;border-radius:999px;font-size:12.5px;font-weight:600;background:var(--raise);border:1px solid var(--line);color:#c4c4c4;transition:background .22s,color .22s,border-color .22s,transform .15s}
+.cats button::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c,#fff);transition:background .22s}
+.cats button:hover{border-color:rgba(255,255,255,.3)}
+.cats button:active{transform:scale(.94)}
+.cats button[aria-pressed=true]{background:var(--c,#fff);color:#000;border-color:transparent;animation:chip .4s cubic-bezier(.3,1.6,.5,1)}
+.cats button[aria-pressed=true]::before{background:#000}
+@keyframes chip{0%{transform:scale(.9)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+
+.cmds{list-style:none;display:grid;gap:6px;padding-top:6px}
+.cmd{
+  --c:#fff;position:relative;padding:11px 13px 11px 17px;border-radius:10px;cursor:pointer;
+  background:var(--raise);border:1px solid var(--line2);
+  content-visibility:auto;contain-intrinsic-size:auto 76px;
+  transition:background .15s,border-color .15s,transform .15s;
+}
+.cmd::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:0 3px 3px 0;background:var(--c)}
+.cmd:hover{background:var(--raise2);border-color:var(--line)}
+.cmd b{font:700 14px var(--mono);color:var(--c)}
+.cmd em{font:500 12.5px var(--mono);color:var(--dim);font-style:normal}
+.cmd p{font-size:13.5px;color:var(--soft);margin-top:3px;line-height:1.4}
+.cmd small,.pill{float:right;font-size:10.5px;font-weight:700;letter-spacing:.02em;color:#000;background:var(--c);border-radius:6px;padding:2px 7px;margin-left:8px}
+.cmd.enter{animation:rise .42s var(--ease) both;animation-delay:var(--d,0ms)}
+.gal .cmd.enter{animation-name:riseG}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes riseG{from{opacity:0;transform:translateY(14px) scale(.94)}to{opacity:1;transform:none}}
+
+/* gallery view */
+.cmds.gal{grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:8px}
+.gal .cmd{display:flex;flex-direction:column;min-height:136px;padding:15px 14px 12px;border-radius:12px;contain-intrinsic-size:auto 140px}
+.gal .cmd::before{left:0;right:0;top:0;bottom:auto;width:auto;height:3px;border-radius:12px 12px 0 0}
+.gal .cmd small{order:-1;float:none;align-self:flex-start;margin:0 0 12px}
+.gal .cmd b{font-size:15px;word-break:break-word}
+.gal .cmd em{display:none}
+.gal .cmd p{flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:12.8px;margin-top:6px}
+.gal .cmd::after{content:attr(data-n);margin-top:12px;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
+.gal .cmd:hover{transform:translateY(-2px);border-color:var(--c)}
+.empty{grid-column:1/-1;padding:30px 0;text-align:center;color:var(--soft);font-size:14px}
+.count{padding-top:12px;font-size:12px;color:var(--dim);text-align:center}
+
+/* command details window */
+.det{--c:#fff}
+.det h2{font:700 26px var(--mono);color:var(--c);word-break:break-word;margin:6px 0 8px;letter-spacing:-.02em}
+.det .pill{float:none;display:inline-block;margin:0 0 12px}
+.det .desc{font-size:15px;line-height:1.55;color:var(--soft)}
+.det h3{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:22px 0 8px;font-weight:600}
+.det code.use{display:block;padding:11px 13px;border-radius:10px;background:#000;border:1px solid var(--line);color:#eee;font:500 13.5px/1.55 var(--mono);white-space:pre-wrap;word-break:break-word}
+.det code.use span{color:var(--c)}
+.det code.use i{color:var(--dim);font-style:normal}
+.prm{padding:10px 13px;border-radius:10px;background:var(--raise);border:1px solid var(--line2);margin-bottom:6px}
+.prm b{font:700 13.5px var(--mono)}
+.prm .rq{float:right;font-size:10.5px;font-weight:700;border-radius:6px;padding:2px 7px;color:#000;background:#fff}
+.prm .rq.o{background:#2a2a2a;color:#aaa}
+.prm p{font-size:13.5px;color:var(--soft);margin-top:3px}
+.det .actions{margin-top:22px}
+
+/* error dialog */
+.dlg{display:flex;gap:16px;align-items:flex-start;padding-top:8px}
+.dlg .ic{flex:none;width:42px;height:42px;border-radius:50%;background:var(--red);display:grid;place-items:center}
+.dlg .ic svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round}
+.dlg h2{font-size:15px;font-weight:600;margin:2px 0 6px;letter-spacing:-.01em}
+.dlg p{font-size:13.5px;line-height:1.55;color:var(--soft)}
+.dlg code{display:block;margin-top:12px;padding:8px 10px;border-radius:2px;background:#000;border:1px solid var(--line);color:var(--red);font:500 13px var(--mono);word-break:break-all}
+.dfoot{display:flex;justify-content:flex-end;margin:24px -22px -22px;padding:14px 22px;background:var(--raise);border-top:1px solid var(--line2)}
+.ok{min-width:92px;height:32px;padding:0 20px;border-radius:3px;background:#fff;color:#000;border:1px solid #fff;font-weight:600;font-size:13.5px;transition:background .12s}
+.ok:hover{background:#e4e4e4}
+.ok:focus-visible{outline:2px solid #fff;outline-offset:3px}
+
+/* documents */
+.doc h1{font-size:36px;line-height:1.05;font-weight:700;letter-spacing:-.04em;margin:4px 0 6px;background:linear-gradient(180deg,#fff 30%,#8a8a8a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.doc h2{font-size:15px;margin:22px 0 6px;letter-spacing:-.01em;color:#fff}
+.doc p,.doc li{font-size:14.5px;line-height:1.65;color:var(--soft)}
+.doc p+p,.doc ul{margin-top:8px}
+.doc ul{padding-left:20px}
+.doc code{font:500 13px var(--mono);background:var(--raise2);padding:1px 6px;border-radius:5px;color:#fff}
+.doc a{color:#fff;text-underline-offset:3px}
+.doc strong{color:#fff}
+.doc .stamp{font-size:12px;color:var(--dim);letter-spacing:.04em;text-transform:uppercase}
+.doc .lead{margin-top:14px}
+
+/* status */
+.banner{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:12px;background:var(--raise);border:1px solid var(--line2);font-weight:600;font-size:15px;margin-bottom:10px}
+.dot{width:10px;height:10px;border-radius:50%;background:#6f6f6f;flex:none}
+.dot.ok{background:#3ddc84;box-shadow:0 0 0 4px rgba(61,220,132,.18)}
+.dot.warn{background:#ffb020;box-shadow:0 0 0 4px rgba(255,176,32,.18)}
+.dot.bad{background:#ff4d4d;box-shadow:0 0 0 4px rgba(255,77,77,.18)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.stats div{padding:13px 10px;border-radius:11px;background:var(--raise);border:1px solid var(--line2);text-align:center}
+.stats b{display:block;font-size:18px;letter-spacing:-.01em}
+.stats span{font-size:11.5px;color:var(--dim)}
+.sub{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:600;margin:16px 0 8px}
+.rows{list-style:none;display:grid;gap:5px}
+.rows li{display:flex;align-items:center;gap:10px;padding:10px 13px;border-radius:10px;background:var(--raise);border:1px solid var(--line2);font-size:14px}
+.rows li b{flex:1;font-weight:500}
+.rows li span{font-size:12.5px;color:var(--dim)}
+
+/* squircle on small static things only (cheap); windows/lists stay plain for smooth scrolling */
+@supports (corner-shape: squircle){
+  .btn,.tile,.icon,.search input,.det code.use,.pet{corner-shape:squircle}
+  .btn{border-radius:19px}.tile{border-radius:17px}.tile.sm{border-radius:9px}.search input{border-radius:16px}.pet{border-radius:34px}
+  .dk .tile{border-radius:21px}
+}
+
+@media (max-width:700px){
+  .icons{left:6px;right:6px;top:10px;justify-content:center;gap:0}
+  .home{grid-template-columns:1fr;gap:16px}
+  .pet{order:-1;width:112px}
+  .hero h1{font-size:46px}
+  .body{padding:6px 16px 18px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol><symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5z"/><path d="m3 7 9 5 9-5M12 12v10"/></symbol><symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 22V4m0 0h12l-2 4 2 4H5"/></symbol><symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16z"/></symbol><symbol id="i-gamepad" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 10v5M4.5 12.5h5"/><circle cx="16" cy="11.5" r="1"/><circle cx="18.5" cy="14" r="1"/></symbol><symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-9 9"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15L6 16zM10 21h4"/></symbol><symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 0 1 4.5 5"/></symbol><symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></symbol><symbol id="i-id" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2"/><path d="M6 16a3 3 0 0 1 6 0M14 10h4M14 14h3"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol><symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></symbol><symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.4 8.2 8 9 4.6-.8 8-4 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/></symbol><symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h6M10 16h6"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol></svg>
-<header class="nav"><div class="wrap"><div class="nav-in">
-<a class="brand" href="index.html"><img src="assets/chomik.webp" alt="Chomik" width="40" height="40">Chomik</a>
-<nav class="links" aria-label="Main"><a href="index.html" aria-current="page">Home</a><a href="commands.html">Commands</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="status.html">Status</a></nav>
-<a class="btn sm" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg>Invite</a>
-<button class="icon-btn" id="theme" type="button" aria-label="Toggle dark mode"><span class="sun"><svg class="i" aria-hidden="true"><use href="#i-sun"/></svg></span><span class="moon"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></span></button>
-</div><nav class="mobile-links" aria-label="Main mobile"><a href="index.html" aria-current="page">Home</a><a href="commands.html">Commands</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="status.html">Status</a></nav></div></header>
-<main class="wrap">
 
-<section class="nm-hero">
-<div>
-<h1>Meet <em>Chomik</em></h1>
-<p>Chomik Bot is a custom discord utility bot designed to fetch and display data from various sites, primarily on Roblox lookups, tracking, and information tools.</p>
-<div class="cta">
-<a class="btn" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg>Add to Discord</a>
-<a class="btn blue" href="commands.html"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg>Commands</a>
-<a class="btn green" href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg>Support</a>
-</div>
-<a class="live" id="live" href="status.html"><span class="dot"></span><span id="live-text">Checking status&hellip;</span><small id="live-sub"></small></a>
-</div>
-<div class="logo"><img src="assets/chomik.webp" alt="Chomik" width="378" height="378" fetchpriority="high"></div>
-</section>
+<div class="scene" aria-hidden="true"></div>
+<p class="legal">Chomik is not affiliated with or endorsed by Discord or Roblox.</p>
 
-<section class="facts reveal">
-<div class="fact" style="--c:var(--green)"><span class="ico" style="--c:var(--green)"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg></span><h3>Free, permanently</h3><p>No premium tier and no paywalled features. Every command is available to everyone, and that will not change.</p></div>
-<div class="fact" style="--c:var(--blue)"><span class="ico" style="--c:var(--blue)"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><h3>Transparent by design</h3><p>How Chomik works is open for anyone to know. Ask in the support server and you will get a straight answer.</p></div>
-<div class="fact" style="--c:var(--tan)"><span class="ico" style="--c:var(--tan)"><svg class="i" aria-hidden="true"><use href="#i-gear"/></svg></span><h3>Built on free services</h3><p>Every operation Chomik runs uses free services or free trials, so it can stay free for you.</p></div>
-</section>
+<!-- Desktop icons -->
+<nav class="icons" aria-label="Apps">
+  <button class="icon" data-app="chomik"><span class="tile"><img src="/assets/chomik.webp" alt="" width="36" height="36"></span>Chomik</button>
+  <button class="icon" data-app="commands"><span class="tile"><svg viewBox="0 0 24 24"><use href="#g-commands"/></svg></span>Commands</button>
+  <button class="icon" data-app="privacy"><span class="tile"><svg viewBox="0 0 24 24"><use href="#g-privacy"/></svg></span>Privacy</button>
+  <button class="icon" data-app="terms"><span class="tile"><svg viewBox="0 0 24 24"><use href="#g-terms"/></svg></span>Terms</button>
+  <button class="icon" data-app="status"><span class="tile"><svg viewBox="0 0 24 24"><use href="#g-status"/></svg></span>Status</button>
+</nav>
 
-<section class="section reveal puzzle">
-<div class="puzzle-text">
-<span class="eyebrow" style="--c:var(--green)">Our goal</span>
-<h2>Built for puzzle solving</h2>
-<p class="lead">Chomik exists to be a powerful tool for puzzle hunters: Roblox ARGs, secret-hunting games and puzzle experiences where anything could be a clue.</p>
-</div>
-<div class="stack" id="games" aria-label="Games Chomik is useful for">
-<div class="slide" style="--c:#4fa56a" title="Anything Could Be A Secret"><span aria-hidden="true">A</span><img src="/api/gameicon?g=anything-could-be-a-secret" alt="Anything Could Be A Secret icon" loading="lazy" onerror="this.remove()"></div>
-<div class="slide" style="--c:#4a90d9" title="Secret Universe"><span aria-hidden="true">S</span><img src="/api/gameicon?g=secret-universe" alt="Secret Universe icon" loading="lazy" onerror="this.remove()"></div>
-<div class="slide" style="--c:#f28c28" title="Find the Chomiks"><span aria-hidden="true">F</span><img src="/api/gameicon?g=find-the-chomiks" alt="Find the Chomiks icon" loading="lazy" onerror="this.remove()"></div>
-<div class="slide" style="--c:#d99a0b" title="Find the Markers"><span aria-hidden="true">F</span><img src="/api/gameicon?g=find-the-markers" alt="Find the Markers icon" loading="lazy" onerror="this.remove()"></div>
-</div>
-</section>
+<!-- Minimized windows live here: just icons + a dot -->
+<nav class="dock" id="dock" aria-label="Minimized windows"></nav>
 
-<section class="section reveal"><h2>Find a command</h2><p class="lead">91 commands across 8 categories. Search them all or jump into a category.</p>
-<div class="panel" style="margin-bottom:18px"><form action="commands.html" method="get" class="search" style="max-width:none"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><input name="q" placeholder="try: avatar, cipher, report..." aria-label="Search commands" autocomplete="off"></form></div>
-<div class="tiles"><a class="tile c-roblox" href="commands.html?cat=Roblox"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-cube"/></svg></span><span><b>Roblox</b><small>36 commands</small></span></a><a class="tile c-tools" href="commands.html?cat=Tools"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-sliders"/></svg></span><span><b>Tools</b><small>13 commands</small></span></a><a class="tile c-social" href="commands.html?cat=Social"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg></span><span><b>Social</b><small>3 commands</small></span></a><a class="tile c-ai" href="commands.html?cat=AI"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-sparkle"/></svg></span><span><b>AI</b><small>4 commands</small></span></a><a class="tile c-fun" href="commands.html?cat=Fun"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-sparkle"/></svg></span><span><b>Fun</b><small>5 commands</small></span></a><a class="tile c-games" href="commands.html?cat=Games"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-gamepad"/></svg></span><span><b>Games</b><small>2 commands</small></span></a><a class="tile c-image" href="commands.html?cat=Image"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-image"/></svg></span><span><b>Image</b><small>19 commands</small></span></a><a class="tile c-general" href="commands.html?cat=General"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-gear"/></svg></span><span><b>General</b><small>5 commands</small></span></a></div>
-</section>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="g-commands" viewBox="0 0 24 24"><path d="m5 8 4 4-4 4"/><path d="M12 17h7"/></symbol>
+  <symbol id="g-privacy" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6z"/><path d="m9.5 12 2 2 3.5-4"/></symbol>
+  <symbol id="g-terms" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+  <symbol id="g-status" viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></symbol>
+  <symbol id="g-alert" viewBox="0 0 24 24"><path d="M12 4 3 20h18z"/><path d="M12 10v4M12 17h.01"/></symbol>
+</svg>
 
-<section class="section reveal"><h2>Questions</h2><p class="lead">Quick answers about Chomik.</p>
-<div class="faq">
-<details><summary>Is Chomik really free?</summary><p>Yes. It is free permanently and there are no paywalled features, now or later.</p></details>
-<details><summary>Can I add it to my server?</summary><p>Chomik is currently a small bot for people the developer knows, and it is going public soon. If you want in early, ask in the support server.</p></details>
-<details><summary>How does it work?</summary><p>The developer is happy to explain how Chomik operates. Join the support server and ask, nothing is kept secret.</p></details>
-<details><summary>How is it free?</summary><p>Everything it uses is built on free services or free trials.</p></details>
-<details><summary>Something is broken, what do I do?</summary><p>Check the status page first, then tell us in the support server.</p></details>
-</div>
-</section>
+<!-- App templates -->
+<template id="t-chomik">
+  <div class="home">
+    <div class="hero">
+      <h1>Chomik</h1>
+      <p>A free Discord bot for Roblox lookups, puzzle solving and OSINT. Type a slash command, get the answer in chat.</p>
+      <div class="actions">
+        <a class="btn go" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Invite to Discord</a>
+        <button class="btn alt" type="button" data-app="commands"><svg viewBox="0 0 24 24"><use href="#g-commands"/></svg>Commands</button>
+      </div>
+    </div>
+    <figure class="pet"><img src="/assets/chomik.webp" alt="Chomik the hamster with a magnifying glass" width="378" height="378" draggable="false"></figure>
+  </div>
+</template>
 
-<section class="section reveal"><div class="final">
-<h2>Give Chomik a try</h2>
-<p>Add it to your server, or join the support server to see what it can do and ask anything about how it works.</p>
-<div class="cta">
-<a class="btn" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg>Add to Discord</a>
-<a class="btn green" href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg>Support</a>
-</div></div></section>
+<template id="t-commands">
+  <div class="chead">
+    <div class="srow">
+      <div class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="Search commands" aria-label="Search commands" autocomplete="off" spellcheck="false"></div>
+      <div class="seg" role="group" aria-label="View" data-v="list">
+        <i class="thumb"></i>
+        <button type="button" data-v="list" aria-label="List view" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg></button>
+        <button type="button" data-v="gallery" aria-label="Gallery view" aria-pressed="false"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></button>
+      </div>
+    </div>
+    <div class="cats" role="group" aria-label="Category"></div>
+  </div>
+  <ul class="cmds"></ul>
+  <p class="count"></p>
+</template>
 
-</main>
-<footer><div class="wrap"><div class="foot">
-<div><strong>Chomik</strong><div class="fine">A Discord utility bot for Roblox lookups, tracking and info tools.</div></div>
-<nav><a href="commands.html">Commands</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="status.html">Status</a><a href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener">Support Server</a></nav>
-</div><p class="fine">Chomik is not affiliated with or endorsed by Discord or Roblox.</p></div></footer>
-<script src="assets/app.js" defer></script>
-<script src="assets/home.js" defer></script>
+<template id="t-privacy">
+  <div class="doc">
+    <h1>Chomik Privacy</h1>
+    <p class="stamp">Last updated October 25, 2026</p>
+    <h2>Information collection</h2>
+    <p>Chomik fetches publicly available information from sites, mainly Roblox, to answer your commands. That information comes from the sites and is subject to their own policies. Chomik does not cache information after it sends the output.</p>
+    <h2>Data collection</h2>
+    <p>Chomik saves:</p>
+    <ul><li>Discord user IDs of whitelisted Chomik users.</li><li>Reports made with the <code>/report</code> command.</li></ul>
+    <p>Messages and commands sent directly to Chomik or in servers are not logged. The only data processed from users is error logs, which are used to fix vulnerabilities and abuse. No other data is collected.</p>
+  </div>
+</template>
+
+<template id="t-terms">
+  <div class="doc">
+    <h1>Chomik Terms</h1>
+    <p class="stamp">Last updated October 25, 2026</p>
+    <p class="lead">Welcome to Chomik. By inviting or installing Chomik you agree to these terms.</p>
+    <h2>Acceptance of terms</h2>
+    <p>By using Chomik, you accept these terms and confirm that you comply with the <a href="https://discord.com/terms" target="_blank" rel="noopener">Discord Terms of Service</a> and <a href="https://discord.com/guidelines" target="_blank" rel="noopener">Discord Community Guidelines</a>.</p>
+    <p>You must be at least 13 years old (or the minimum age required in your country) to interact with the bot.</p>
+    <h2>Description of service</h2>
+    <p>We do not guarantee uninterrupted, 24/7 uptime. Features may be added, changed, or removed at any time without prior notice.</p>
+    <h2>Acceptable use</h2>
+    <p>You agree <strong>not</strong> to use Chomik for illegal or harmful activities, exploit vulnerabilities, spam bugs, or attempt to disrupt the bot's operation.</p>
+    <h2>Data privacy</h2>
+    <p>See the Privacy app for what Chomik collects and how it is used.</p>
+    <h2>Liability</h2>
+    <p>The owner is not responsible for any damages or loss caused by using Chomik.</p>
+    <h2>Termination</h2>
+    <p>The owner reserves the right to blacklist any user or server from using Chomik at our sole discretion, without notice or liability.</p>
+  </div>
+</template>
+
+<template id="t-status">
+  <div class="banner"><i class="dot"></i><span data-r="msg">Checking…</span></div>
+  <div class="stats"><div><b data-r="lat">-</b><span>Latency</span></div><div><b data-r="up">-</b><span>Uptime</span></div><div><b data-r="av">-</b><span>Last 24h</span></div></div>
+  <p class="sub">Roblox APIs</p>
+  <ul class="rows" data-r="rbx"></ul>
+</template>
+
+<script src="/assets/commands-data.js"></script>
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var mobile=function(){return innerWidth<700};
+  var z=10, open={};
+
+  /* the only color in the whole thing: command categories (+ red for errors) */
+  var CATCOLOR={AI:'#a78bfa',Fun:'#f472b6',Games:'#fb923c',General:'#9ca3af',Image:'#2dd4bf',Roblox:'#f87171',Social:'#60a5fa',Tools:'#4ade80'};
+  var catColor=function(c){return CATCOLOR[c]||'#ffffff'};
+
+  var APPS={
+    chomik:  {title:'Chomik',          w:650, tpl:'t-chomik', max:1},
+    commands:{title:'Commands',        w:580, h:540, tpl:'t-commands', glyph:'commands', init:initCommands, max:1},
+    privacy: {title:'Chomik Privacy',  w:500, h:470, tpl:'t-privacy',  glyph:'privacy',  max:1},
+    terms:   {title:'Chomik Terms',    w:500, h:500, tpl:'t-terms',    glyph:'terms',    max:1},
+    status:  {title:'Status',          w:440, h:470, tpl:'t-status',   glyph:'status',   init:initStatus, max:1}
+  };
+
+  var I_MIN='<svg viewBox="0 0 11 11"><path d="M1 5.5h9"/></svg>';
+  var I_MAX='<svg viewBox="0 0 11 11"><rect x="1" y="1" width="9" height="9" rx="1.5"/></svg>';
+  var I_RST='<svg viewBox="0 0 11 11"><rect x="1" y="3" width="7" height="7" rx="1.3"/><path d="M3 3V2.3C3 1.6 3.6 1 4.3 1h4.4C9.4 1 10 1.6 10 2.3v4.4c0 .7-.6 1.3-1.3 1.3H8"/></svg>';
+  var I_X='<svg viewBox="0 0 11 11"><path d="m1 1 9 9M10 1 1 10"/></svg>';
+
+  /* ---------- windows ---------- */
+  function setPos(w,x,y){w._x=x;w._y=y;w.style.translate=x+'px '+y+'px'}
+  function front(w){ w.style.zIndex=++z }
+  function clampPos(w,x,y){return [Math.min(Math.max(x,-w.offsetWidth+90),innerWidth-90),Math.min(Math.max(y,0),innerHeight-44)]}
+
+  function iconHtml(app,sm){
+    var c=sm?'tile sm':'tile';
+    if(app.color) return '<span class="'+c+' cat" style="--c:'+app.color+'"><svg viewBox="0 0 24 24"><use href="#g-'+(app.glyph||'commands')+'"/></svg></span>';
+    if(app.glyph) return '<span class="'+c+'"><svg viewBox="0 0 24 24"><use href="#g-'+app.glyph+'"/></svg></span>';
+    return '<span class="'+c+'"><img src="/assets/chomik.webp" alt="" width="40" height="40"></span>';
+  }
+
+  /* maximize / restore: jump to the final size once, then animate only a transform
+     (compositor-only, so it stays smooth even on slow machines) */
+  function flip(w,r0){
+    var r1=w.getBoundingClientRect();
+    if(!r1.width||!r1.height) return;
+    var from='translate('+(r0.left-r1.left)+'px,'+(r0.top-r1.top)+'px) scale('+(r0.width/r1.width)+','+(r0.height/r1.height)+')';
+    w.animate([{transformOrigin:'0 0',transform:from},{transformOrigin:'0 0',transform:'none'}],{duration:260,easing:'cubic-bezier(.2,.9,.25,1)'});
+  }
+  function setMax(w,on){
+    if(!!w._max===on) return;
+    var r0=w.getBoundingClientRect(), btn=$('.m',w);
+    if(on){
+      w._prev={x:w._x,y:w._y,w:w.offsetWidth,h:w.offsetHeight};
+      w._max=true; w.classList.add('max','maxr');
+      w.style.width=innerWidth+'px'; w.style.height=innerHeight+'px'; setPos(w,0,0);
+      if(btn){btn.innerHTML=I_RST;btn.setAttribute('aria-label','Restore')}
+    } else {
+      var p=w._prev; w._max=false; w.classList.remove('max','maxr');
+      w.style.width=w._orig.w; w.style.height=w._orig.h; setPos(w,p.x,p.y);
+      if(btn){btn.innerHTML=I_MAX;btn.setAttribute('aria-label','Maximize')}
+    }
+    flip(w,r0);
+  }
+  /* grabbing the bar of a maximized window shrinks it under the cursor */
+  function unmaxForDrag(w,cx){
+    var p=w._prev, rx=cx/innerWidth;
+    w._max=false; w.classList.remove('max','maxr');
+    w.style.width=w._orig.w; w.style.height=w._orig.h;
+    var btn=$('.m',w); if(btn){btn.innerHTML=I_MAX;btn.setAttribute('aria-label','Maximize')}
+    return cx-p.w*rx;
+  }
+
+  function drag(w,bar){
+    bar.addEventListener('pointerdown',function(e){
+      if(e.button||e.target.closest('button')) return;
+      front(w);
+      var sx=e.clientX, sy=e.clientY, ox=w._x||0, oy=w._y||0, moved=false;
+      bar.setPointerCapture(e.pointerId);
+      function mv(ev){
+        var dx=ev.clientX-sx, dy=ev.clientY-sy;
+        if(w._max){
+          if(Math.abs(dx)+Math.abs(dy)<5) return;
+          ox=unmaxForDrag(w,ev.clientX); oy=Math.max(0,ev.clientY-20); sx=ev.clientX; sy=ev.clientY; dx=0; dy=0;
+        }
+        if(!moved){moved=true; w.classList.add('dragging')}
+        var q=clampPos(w,ox+dx,oy+dy); setPos(w,q[0],q[1]);
+      }
+      function up(){bar.removeEventListener('pointermove',mv);bar.removeEventListener('pointerup',up);bar.removeEventListener('pointercancel',up);w.classList.remove('dragging')}
+      bar.addEventListener('pointermove',mv);bar.addEventListener('pointerup',up);bar.addEventListener('pointercancel',up);
+    });
+  }
+
+  /* minimize: fly into a dock icon at the bottom center; click the icon to bring it back */
+  function flyVec(w,tile){
+    var r=w.getBoundingClientRect(), t=tile.getBoundingClientRect();
+    return 'translate('+(t.left+t.width/2-(r.left+r.width/2))+'px,'+(t.top+t.height/2-(r.top+r.height/2))+'px) scale(.08)';
+  }
+  function minimize(w){
+    if(w._min) return;
+    var it=document.createElement('button'); it.type='button'; it.className='dk'; it.dataset.t=w._app.title;
+    it.setAttribute('aria-label','Restore '+w._app.title);
+    it.innerHTML=iconHtml(w._app,false)+'<i></i>';
+    $('#dock').appendChild(it); w._dk=it; w._min=true;
+    var a=w.animate([{transform:'none',opacity:1},{transform:flyVec(w,$('.tile',it)),opacity:0}],{duration:320,easing:'cubic-bezier(.5,0,.75,.3)',fill:'forwards'});
+    a.onfinish=function(){w.classList.add('min'); a.cancel()};
+    it.addEventListener('click',function(){restoreMin(w)});
+  }
+  function restoreMin(w){
+    if(!w._min) return;
+    var it=w._dk, vec=flyVec(w,$('.tile',it));
+    w.classList.remove('min'); w._min=false; front(w);
+    vec=flyVec(w,$('.tile',it));
+    w.animate([{transform:vec,opacity:0},{transform:'none',opacity:1}],{duration:340,easing:'cubic-bezier(.2,.9,.3,1)'});
+    it.classList.add('out'); setTimeout(function(){it.remove()},200); w._dk=null;
+  }
+
+  function closeWin(id){
+    var w=open[id]; if(!w) return;
+    w.classList.add('closing'); delete open[id];
+    if(w._dk){w._dk.remove()}
+    setTimeout(function(){w.remove()},120);
+  }
+
+  function build(id,app){
+    var w=document.createElement('section');
+    w.className='win'; w.setAttribute('role','dialog'); w.setAttribute('aria-label',app.title);
+    w._app=app; w._id=id;
+    w.innerHTML='<div class="bar">'+iconHtml(app,true)+'<span class="ttl"></span><div class="ctl">'+(app.nomin?'':'<button type="button" class="n" aria-label="Minimize">'+I_MIN+'</button>')+(app.max?'<button type="button" class="m" aria-label="Maximize">'+I_MAX+'</button>':'')+'<button type="button" class="x" aria-label="Close">'+I_X+'</button></div></div><div class="body"></div>';
+    $('.ttl',w).textContent=app.title;
+    var body=$('.body',w);
+    if(app.tpl) body.appendChild(document.getElementById(app.tpl).content.cloneNode(true)); else app.fill(body);
+    w.style.width='min('+app.w+'px,calc(100vw - 16px))'; if(app.h) w.style.height=app.h+'px';
+    w._orig={w:w.style.width,h:w.style.height};
+    return w;
+  }
+  function show(id,app,pos){
+    if(open[id]){ if(open[id]._min) restoreMin(open[id]); else front(open[id]); return open[id] }
+    var w=build(id,app); document.body.appendChild(w); open[id]=w;
+    var vw=innerWidth, vh=innerHeight, ww=w.offsetWidth, wh=w.offsetHeight, p=pos?pos(ww,wh):cascade(ww,wh);
+    setPos(w,Math.max(8,Math.min(p[0],vw-ww-8)),Math.max(8,Math.min(p[1],vh-wh-8)));
+    front(w); drag(w,$('.bar',w));
+    w.addEventListener('pointerdown',function(){front(w)});
+    $('.x',w).addEventListener('click',function(){closeWin(id)});
+    var nb=$('.n',w); if(nb) nb.addEventListener('click',function(){minimize(w)});
+    var m=$('.m',w);
+    if(m){ m.addEventListener('click',function(){setMax(w,!w._max)}); $('.bar',w).addEventListener('dblclick',function(e){if(!e.target.closest('button'))setMax(w,!w._max)}) }
+    w.querySelectorAll('[data-app]').forEach(function(b){b.addEventListener('click',function(){if(b.dataset.close)closeWin(id); openApp(b.dataset.app)})});
+    if(app.init) app.init(w);
+    return w;
+  }
+  function cascade(ww,wh){
+    var n=Math.max(0,Object.keys(open).length-1);
+    return [(innerWidth-ww)/2+n*28-(mobile()?0:120),Math.max(mobile()?100:60,(innerHeight-wh)/2+n*28-20)];
+  }
+  function openApp(id){
+    show(id,APPS[id],id==='chomik'?function(ww,wh){
+      return [(innerWidth-ww)/2,mobile()?96:Math.max(84,innerHeight*.1)];
+    }:null);
+  }
+
+  /* ---------- 404 dialog ---------- */
+  function openError(path){
+    var w=show('error',{
+      title:'Chomik Error', w:420, color:'#ff5252', glyph:'alert', nomin:1,
+      fill:function(body){
+        var el=function(t,cls,txt){var e=document.createElement(t); if(cls)e.className=cls; if(txt!=null)e.textContent=txt; return e};
+        var row=el('div','dlg'), ic=el('div','ic');
+        ic.innerHTML='<svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg>';
+        var txt=el('div');
+        txt.appendChild(el('h2',0,'Page not found (404)'));
+        txt.appendChild(el('p',0,'Chomik couldn\u2019t find the page you asked for. It may have moved or never existed.'));
+        txt.appendChild(el('code',0,path||'/'));
+        row.appendChild(ic); row.appendChild(txt); body.appendChild(row);
+        var foot=el('div','dfoot'), ok=el('button','ok','OK'); ok.type='button';
+        ok.addEventListener('click',function(){closeWin('error')});
+        foot.appendChild(ok); body.appendChild(foot);
+        setTimeout(function(){ok.focus({preventScroll:true})},50);
+      }
+    },function(ww,wh){return [(innerWidth-ww)/2,Math.max(90,(innerHeight-wh)/2-30)]});
+    w.animate([{transform:'none'},{transform:'translateX(-9px)'},{transform:'translateX(8px)'},{transform:'translateX(-5px)'},{transform:'translateX(3px)'},{transform:'none'}],{duration:450,delay:180,easing:'ease'});
+  }
+
+  /* ---------- commands ---------- */
+  function initCommands(w){
+    var input=$('input',w), cats=$('.cats',w), list=$('.cmds',w), count=$('.count',w), seg=$('.seg',w), scroller=$('.body',w);
+    scroller.style.paddingTop='0';
+    var data=window.CHOMIK_COMMANDS||[], cat='All', view='list';
+    try{ if(localStorage.getItem('chomik-view')==='gallery') view='gallery' }catch(e){}
+
+    var names=['All'].concat(data.map(function(c){return c.category}).filter(function(v,i,a){return v&&a.indexOf(v)===i}).sort());
+    names.forEach(function(n){
+      var b=document.createElement('button'); b.type='button'; b.textContent=n; b.setAttribute('aria-pressed',n==='All');
+      if(n!=='All') b.style.setProperty('--c',catColor(n));
+      b.addEventListener('click',function(){
+        if(cat===n) return; cat=n;
+        cats.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});
+        scroller.scrollTop=0; render(true);
+      });
+      cats.appendChild(b);
+    });
+
+    function setView(v,anim){
+      view=v; seg.dataset.v=v;
+      seg.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===v)});
+      try{localStorage.setItem('chomik-view',v)}catch(e){}
+      if(anim){scroller.scrollTop=0; render(true)}
+    }
+    seg.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){if(view!==b.dataset.v) setView(b.dataset.v,true)})});
+
+    function render(anim){
+      var q=input.value.trim().toLowerCase().replace(/^\//,''), out=document.createDocumentFragment(), n=0;
+      list.textContent='';
+      list.className='cmds'+(view==='gallery'?' gal':'');
+      data.forEach(function(c,idx){
+        if(cat!=='All'&&c.category!==cat) return;
+        if(q && (c.name+' '+(c.description||'')).toLowerCase().indexOf(q)<0) return;
+        var li=document.createElement('li'); li.className='cmd'; li.tabIndex=0; li.setAttribute('role','button'); li.dataset.i=idx;
+        var np=(c.params||[]).length; li.dataset.n=np?np+(np===1?' option':' options'):'no options';
+        if(anim&&n<16){li.classList.add('enter'); li.style.setProperty('--d',(n*28)+'ms')}
+        li.style.setProperty('--c',catColor(c.category));
+        var tag=document.createElement('small'); tag.textContent=c.category; li.appendChild(tag);
+        var b=document.createElement('b'); b.textContent='/'+c.name; li.appendChild(b);
+        (c.params||[]).forEach(function(p){var e=document.createElement('em'); e.textContent=' '+(p.required?'<'+p.name+'>':'['+p.name+']'); li.appendChild(e)});
+        var d=document.createElement('p'); d.textContent=c.description||''; li.appendChild(d);
+        out.appendChild(li); n++;
+      });
+      list.appendChild(out);
+      if(!n){var e=document.createElement('li');e.className='empty';e.textContent=data.length?'No commands match that.':'Command list failed to load.';list.appendChild(e)}
+      count.textContent=data.length? n+' of '+data.length+' commands · click one for details' : '';
+    }
+    list.addEventListener('click',function(e){var li=e.target.closest('.cmd'); if(li) openDetails(data[+li.dataset.i],w)});
+    list.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('cmd')){e.preventDefault();openDetails(data[+e.target.dataset.i],w)}});
+    input.addEventListener('input',function(){render(false)});
+    setView(view,false); render(true);
+    if(!mobile()) setTimeout(function(){input.focus({preventScroll:true})},60);
+  }
+
+  /* details window for one command (usage, prefix version, options, copy) */
+  function openDetails(c,parent){
+    var color=catColor(c.category), id='cmd:'+c.name;
+    show(id,{
+      title:'/'+c.name, w:430, color:color,
+      fill:function(body){
+        var el=function(t,cls,txt){var e=document.createElement(t); if(cls)e.className=cls; if(txt!=null)e.textContent=txt; return e};
+        var root=el('div','det'); root.style.setProperty('--c',color);
+        root.appendChild(el('h2',0,'/'+c.name));
+        root.appendChild(el('span','pill',c.category));
+        root.appendChild(el('p','desc',c.description||''));
+        root.appendChild(el('h3',0,'Usage'));
+        var use=el('code','use'); use.appendChild(document.createTextNode('/'+c.name));
+        (c.params||[]).forEach(function(p){use.appendChild(document.createTextNode(' ')); use.appendChild(el(p.required?'span':'i',0,p.required?p.name+':<value>':'['+p.name+':<value>]'))});
+        root.appendChild(use);
+        if(c.prefix&&c.prefix.length){
+          root.appendChild(el('h3',0,'Prefix version'));
+          root.appendChild(el('code','use',c.prefix.map(function(p){return ','+p}).join('   ')));
+        }
+        root.appendChild(el('h3',0,'Options'));
+        if(!(c.params||[]).length) root.appendChild(el('p','desc','No options, just run it.'));
+        (c.params||[]).slice().sort(function(a,b){return (b.required?1:0)-(a.required?1:0)}).forEach(function(p){
+          var d=el('div','prm'); d.appendChild(el('span','rq'+(p.required?'':' o'),p.required?'required':'optional'));
+          d.appendChild(el('b',0,p.name)); if(p.description) d.appendChild(el('p',0,p.description)); root.appendChild(d);
+        });
+        var act=el('div','actions'), cp=el('button','btn alt sm'); cp.type='button'; var lab=el('span',0,'Copy command'); cp.appendChild(lab);
+        cp.addEventListener('click',function(){
+          var t='/'+c.name, done=function(m){lab.textContent=m; setTimeout(function(){lab.textContent='Copy command'},1400)};
+          (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){done('Copied!')},function(){done(t)});
+        });
+        act.appendChild(cp); root.appendChild(act); body.appendChild(root);
+      }
+    },function(ww,wh){
+      var pr=parent&&parent.isConnected?[parent._x,parent._y]:[innerWidth/2-ww/2,80];
+      return [pr[0]+(mobile()?0:60),pr[1]+(mobile()?30:50)];
+    });
+  }
+
+  /* ---------- status ---------- */
+  function initStatus(w){
+    var g=function(k){return $('[data-r='+k+']',w)}, dot=$('.dot',w);
+    function set(cls,msg){dot.className='dot '+cls; g('msg').textContent=msg}
+    function fmt(s){if(s==null)return '-';var d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);return d?d+'d '+h+'h':h?h+'h '+m+'m':m+'m'}
+    fetch('/api/status',{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
+      if(!d||!d.bot||!Array.isArray(d.roblox)) throw 0;
+      var b=d.bot;
+      /* the banner only reflects Chomik itself; Roblox API trouble shows in its own list below */
+      if(!d.configured) set('','Status isn’t set up yet');
+      else if(!b.online) set('bad','Chomik is offline');
+      else set('ok','Chomik is online');
+      g('lat').textContent=b.online&&b.latency_ms!=null?b.latency_ms+' ms':'-';
+      g('up').textContent=b.online?fmt(b.uptime_seconds):'-';
+      g('av').textContent=b.availability_24h==null?'-':b.availability_24h+'%';
+      var ul=g('rbx'); ul.textContent='';
+      d.roblox.forEach(function(r){
+        var li=document.createElement('li'), i=document.createElement('i'), n=document.createElement('b'), s=document.createElement('span');
+        i.className='dot '+(r.status==='operational'?'ok':r.status==='degraded'?'warn':'bad');
+        n.textContent=r.name; s.textContent=r.ms==null?'no response':r.ms+' ms';
+        li.appendChild(i);li.appendChild(n);li.appendChild(s);ul.appendChild(li);
+      });
+    }).catch(function(){set('bad','Status is unavailable right now')});
+  }
+
+  /* ---------- go ---------- */
+  document.querySelectorAll('.icon').forEach(function(b){b.addEventListener('click',function(){openApp(b.dataset.app)})});
+  addEventListener('resize',function(){document.querySelectorAll('.win').forEach(function(w){
+    if(w._max){w.style.width=innerWidth+'px';w.style.height=innerHeight+'px';return}
+    var p=clampPos(w,w._x||0,w._y||0);setPos(w,p[0],p[1]);
+  })});
+
+  openApp('chomik');
+  var qs=new URLSearchParams(location.search);
+  if(qs.get('e')==='404'){
+    var bad=qs.get('p')||'/';
+    try{history.replaceState(null,'',bad)}catch(e){}   // keep the address bar on the page they asked for
+    openError(bad);
+  } else {
+    var h=location.hash.slice(1); if(APPS[h]&&h!=='chomik') openApp(h);
+  }
+})();
+</script>
 </body>
 </html>
