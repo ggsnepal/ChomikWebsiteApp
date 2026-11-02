@@ -8,251 +8,203 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#000000">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
-<script>
-/* First visit only: show the boot screen. Add ?boot to the URL to replay it. */
-try{if(!localStorage.getItem('chomik-visited')||/[?&]boot\b/.test(location.search))document.documentElement.className='booting'}catch(e){}
-</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="/assets/chomik.webp" type="image/webp">
+<link rel="preload" as="image" href="/preview/assets/cat.webp" type="image/webp">
 <style>
 :root{
-  --ink:#0a2f57; --ink-soft:#2b5379;
+  --bg:#000; --panel:#0f0f0f; --raise:#171717; --raise2:#1f1f1f;
+  --line:rgba(255,255,255,.12); --line2:rgba(255,255,255,.07);
+  --ink:#f5f5f5; --soft:#a6a6a6; --dim:#6f6f6f;
   --r:14px;
   --font:"Segoe UI Variable","Segoe UI",Inter,system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
-body{font-family:var(--font);color:var(--ink);background:#3b95ee;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none}
+body{font-family:var(--font);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 a{color:inherit}
-:focus-visible{outline:2px solid #fff;outline-offset:2px;box-shadow:0 0 0 4px rgba(0,103,192,.7)}
+:focus-visible{outline:2px solid #fff;outline-offset:2px}
 
-/* ---------- boot screen ---------- */
-#boot{display:none;position:fixed;inset:0;z-index:2147483647;background:#000;color:#fff;padding:26px 28px;font:15px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre;overflow:hidden;cursor:none}
-.booting #boot{display:block}
-#boot.out{opacity:0;transition:opacity .15s linear}
-#boot i{display:inline-block;width:.6em;height:1.05em;background:#fff;vertical-align:-.15em;animation:blink .5s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-
-/* ---------- scenery (static, cheap to paint) ---------- */
-.scene{position:fixed;inset:0;z-index:0}
-.scene svg{width:100%;height:100%;display:block}
+/* ---------- wallpaper ---------- */
+.scene{position:fixed;inset:-24px;z-index:0;background:#000 url(/preview/assets/cat.webp) no-repeat left bottom / auto 100%;transition:transform .5s cubic-bezier(.2,.7,.2,1);will-change:transform}
+.scene::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 90% 90% at 30% 60%,transparent 55%,rgba(0,0,0,.65) 100%)}
+@media (max-aspect-ratio:1/1){.scene{background-size:auto 62%;background-position:-6% 88%}}
 
 /* ---------- desktop icons ---------- */
-.icons{position:fixed;top:22px;left:22px;z-index:2;display:flex;flex-direction:column;gap:6px}
+.icons{position:fixed;top:14px;right:14px;z-index:2;display:flex;gap:2px}
 .icon{
-  width:92px;padding:8px 4px 6px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:7px;
-  font-size:12.5px;font-weight:600;color:#fff;text-shadow:0 1px 3px rgba(0,40,90,.85),0 0 8px rgba(0,60,120,.5);
-  border:1px solid transparent;transition:background .15s,border-color .15s;
+  width:62px;padding:7px 2px 6px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:6px;
+  font-size:11px;font-weight:500;letter-spacing:.01em;color:#fff;text-shadow:0 1px 8px #000;
+  transition:background .15s;
 }
-.icon:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.4)}
-.icon:active{background:rgba(255,255,255,.32)}
+.icon:hover{background:rgba(255,255,255,.1)}
 .tile{
-  position:relative;width:52px;height:52px;border-radius:15px;display:grid;place-items:center;overflow:hidden;
-  box-shadow:0 0 0 1px rgba(0,50,100,.35),0 4px 10px rgba(0,40,90,.3),inset 0 1px 0 rgba(255,255,255,.7);
+  position:relative;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;overflow:hidden;flex:none;
+  background:var(--raise);border:1px solid rgba(255,255,255,.18);transition:background .15s,border-color .15s,transform .15s;
 }
-.tile::after{content:"";position:absolute;left:0;right:0;top:0;height:50%;background:linear-gradient(rgba(255,255,255,.55),rgba(255,255,255,.08));pointer-events:none}
-.tile svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;position:relative;z-index:1}
+.tile svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:stroke .15s}
 .tile img{width:100%;height:100%;object-fit:cover;display:block}
-.c-commands{background:linear-gradient(#3fd6c4,#0f9d8f)}
-.c-privacy{background:linear-gradient(#5aa8ff,#1b66d6)}
-.c-terms{background:linear-gradient(#ffb454,#e8731a)}
-.c-status{background:linear-gradient(#6fe27f,#1fa543)}
-.c-chomik{background:#ffe1b3}
-.tile.sm{width:20px;height:20px;border-radius:6px;box-shadow:0 0 0 1px rgba(0,50,100,.3),inset 0 1px 0 rgba(255,255,255,.6)}
-.tile.sm svg{width:12px;height:12px;stroke-width:2.4}
-.tile.cat{background:var(--c)}
+.icon:hover .tile{background:#fff;border-color:#fff;transform:translateY(-1px)}
+.icon:hover .tile svg{stroke:#000}
+.tile.sm{width:20px;height:20px;border-radius:6px}
+.tile.sm svg{width:11px;height:11px;stroke-width:2}
+.tile.cat{background:var(--c);border-color:transparent}
+.tile.cat svg{stroke:#000}
 
-/* ---------- windows (no blur: solid frosted look) ---------- */
+/* ---------- windows ---------- */
 .win{
   position:fixed;left:0;top:0;z-index:10;display:flex;flex-direction:column;overflow:hidden;
-  border-radius:var(--r);background:linear-gradient(160deg,#f6fbff,#d9ecff);
-  border:1px solid rgba(255,255,255,.9);
-  box-shadow:0 0 0 1px rgba(0,60,120,.22),0 10px 28px rgba(0,40,100,.3);
+  border-radius:var(--r);background:var(--panel);border:1px solid var(--line);
+  box-shadow:0 18px 50px rgba(0,0,0,.65);
   max-width:calc(100vw - 16px);max-height:calc(100vh - 16px);
-  animation:pop .2s ease-out;
+  animation:pop .18s ease-out;
 }
-.win.closing{animation:out .14s ease forwards}
+.win.closing{animation:out .12s ease forwards}
 .win.dragging{will-change:translate}
 .win.max{translate:none!important;width:100vw!important;height:100vh!important;max-width:none;max-height:none;border-radius:0}
 .win.front{z-index:99999}
-@keyframes pop{from{opacity:.4;transform:scale(.95)}to{opacity:1;transform:none}}
-@keyframes out{to{opacity:0;transform:scale(.96)}}
+@keyframes pop{from{opacity:.3;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes out{to{opacity:0;transform:scale(.97)}}
 
-.bar{display:flex;align-items:center;height:42px;padding-left:12px;gap:9px;cursor:grab;touch-action:none;flex:none;font-size:13px;font-weight:600;color:var(--ink);background:linear-gradient(rgba(255,255,255,.8),rgba(255,255,255,.2))}
+.bar{display:flex;align-items:center;height:40px;padding-left:12px;gap:9px;cursor:grab;touch-action:none;flex:none;font-size:12.5px;font-weight:500;color:var(--soft);border-bottom:1px solid var(--line2)}
 .win.dragging .bar{cursor:grabbing}
 .bar .ttl{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ctl{display:flex;height:100%}
-.ctl button{width:46px;display:grid;place-items:center;transition:background .12s,color .12s}
-.ctl button:hover{background:rgba(0,40,100,.1)}
-.ctl button.x:hover{background:#c42b1c;color:#fff}
+.ctl button{width:44px;display:grid;place-items:center;color:var(--soft);transition:background .12s,color .12s}
+.ctl button:hover{background:rgba(255,255,255,.09);color:#fff}
+.ctl button.x:hover{background:#e5342b;color:#fff}
 .ctl svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:1.3}
-.body{flex:1;min-height:0;overflow:auto;padding:6px 22px 22px;user-select:text;-webkit-user-select:text;cursor:auto}
+.body{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:8px 22px 22px;user-select:text;-webkit-user-select:text;cursor:auto}
 .body::-webkit-scrollbar{width:10px}
-.body::-webkit-scrollbar-thumb{background:rgba(10,47,87,.28);border-radius:10px;border:3px solid transparent;background-clip:content-box}
+.body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:10px;border:3px solid transparent;background-clip:content-box}
 
 /* chomik window */
-.hero h1{font-size:54px;line-height:1;font-weight:700;letter-spacing:-.035em;margin:10px 0 14px;color:var(--ink)}
-.hero p{font-size:16px;line-height:1.55;color:var(--ink-soft);max-width:340px}
+.hero h1{font-size:58px;line-height:1;font-weight:700;letter-spacing:-.04em;margin:12px 0 14px;background:linear-gradient(180deg,#fff 30%,#8a8a8a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{font-size:15.5px;line-height:1.6;color:var(--soft);max-width:340px}
 .actions{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
 .btn{
-  position:relative;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:12px;
-  font-weight:600;font-size:15px;text-decoration:none;overflow:hidden;transition:transform .15s,filter .15s;
+  display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:12px;
+  font-weight:600;font-size:14.5px;text-decoration:none;transition:transform .15s,background .15s,border-color .15s;
 }
-.btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
-.btn:active{transform:translateY(0) scale(.98)}
-.btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;position:relative;z-index:1}
-.btn span{position:relative;z-index:1}
-.btn.go{
-  color:#fff;text-shadow:0 1px 1px rgba(0,70,20,.55);
-  background:linear-gradient(#63e582,#22b64a 52%,#17983b);
-  border:1px solid #0c7a2b;box-shadow:0 4px 12px rgba(10,110,40,.3),inset 0 1px 0 rgba(255,255,255,.65);
-}
-.btn.go::after{content:"";position:absolute;left:0;right:0;top:0;height:50%;background:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.06))}
-.btn.alt{background:rgba(255,255,255,.75);border:1px solid #fff;color:var(--ink);box-shadow:0 2px 8px rgba(0,60,120,.12),inset 0 1px 0 #fff}
-.btn.sm{height:36px;padding:0 15px;font-size:14px}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:none}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn.go{background:#fff;color:#000;box-shadow:0 0 0 1px #fff,0 8px 24px rgba(255,255,255,.12)}
+.btn.go:hover{background:#e8e8e8}
+.btn.alt{border:1px solid rgba(255,255,255,.22);color:#fff}
+.btn.alt:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.4)}
+.btn.sm{height:36px;padding:0 15px;font-size:13.5px}
 
 /* image window */
 #w-image{z-index:99999}
-#w-image .body{padding:0 9px 9px;overflow:hidden}
-#w-image img{display:block;width:100%;height:auto;border-radius:9px;box-shadow:0 0 0 1px rgba(0,50,100,.2);pointer-events:none;-webkit-user-drag:none}
+#w-image .body{padding:0 8px 8px;overflow:hidden}
+#w-image img{display:block;width:100%;height:auto;border-radius:9px;pointer-events:none;-webkit-user-drag:none}
 
-/* commands */
+/* commands (kept cheap to paint so scrolling stays smooth) */
 .search{position:relative;margin:2px 0 12px}
-.search svg{position:absolute;left:13px;top:50%;width:16px;height:16px;transform:translateY(-50%);fill:none;stroke:var(--ink-soft);stroke-width:2;stroke-linecap:round}
-.search input{width:100%;height:40px;border-radius:10px;border:1px solid #fff;background:rgba(255,255,255,.9);padding:0 14px 0 38px;font:inherit;font-size:14.5px;color:var(--ink);box-shadow:inset 0 1px 3px rgba(0,50,100,.14);outline:none;user-select:text;-webkit-user-select:text}
-.search input:focus{border-color:#2d8cf0;box-shadow:0 0 0 3px rgba(45,140,240,.3)}
+.search svg{position:absolute;left:13px;top:50%;width:16px;height:16px;transform:translateY(-50%);fill:none;stroke:var(--dim);stroke-width:2;stroke-linecap:round}
+.search input{width:100%;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--raise);padding:0 14px 0 38px;font:inherit;font-size:14.5px;color:#fff;outline:none;user-select:text;-webkit-user-select:text}
+.search input::placeholder{color:var(--dim)}
+.search input:focus{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.14)}
 .cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.cats button{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px 0 10px;border-radius:999px;font-size:12.5px;font-weight:600;background:rgba(255,255,255,.8);border:1px solid #fff;color:var(--ink-soft)}
-.cats button::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c,#7aa7d6)}
-.cats button[aria-pressed=true]{background:var(--c,#2272e0);color:#fff;border-color:rgba(0,0,0,.15);text-shadow:0 1px 1px rgba(0,0,0,.25)}
-.cats button[aria-pressed=true]::before{background:#fff}
+.cats button{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px 0 10px;border-radius:999px;font-size:12.5px;font-weight:600;background:var(--raise);border:1px solid var(--line);color:#c4c4c4}
+.cats button::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c,#fff)}
+.cats button:hover{border-color:rgba(255,255,255,.3)}
+.cats button[aria-pressed=true]{background:var(--c,#fff);color:#000;border-color:transparent}
+.cats button[aria-pressed=true]::before{background:#000}
 .cmds{list-style:none;display:grid;gap:6px}
 .cmd{
-  --c:#4a90d9;position:relative;padding:11px 13px 11px 16px;border-radius:11px;cursor:pointer;
-  background:rgba(255,255,255,.78);border:1px solid #fff;box-shadow:0 1px 3px rgba(0,50,100,.1);
-  transition:transform .12s,box-shadow .12s,background .12s;
+  --c:#fff;position:relative;padding:11px 13px 11px 17px;border-radius:10px;cursor:pointer;
+  background:var(--raise);border:1px solid var(--line2);
+  content-visibility:auto;contain-intrinsic-size:auto 76px;
 }
-.cmd::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:5px;border-radius:0 5px 5px 0;background:var(--c)}
-.cmd:hover{background:#fff;transform:translateX(2px);box-shadow:0 3px 10px rgba(0,50,100,.16)}
-.cmd b{font:700 14px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--c)}
-.cmd em{font:500 12.5px ui-monospace,Menlo,monospace;color:var(--ink-soft);font-style:normal;opacity:.85}
-.cmd p{font-size:13.5px;color:var(--ink-soft);margin-top:3px;line-height:1.4}
-.cmd small,.pill{float:right;font-size:11px;font-weight:700;color:#fff;background:var(--c);border-radius:6px;padding:2px 7px;margin-left:8px}
-.empty{padding:30px 0;text-align:center;color:var(--ink-soft);font-size:14px}
-.count{padding-top:12px;font-size:12px;color:var(--ink-soft);text-align:center}
+.cmd::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:0 3px 3px 0;background:var(--c)}
+.cmd:hover{background:var(--raise2);border-color:var(--line)}
+.cmd b{font:700 14px var(--mono);color:var(--c)}
+.cmd em{font:500 12.5px var(--mono);color:var(--dim);font-style:normal}
+.cmd p{font-size:13.5px;color:var(--soft);margin-top:3px;line-height:1.4}
+.cmd small,.pill{float:right;font-size:10.5px;font-weight:700;letter-spacing:.02em;color:#000;background:var(--c);border-radius:6px;padding:2px 7px;margin-left:8px}
+.empty{padding:30px 0;text-align:center;color:var(--soft);font-size:14px}
+.count{padding-top:12px;font-size:12px;color:var(--dim);text-align:center}
 
 /* command details window */
-.det{--c:#4a90d9}
-.det h2{font:700 26px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--c);word-break:break-word;margin:6px 0 6px;letter-spacing:-.02em}
-.det .pill{float:none;display:inline-block;margin:0 0 10px}
-.det .desc{font-size:15px;line-height:1.5;color:var(--ink-soft)}
-.det h3{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);opacity:.8;margin:20px 0 8px}
-.det code.use{display:block;padding:11px 13px;border-radius:10px;background:#0f2742;color:#e9f4ff;font:500 13.5px/1.5 ui-monospace,Menlo,monospace;white-space:pre-wrap;word-break:break-word}
-.det code.use span{color:#7fe0b0}
-.det code.use i{color:#ffcf7f;font-style:normal}
-.prm{padding:10px 13px;border-radius:10px;background:rgba(255,255,255,.75);border:1px solid #fff;margin-bottom:6px}
-.prm b{font:700 13.5px ui-monospace,Menlo,monospace}
-.prm .rq{float:right;font-size:11px;font-weight:700;border-radius:6px;padding:2px 7px;color:#fff;background:#d94b3d}
-.prm .rq.o{background:#6b8aa8}
-.prm p{font-size:13.5px;color:var(--ink-soft);margin-top:3px}
-.det .actions{margin-top:20px}
+.det{--c:#fff}
+.det h2{font:700 26px var(--mono);color:var(--c);word-break:break-word;margin:6px 0 8px;letter-spacing:-.02em}
+.det .pill{float:none;display:inline-block;margin:0 0 12px}
+.det .desc{font-size:15px;line-height:1.55;color:var(--soft)}
+.det h3{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:22px 0 8px;font-weight:600}
+.det code.use{display:block;padding:11px 13px;border-radius:10px;background:#000;border:1px solid var(--line);color:#eee;font:500 13.5px/1.55 var(--mono);white-space:pre-wrap;word-break:break-word}
+.det code.use span{color:var(--c)}
+.det code.use i{color:var(--dim);font-style:normal}
+.prm{padding:10px 13px;border-radius:10px;background:var(--raise);border:1px solid var(--line2);margin-bottom:6px}
+.prm b{font:700 13.5px var(--mono)}
+.prm .rq{float:right;font-size:10.5px;font-weight:700;border-radius:6px;padding:2px 7px;color:#000;background:#fff}
+.prm .rq.o{background:#2a2a2a;color:#aaa}
+.prm p{font-size:13.5px;color:var(--soft);margin-top:3px}
+.det .actions{margin-top:22px}
 
 /* documents */
-.doc h2{font-size:16px;margin:20px 0 6px;letter-spacing:-.01em}
+.doc h2{font-size:15px;margin:22px 0 6px;letter-spacing:-.01em;color:#fff}
 .doc h2:first-of-type{margin-top:6px}
-.doc p,.doc li{font-size:14.5px;line-height:1.6;color:var(--ink-soft)}
+.doc p,.doc li{font-size:14.5px;line-height:1.65;color:var(--soft)}
 .doc p+p,.doc ul{margin-top:8px}
 .doc ul{padding-left:20px}
-.doc code{font:500 13px ui-monospace,Menlo,monospace;background:rgba(255,255,255,.85);padding:1px 6px;border-radius:5px;color:var(--ink)}
-.doc a{color:#0b5bc4}
-.doc .stamp{font-size:12.5px;color:var(--ink-soft);opacity:.8}
+.doc code{font:500 13px var(--mono);background:var(--raise2);padding:1px 6px;border-radius:5px;color:#fff}
+.doc a{color:#fff;text-underline-offset:3px}
+.doc strong{color:#fff}
+.doc .stamp{font-size:12px;color:var(--dim);letter-spacing:.04em;text-transform:uppercase}
 
 /* status */
-.banner{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.8);border:1px solid #fff;font-weight:600;font-size:15px;margin-bottom:12px}
-.dot{width:12px;height:12px;border-radius:50%;background:#98a6b5;flex:none;box-shadow:0 0 0 4px rgba(150,165,180,.25)}
-.dot.ok{background:#22b64a;box-shadow:0 0 0 4px rgba(34,182,74,.25)}
-.dot.warn{background:#f0a020;box-shadow:0 0 0 4px rgba(240,160,32,.25)}
-.dot.bad{background:#d8403a;box-shadow:0 0 0 4px rgba(216,64,58,.25)}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
-.stats div{padding:12px;border-radius:11px;background:rgba(255,255,255,.75);border:1px solid #fff;text-align:center}
-.stats b{display:block;font-size:17px}
-.stats span{font-size:12px;color:var(--ink-soft)}
+.banner{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:12px;background:var(--raise);border:1px solid var(--line2);font-weight:600;font-size:15px;margin-bottom:10px}
+.dot{width:10px;height:10px;border-radius:50%;background:#6f6f6f;flex:none}
+.dot.ok{background:#3ddc84;box-shadow:0 0 0 4px rgba(61,220,132,.18)}
+.dot.warn{background:#ffb020;box-shadow:0 0 0 4px rgba(255,176,32,.18)}
+.dot.bad{background:#ff4d4d;box-shadow:0 0 0 4px rgba(255,77,77,.18)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.stats div{padding:13px 10px;border-radius:11px;background:var(--raise);border:1px solid var(--line2);text-align:center}
+.stats b{display:block;font-size:18px;letter-spacing:-.01em}
+.stats span{font-size:11.5px;color:var(--dim)}
 .rows{list-style:none;display:grid;gap:5px}
-.rows li{display:flex;align-items:center;gap:10px;padding:9px 13px;border-radius:10px;background:rgba(255,255,255,.7);font-size:14px}
-.rows li b{flex:1;font-weight:600}
-.rows li span{font-size:12.5px;color:var(--ink-soft)}
+.rows li{display:flex;align-items:center;gap:10px;padding:10px 13px;border-radius:10px;background:var(--raise);border:1px solid var(--line2);font-size:14px}
+.rows li b{flex:1;font-weight:500}
+.rows li span{font-size:12.5px;color:var(--dim)}
 
-/* squircle where supported */
+/* squircle on small static things only (cheap); windows/lists stay plain for smooth scrolling */
 @supports (corner-shape: squircle){
-  .win,.btn,.tile,.cmd,.banner,.stats div,.search input,.rows li,.icon,.prm,.det code.use{corner-shape:squircle}
-  .win{--r:22px}.btn{border-radius:18px}.tile{border-radius:24px}.tile.sm{border-radius:10px}
-  .cmd,.banner,.stats div,.prm,.det code.use{border-radius:18px}.search input,.rows li{border-radius:15px}#w-image img{corner-shape:squircle;border-radius:16px}
+  .btn,.tile,.icon,.search input,.det code.use{corner-shape:squircle}
+  .btn{border-radius:19px}.tile{border-radius:17px}.tile.sm{border-radius:9px}.search input{border-radius:16px}
 }
 
 @media (max-width:700px){
-  .icons{flex-direction:row;left:8px;right:8px;top:12px;justify-content:center;gap:0}
-  .icon{width:64px;font-size:11px}
-  .tile{width:46px;height:46px}
-  .hero h1{font-size:44px}
-  .body{padding:4px 16px 18px}
+  .icons{left:6px;right:6px;top:10px;justify-content:center;gap:0}
+  .hero h1{font-size:46px}
+  .body{padding:6px 16px 18px}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
-  #boot i{animation:none!important}
 }
 </style>
 </head>
 <body>
 
-<div id="boot" aria-hidden="true"></div>
-
-<!-- Scenery: an original sky-and-hill scene (static, no filters) -->
-<div class="scene" aria-hidden="true">
-<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1f6fd8"/><stop offset=".45" stop-color="#46a4f5"/><stop offset=".78" stop-color="#a9dcff"/><stop offset="1" stop-color="#e4f6ff"/>
-    </linearGradient>
-    <radialGradient id="sun" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1260 170) scale(520)">
-      <stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".25" stop-color="#fff" stop-opacity=".45"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="puff"><stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset=".55" stop-color="#fff" stop-opacity=".92"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-    <linearGradient id="far" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fdc7a"/><stop offset="1" stop-color="#4dae48"/></linearGradient>
-    <linearGradient id="hill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a6ec4e"/><stop offset=".35" stop-color="#4fc424"/><stop offset="1" stop-color="#157a12"/></linearGradient>
-    <radialGradient id="shine" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(520 560) scale(700 220)">
-      <stop offset="0" stop-color="#e8ff9a" stop-opacity=".55"/><stop offset="1" stop-color="#e8ff9a" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-  <rect width="1600" height="900" fill="url(#sky)"/>
-  <rect width="1600" height="900" fill="url(#sun)"/>
-  <g fill="url(#puff)">
-    <ellipse cx="300" cy="195" rx="190" ry="48"/><ellipse cx="390" cy="165" rx="120" ry="48"/><ellipse cx="220" cy="180" rx="110" ry="38"/>
-    <ellipse cx="920" cy="125" rx="170" ry="38"/><ellipse cx="985" cy="102" rx="105" ry="38"/>
-    <ellipse cx="1190" cy="335" rx="210" ry="44"/><ellipse cx="1270" cy="305" rx="125" ry="46"/><ellipse cx="1080" cy="320" rx="105" ry="32"/>
-    <ellipse cx="570" cy="405" rx="170" ry="32"/><ellipse cx="635" cy="384" rx="100" ry="32"/>
-  </g>
-  <path d="M0 640C260 560 520 575 800 620S1380 610 1600 565V900H0Z" fill="url(#far)" opacity=".85"/>
-  <path d="M-100 900V660C200 540 600 480 980 545C1280 596 1480 690 1700 650V900Z" fill="url(#hill)"/>
-  <path d="M-100 900V660C200 540 600 480 980 545C1280 596 1480 690 1700 650V900Z" fill="url(#shine)"/>
-</svg>
-</div>
+<div class="scene" id="scene" aria-hidden="true"></div>
 
 <!-- Desktop icons -->
 <nav class="icons" aria-label="Apps">
-  <button class="icon" data-app="chomik"><span class="tile c-chomik"><img src="/assets/chomik.webp" alt="" width="52" height="52"></span>Chomik</button>
-  <button class="icon" data-app="commands"><span class="tile c-commands"><svg viewBox="0 0 24 24"><use href="#g-commands"/></svg></span>Commands</button>
-  <button class="icon" data-app="privacy"><span class="tile c-privacy"><svg viewBox="0 0 24 24"><use href="#g-privacy"/></svg></span>Privacy</button>
-  <button class="icon" data-app="terms"><span class="tile c-terms"><svg viewBox="0 0 24 24"><use href="#g-terms"/></svg></span>Terms</button>
-  <button class="icon" data-app="status"><span class="tile c-status"><svg viewBox="0 0 24 24"><use href="#g-status"/></svg></span>Status</button>
+  <button class="icon" data-app="chomik"><span class="tile"><img src="/assets/chomik.webp" alt="" width="36" height="36"></span>Chomik</button>
+  <button class="icon" data-app="commands"><span class="tile"><svg viewBox="0 0 24 24"><use href="#g-commands"/></svg></span>Commands</button>
+  <button class="icon" data-app="privacy"><span class="tile"><svg viewBox="0 0 24 24"><use href="#g-privacy"/></svg></span>Privacy</button>
+  <button class="icon" data-app="terms"><span class="tile"><svg viewBox="0 0 24 24"><use href="#g-terms"/></svg></span>Terms</button>
+  <button class="icon" data-app="status"><span class="tile"><svg viewBox="0 0 24 24"><use href="#g-status"/></svg></span>Status</button>
 </nav>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="g-commands" viewBox="0 0 24 24"><path d="M16 4 8 20"/></symbol>
-  <symbol id="g-privacy" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
-  <symbol id="g-terms" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></symbol>
-  <symbol id="g-status" viewBox="0 0 24 24"><path d="M3 12h4l2.5-6 4 12 2.5-6h5"/></symbol>
+  <symbol id="g-commands" viewBox="0 0 24 24"><path d="m5 8 4 4-4 4"/><path d="M12 17h7"/></symbol>
+  <symbol id="g-privacy" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6z"/><path d="m9.5 12 2 2 3.5-4"/></symbol>
+  <symbol id="g-terms" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+  <symbol id="g-status" viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></symbol>
 </svg>
 
 <!-- App templates -->
@@ -261,8 +213,8 @@ a{color:inherit}
     <h1>Chomik</h1>
     <p>A free Discord bot for Roblox lookups, puzzle solving and OSINT. Type a slash command, get the answer in chat.</p>
     <div class="actions">
-      <a class="btn go" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>Invite to Discord</span></a>
-      <button class="btn alt" type="button" data-app="commands"><svg viewBox="0 0 24 24"><use href="#g-commands"/></svg><span>Commands</span></button>
+      <a class="btn go" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Invite to Discord</a>
+      <button class="btn alt" type="button" data-app="commands"><svg viewBox="0 0 24 24"><use href="#g-commands"/></svg>Commands</button>
     </div>
   </div>
 </template>
@@ -319,15 +271,16 @@ a{color:inherit}
   var mobile=function(){return innerWidth<700};
   var z=10, open={};
 
-  var CATCOLOR={AI:'#7a3df0',Fun:'#d6246e',Games:'#d9730a',General:'#4f5f73',Image:'#0b8f8a',Roblox:'#d12f2f',Social:'#1f6fe0',Tools:'#2f8a1f'};
-  var catColor=function(c){return CATCOLOR[c]||'#4a90d9'};
+  /* the only color in the whole thing: command categories */
+  var CATCOLOR={AI:'#a78bfa',Fun:'#f472b6',Games:'#fb923c',General:'#9ca3af',Image:'#2dd4bf',Roblox:'#f87171',Social:'#60a5fa',Tools:'#4ade80'};
+  var catColor=function(c){return CATCOLOR[c]||'#ffffff'};
 
   var APPS={
     chomik:  {title:'Chomik',          w:430, tpl:'t-chomik'},
-    commands:{title:'Commands',        w:580, h:540, tpl:'t-commands', glyph:'commands', cls:'c-commands', init:initCommands, max:1},
-    privacy: {title:'Privacy policy',  w:480, h:440, tpl:'t-privacy',  glyph:'privacy',  cls:'c-privacy',  max:1},
-    terms:   {title:'Terms of service',w:480, h:480, tpl:'t-terms',    glyph:'terms',    cls:'c-terms',    max:1},
-    status:  {title:'Status',          w:440, h:430, tpl:'t-status',   glyph:'status',   cls:'c-status',   init:initStatus}
+    commands:{title:'Commands',        w:580, h:540, tpl:'t-commands', glyph:'commands', init:initCommands, max:1},
+    privacy: {title:'Privacy policy',  w:480, h:440, tpl:'t-privacy',  glyph:'privacy',  max:1},
+    terms:   {title:'Terms of service',w:480, h:480, tpl:'t-terms',    glyph:'terms',    max:1},
+    status:  {title:'Status',          w:440, h:430, tpl:'t-status',   glyph:'status',   init:initStatus}
   };
 
   var X='<svg viewBox="0 0 11 11"><path d="m1 1 9 9M10 1 1 10"/></svg>';
@@ -354,8 +307,8 @@ a{color:inherit}
     var icon = app.color
       ? '<span class="tile sm cat" style="--c:'+app.color+'"><svg viewBox="0 0 24 24"><use href="#g-commands"/></svg></span>'
       : app.glyph
-        ? '<span class="tile sm '+app.cls+'"><svg viewBox="0 0 24 24"><use href="#g-'+app.glyph+'"/></svg></span>'
-        : '<span class="tile sm c-chomik"><img src="/assets/chomik.webp" alt="" width="20" height="20"></span>';
+        ? '<span class="tile sm"><svg viewBox="0 0 24 24"><use href="#g-'+app.glyph+'"/></svg></span>'
+        : '<span class="tile sm"><img src="/assets/chomik.webp" alt="" width="20" height="20"></span>';
     w.innerHTML='<div class="bar">'+icon+'<span class="ttl"></span><div class="ctl">'+(app.max?'<button type="button" class="m" aria-label="Maximize">'+M+'</button>':'')+'<button type="button" class="x" aria-label="Close">'+X+'</button></div></div><div class="body"></div>';
     $('.ttl',w).textContent=app.title;
     var body=$('.body',w);
@@ -372,7 +325,7 @@ a{color:inherit}
     w.addEventListener('pointerdown',function(){front(w)});
     $('.x',w).addEventListener('click',function(){
       w.classList.add('closing'); delete open[id];
-      setTimeout(function(){w.remove()},140);
+      setTimeout(function(){w.remove()},120);
     });
     var m=$('.m',w);
     if(m){ var tm=function(){w.classList.toggle('max')}; m.addEventListener('click',tm); $('.bar',w).addEventListener('dblclick',function(e){if(!e.target.closest('button'))tm()}) }
@@ -382,11 +335,11 @@ a{color:inherit}
   }
   function cascade(ww,wh){
     var n=Math.max(0,Object.keys(open).length-2);
-    return [(innerWidth-ww)/2+n*28,Math.max(mobile()?100:30,(innerHeight-wh)/2-20+n*28)];
+    return [(innerWidth-ww)/2+n*28,Math.max(mobile()?100:60,(innerHeight-wh)/2+n*28)];
   }
   function openApp(id){
     show(id,APPS[id],id==='chomik'?function(ww,wh){
-      return mobile()?[(innerWidth-ww)/2,Math.max(100,(innerHeight-wh)/2)]:[Math.max(150,innerWidth*.13),Math.max(24,(innerHeight-wh)/2-10)];
+      return mobile()?[(innerWidth-ww)/2,Math.max(100,(innerHeight-wh)/2)]:[innerWidth*.46,Math.max(70,(innerHeight-wh)/2-10)];
     }:null);
   }
 
@@ -394,8 +347,8 @@ a{color:inherit}
   function imageWindow(){
     var w=document.createElement('section');
     w.className='win front'; w.id='w-image'; w.setAttribute('role','figure'); w.setAttribute('aria-label','Chomik');
-    w.style.width=(mobile()?140:300)+'px';
-    w.innerHTML='<div class="bar"><span class="tile sm c-chomik"><img src="/assets/chomik.webp" alt="" width="20" height="20"></span><span class="ttl">chomik.webp</span></div><div class="body"><img src="/assets/chomik.webp" alt="Chomik" width="378" height="378" draggable="false"></div>';
+    w.style.width=(mobile()?140:290)+'px';
+    w.innerHTML='<div class="bar"><span class="tile sm"><img src="/assets/chomik.webp" alt="" width="20" height="20"></span><span class="ttl">chomik.webp</span></div><div class="body"><img src="/assets/chomik.webp" alt="Chomik" width="378" height="378" draggable="false"></div>';
     document.body.appendChild(w);
     var gap=mobile()?12:28;
     setPos(w,innerWidth-w.offsetWidth-gap,innerHeight-w.offsetHeight-gap);
@@ -435,14 +388,14 @@ a{color:inherit}
     list.addEventListener('click',function(e){var li=e.target.closest('.cmd'); if(li) openDetails(data[+li.dataset.i],w)});
     list.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('cmd')){e.preventDefault();openDetails(data[+e.target.dataset.i],w)}});
     input.addEventListener('input',render); render();
-    if(!mobile()) setTimeout(function(){input.focus()},60);
+    if(!mobile()) setTimeout(function(){input.focus({preventScroll:true})},60);
   }
 
   /* details window for one command (usage, prefix version, options, copy) */
   function openDetails(c,parent){
     var color=catColor(c.category), id='cmd:'+c.name;
     show(id,{
-      title:'/'+c.name, w:430, h:null, color:color,
+      title:'/'+c.name, w:430, color:color,
       fill:function(body){
         var el=function(t,cls,txt){var e=document.createElement(t); if(cls)e.className=cls; if(txt!=null)e.textContent=txt; return e};
         var root=el('div','det'); root.style.setProperty('--c',color);
@@ -463,9 +416,9 @@ a{color:inherit}
           var d=el('div','prm'); d.appendChild(el('span','rq'+(p.required?'':' o'),p.required?'required':'optional'));
           d.appendChild(el('b',0,p.name)); if(p.description) d.appendChild(el('p',0,p.description)); root.appendChild(d);
         });
-        var act=el('div','actions'), cp=el('button','btn alt sm'); cp.type='button'; cp.appendChild(el('span',0,'Copy command'));
+        var act=el('div','actions'), cp=el('button','btn alt sm'); cp.type='button'; var lab=el('span',0,'Copy command'); cp.appendChild(lab);
         cp.addEventListener('click',function(){
-          var t='/'+c.name, done=function(m){$('span',cp).textContent=m; setTimeout(function(){$('span',cp).textContent='Copy command'},1400)};
+          var t='/'+c.name, done=function(m){lab.textContent=m; setTimeout(function(){lab.textContent='Copy command'},1400)};
           (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){done('Copied!')},function(){done(t)});
         });
         act.appendChild(cp); root.appendChild(act); body.appendChild(root);
@@ -500,30 +453,21 @@ a{color:inherit}
     }).catch(function(){set('bad','Status is unavailable right now')});
   }
 
-  /* ---------- boot ---------- */
-  function start(){
-    openApp('chomik'); imageWindow();
-    var h=location.hash.slice(1); if(APPS[h]&&h!=='chomik') openApp(h);
-  }
+  /* ---------- go ---------- */
   document.querySelectorAll('.icon').forEach(function(b){b.addEventListener('click',function(){openApp(b.dataset.app)})});
   addEventListener('resize',function(){document.querySelectorAll('.win:not(.max)').forEach(function(w){var p=clampPos(w,w._x||0,w._y||0);setPos(w,p[0],p[1])})});
 
-  var boot=$('#boot');
-  if(document.documentElement.classList.contains('booting')){
-    try{localStorage.setItem('chomik-visited','1')}catch(e){}
-    var LINES=['CHOMIK BIOS v1.0','Memory test: 640K ......... OK','Feeding hamster ........... OK','Spinning up wheel ......... OK','Linking Roblox APIs ....... OK','Mounting desktop .......... OK','','Starting Chomik...'];
-    var shown=0;
-    (function tick(){
-      boot.textContent=LINES.slice(0,shown+1).join('\n')+'\n';
-      var c=document.createElement('i'); boot.appendChild(c);
-      if(++shown<LINES.length) return void setTimeout(tick,80);
-      setTimeout(function(){
-        boot.classList.add('out');
-        start();
-        setTimeout(function(){document.documentElement.classList.remove('booting')},170);
-      },160);
-    })();
-  } else start();
+  /* tiny parallax on the wallpaper (compositor-only, skipped for reduced motion) */
+  if(!matchMedia('(prefers-reduced-motion:reduce)').matches && matchMedia('(pointer:fine)').matches){
+    var sc=$('#scene'), raf=0, mx=0, my=0;
+    addEventListener('pointermove',function(e){
+      mx=(e.clientX/innerWidth-.5)*-16; my=(e.clientY/innerHeight-.5)*-10;
+      if(!raf) raf=requestAnimationFrame(function(){raf=0;sc.style.transform='translate3d('+mx+'px,'+my+'px,0)'});
+    },{passive:true});
+  }
+
+  openApp('chomik'); imageWindow();
+  var h=location.hash.slice(1); if(APPS[h]&&h!=='chomik') openApp(h);
 })();
 </script>
 </body>
