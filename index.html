@@ -220,9 +220,9 @@ a{color:inherit}
 .dlg p{font-size:13.5px;line-height:1.55;color:var(--soft)}
 .dlg code{display:block;margin-top:12px;padding:8px 10px;border-radius:2px;background:#000;border:1px solid var(--line);color:var(--red);font:500 13px var(--mono);word-break:break-all}
 .dfoot{display:flex;justify-content:flex-end;margin:24px -22px -22px;padding:14px 22px;background:var(--raise);border-top:1px solid var(--line2)}
-.ok{min-width:92px;height:32px;padding:0 20px;border-radius:3px;background:#fff;color:#000;border:1px solid #fff;font-weight:600;font-size:13.5px;transition:background .12s}
-.ok:hover{background:#e4e4e4}
-.ok:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.okbtn{min-width:92px;height:32px;padding:0 20px;border-radius:3px;background:#fff;color:#000;border:1px solid #fff;font-weight:600;font-size:13.5px;transition:background .12s}
+.okbtn:hover{background:#e4e4e4}
+.okbtn:focus-visible{outline:2px solid #fff;outline-offset:3px}
 
 /* documents */
 .doc h1{font-size:36px;line-height:1.05;font-weight:700;letter-spacing:-.04em;margin:4px 0 6px;background:linear-gradient(180deg,#fff 30%,#8a8a8a);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -526,7 +526,7 @@ a{color:inherit}
 
   /* ---------- 404 dialog ---------- */
   function openError(path){
-    var w=show('error',{
+    show('error',{
       title:'Chomik Error', w:420, color:'#ff5252', glyph:'alert', nomin:1,
       fill:function(body){
         var el=function(t,cls,txt){var e=document.createElement(t); if(cls)e.className=cls; if(txt!=null)e.textContent=txt; return e};
@@ -537,13 +537,12 @@ a{color:inherit}
         txt.appendChild(el('p',0,'Chomik couldn\u2019t find the page you asked for. It may have moved or never existed.'));
         txt.appendChild(el('code',0,path||'/'));
         row.appendChild(ic); row.appendChild(txt); body.appendChild(row);
-        var foot=el('div','dfoot'), ok=el('button','ok','OK'); ok.type='button';
+        var foot=el('div','dfoot'), ok=el('button','okbtn','OK'); ok.type='button';
         ok.addEventListener('click',function(){closeWin('error')});
         foot.appendChild(ok); body.appendChild(foot);
         setTimeout(function(){ok.focus({preventScroll:true})},50);
       }
     },function(ww,wh){return [(innerWidth-ww)/2,Math.max(90,(innerHeight-wh)/2-30)]});
-    w.animate([{transform:'none'},{transform:'translateX(-9px)'},{transform:'translateX(8px)'},{transform:'translateX(-5px)'},{transform:'translateX(3px)'},{transform:'none'}],{duration:450,delay:180,easing:'ease'});
   }
 
   /* ---------- commands ---------- */
@@ -675,7 +674,7 @@ a{color:inherit}
   var qs=new URLSearchParams(location.search);
   if(qs.get('e')==='404'){
     var bad=qs.get('p')||'/';
-    try{history.replaceState(null,'',bad)}catch(e){}   // keep the address bar on the page they asked for
+    try{history.replaceState(null,'','/')}catch(e){}   // send them back to the main address, error still shown
     openError(bad);
   } else {
     var h=location.hash.slice(1); if(APPS[h]&&h!=='chomik') openApp(h);
