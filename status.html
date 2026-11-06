@@ -1,6 +1,69 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="robots" content="noindex">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Chomik Status</title>
-<meta http-equiv="refresh" content="0;url=/#status">
-<script>location.replace("/#status")</script></head>
-<body style="background:#000"><a href="/#status" style="color:#fff;font-family:sans-serif">Continue to Chomik Status</a></body></html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Status | Chomik</title>
+<meta name="description" content="Live status of Chomik and the Roblox APIs it relies on.">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chomik">
+<meta property="og:title" content="Status | Chomik">
+<meta property="og:description" content="Live status of Chomik and the Roblox APIs it relies on.">
+<meta property="og:image" content="https://chomik.pages.dev/assets/chomik.webp">
+<meta name="twitter:card" content="summary">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#171310">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..900,0..100,0..1&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<header class="top"><div class="wrap in">
+<a class="brand" href="/"><img src="/assets/chomik.webp" alt="" width="40" height="40">Chomik</a>
+<nav class="links" aria-label="Main"><a href="/features.html">Features</a><a href="/commands.html">Commands</a><a href="/status.html" aria-current="page">Status</a></nav>
+<span class="sp"></span>
+<a class="btn ghost sm" href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Support</a>
+<a class="btn go sm" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Invite</a>
+</div></header>
+<main class="wrap">
+<div class="ph"><h1>Is it <em>up?</em></h1></div>
+<div class="big-status"><i class="dot" id="sdot"></i><h2 id="smsg">Checking…</h2></div>
+<div class="nums"><div><b id="slat">-</b><span>Latency</span></div><div><b id="sup">-</b><span>Uptime</span></div><div><b id="sav">-</b><span>Last 24 hours</span></div></div>
+<section class="apis"><h3>Roblox APIs</h3><ul class="rows" id="srbx"><li><i class="dot"></i><b>Checking…</b></li></ul></section>
+<p class="fine" id="fine">Updates every minute while this page is open.</p>
+</main>
+<footer class="foot"><div class="wrap in">
+<p>Chomik is not affiliated with or endorsed by Discord or Roblox.</p>
+<nav aria-label="Footer"><a href="/features.html">Features</a><a href="/commands.html">Commands</a><a href="/status.html">Status</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener">Support server</a></nav>
+</div></footer>
+<script src="/assets/site.js"></script>
+<script>
+(function(){
+  var CH=window.CH, el=CH.el, $=CH.q, dot=$('#sdot'), msg=$('#smsg');
+  function set(cls,m){dot.className='dot '+cls; msg.textContent=m}
+  function fmt(s){if(s==null)return '-';var d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);return d?d+'d '+h+'h':h?h+'h '+m+'m':m+'m'}
+  function load(){
+    fetch('/api/status',{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
+      if(!d||!d.bot||!Array.isArray(d.roblox)) throw 0;
+      var b=d.bot;
+      if(!d.configured) set('','Status isn’t set up yet');
+      else if(!b.online) set('bad','Chomik is offline');
+      else set('ok','Chomik is online');
+      $('#slat').textContent=b.online&&b.latency_ms!=null?b.latency_ms+' ms':'-';
+      $('#sup').textContent=b.online?fmt(b.uptime_seconds):'-';
+      $('#sav').textContent=b.availability_24h==null?'-':b.availability_24h+'%';
+      var ul=$('#srbx'); ul.textContent='';
+      d.roblox.forEach(function(r){
+        var li=el('li'); li.appendChild(el('i','dot '+(r.status==='operational'?'ok':r.status==='degraded'?'warn':'bad')));
+        li.appendChild(el('b',0,r.name)); li.appendChild(el('span',0,r.ms==null?'no response':r.ms+' ms')); ul.appendChild(li);
+      });
+    }).catch(function(){set('bad','Status is unavailable right now'); $('#srbx').textContent=''});
+  }
+  load();
+  setInterval(function(){if(!document.hidden) load()},60000);
+})();
+</script>
+</body>
+</html>

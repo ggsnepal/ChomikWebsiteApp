@@ -1,6 +1,189 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="robots" content="noindex">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Chomik Commands</title>
-<meta http-equiv="refresh" content="0;url=/#commands">
-<script>location.replace("/#commands")</script></head>
-<body style="background:#000"><a href="/#commands" style="color:#fff;font-family:sans-serif">Continue to Chomik</a></body></html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Commands | Chomik</title>
+<meta name="description" content="Every Chomik command with usage, options and prefix versions.">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chomik">
+<meta property="og:title" content="Commands | Chomik">
+<meta property="og:description" content="Every Chomik command with usage, options and prefix versions.">
+<meta property="og:image" content="https://chomik.pages.dev/assets/chomik.webp">
+<meta name="twitter:card" content="summary">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#171310">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..900,0..100,0..1&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<header class="top"><div class="wrap in">
+<a class="brand" href="/"><img src="/assets/chomik.webp" alt="" width="40" height="40">Chomik</a>
+<nav class="links" aria-label="Main"><a href="/features.html">Features</a><a href="/commands.html" aria-current="page">Commands</a><a href="/status.html">Status</a></nav>
+<span class="sp"></span>
+<a class="btn ghost sm" href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Support</a>
+<a class="btn go sm" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Invite</a>
+</div></header>
+<main class="wrap">
+<div class="ph"><h1>Com<em>mands</em></h1><p>Pick one to see how it works. Fill in the options and Chomik builds the command for you to copy.</p></div>
+<div class="cmdtools">
+  <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search commands" aria-label="Search commands" autocomplete="off" spellcheck="false"><kbd>/</kbd></label>
+  <div class="cats" id="cats" role="group" aria-label="Category"></div>
+</div>
+<div class="split">
+  <div class="list" id="list" role="listbox" aria-label="Commands"></div>
+  <aside class="detail" id="detail" aria-live="polite"></aside>
+</div>
+<p class="count" id="count"></p>
+</main>
+<div class="scrim" id="scrim"></div>
+<footer class="foot"><div class="wrap in">
+<p>Chomik is not affiliated with or endorsed by Discord or Roblox.</p>
+<nav aria-label="Footer"><a href="/features.html">Features</a><a href="/commands.html">Commands</a><a href="/status.html">Status</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener">Support server</a></nav>
+</div></footer>
+<script src="/assets/commands-data.js"></script>
+<script src="/assets/site.js"></script>
+<script>
+(function(){
+  var CH=window.CH, el=CH.el, $=CH.q, data=CH.data;
+  var list=$('#list'), det=$('#detail'), scrim=$('#scrim'), input=$('#q'), catsEl=$('#cats'), count=$('#count');
+  var mobile=matchMedia('(max-width:900px)'), cat='All', cur=-1;
+  var cats=data.map(function(c){return c.category}).filter(function(v,i,a){return v&&a.indexOf(v)===i}).sort();
+
+  ['All'].concat(cats).forEach(function(n){
+    var b=el('button'); b.type='button'; b.setAttribute('aria-pressed',n==='All'); b.dataset.n=n;
+    b.appendChild(document.createTextNode(n));
+    b.appendChild(el('em',0,String(n==='All'?data.length:CH.byCat([n]).length)));
+    if(n!=='All') b.style.setProperty('--c',CH.col(n));
+    b.addEventListener('click',function(){setCat(n)});
+    catsEl.appendChild(b);
+  });
+  function setCat(n){
+    cat=n; catsEl.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.n===n)});
+    renderList(); var v=visible(); if(v.length&&v.indexOf(cur)<0&&!mobile.matches) select(v[0],false);
+  }
+  function visible(){
+    var qq=input.value.trim().toLowerCase().replace(/^\//,''), out=[];
+    data.forEach(function(c,i){
+      if(cat!=='All'&&c.category!==cat) return;
+      if(qq&&(c.name+' '+(c.description||'')).toLowerCase().indexOf(qq)<0) return;
+      out.push(i);
+    });
+    return out;
+  }
+  function renderList(){
+    var v=visible(), f=document.createDocumentFragment();
+    list.textContent='';
+    v.forEach(function(i){
+      var c=data[i], b=el('button','row'); b.type='button'; b.setAttribute('role','option'); b.dataset.i=i;
+      b.setAttribute('aria-selected',i===cur); b.style.setProperty('--c',CH.col(c.category));
+      b.appendChild(el('b',0,'/'+c.name)); b.appendChild(el('span',0,c.description||'')); f.appendChild(b);
+    });
+    list.appendChild(f);
+    if(!v.length) list.appendChild(el('div','none',data.length?'No commands match that.':'The command list failed to load.'));
+    count.textContent=data.length?v.length+' of '+data.length+' commands':'';
+  }
+  list.addEventListener('click',function(e){var b=e.target.closest('.row'); if(b) select(+b.dataset.i,true)});
+  list.addEventListener('keydown',function(e){
+    if(e.key!=='ArrowDown'&&e.key!=='ArrowUp') return;
+    var b=e.target.closest('.row'); if(!b) return; e.preventDefault();
+    var n=e.key==='ArrowDown'?b.nextElementSibling:b.previousElementSibling;
+    if(n&&n.classList.contains('row')){n.focus(); select(+n.dataset.i,false)}
+  });
+  input.addEventListener('input',function(){
+    renderList(); var v=visible(); if(v.length&&v.indexOf(cur)<0&&!mobile.matches) select(v[0],false);
+  });
+
+  function copy(text,btn,label,done){
+    var ok=function(){var o=btn.textContent; btn.textContent=done||'Copied!'; btn.classList.add('copied'); setTimeout(function(){btn.textContent=o; btn.classList.remove('copied')},1300)};
+    (navigator.clipboard?navigator.clipboard.writeText(text):Promise.reject()).then(ok,function(){var o=btn.textContent; btn.textContent=text; setTimeout(function(){btn.textContent=o},2000)});
+  }
+
+  function select(i,user){
+    var c=data[i]; if(!c) return;
+    if(visible().indexOf(i)<0){ input.value=''; cat='All'; catsEl.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.n==='All')}); }
+    cur=i; renderList();
+    var row=list.querySelector('.row[data-i="'+i+'"]');
+    if(row&&!mobile.matches){var t=row.offsetTop, h=row.offsetHeight; if(t<list.scrollTop) list.scrollTop=t-8; else if(t+h>list.scrollTop+list.clientHeight) list.scrollTop=t+h-list.clientHeight+8}
+    detail(c);
+    try{history.replaceState(null,'','#'+encodeURIComponent(c.name))}catch(e){}
+    if(mobile.matches&&user) openSheet();
+  }
+
+  function detail(c){
+    var color=CH.col(c.category); det.style.setProperty('--c',color); det.textContent=''; det.scrollTop=0;
+    var x=el('button','x'); x.type='button'; x.setAttribute('aria-label','Close'); x.innerHTML='<svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>'; x.addEventListener('click',closeSheet); det.appendChild(x);
+    det.appendChild(el('span','tag',c.category)); det.appendChild(el('h2',0,'/'+c.name)); det.appendChild(el('p','desc',c.description||''));
+
+    var params=(c.params||[]).slice().sort(function(a,b){return (b.required?1:0)-(a.required?1:0)});
+    det.appendChild(el('h3',0,'Usage'));
+    var use=el('code','use'); det.appendChild(use);
+    var inputs=[];
+    function build(){
+      var s='/'+c.name; params.forEach(function(p,k){var v=inputs[k].value.trim(); if(v) s+=' '+p.name+':'+v}); return s;
+    }
+    function paint(){
+      use.textContent=''; use.appendChild(el('span','n','/'+c.name));
+      params.forEach(function(p,k){
+        var v=inputs[k].value.trim();
+        if(v){use.appendChild(document.createTextNode(' ')); use.appendChild(el('span','k',p.name+':')); use.appendChild(el('span','v',v))}
+        else if(p.required){use.appendChild(document.createTextNode(' ')); use.appendChild(el('span','ph',p.name+':<value>'))}
+      });
+    }
+    det.appendChild(el('h3',0,'Options'));
+    if(!params.length) det.appendChild(el('p','desc','No options. Just run it.'));
+    params.forEach(function(p,k){
+      var o=el('div','opt'), h=el('div','oh'); h.appendChild(el('b',0,p.name)); h.appendChild(el('span','rq'+(p.required?'':' o'),p.required?'required':'optional')); o.appendChild(h);
+      if(p.description) o.appendChild(el('p',0,p.description));
+      var inp=el('input'); inp.type='text'; inp.placeholder='try a value'; inp.setAttribute('aria-label',p.name); inp.autocomplete='off'; inp.spellcheck=false;
+      inp.addEventListener('input',paint); inputs.push(inp); o.appendChild(inp); det.appendChild(o);
+    });
+    paint();
+
+    if(c.prefix&&c.prefix.length){
+      det.appendChild(el('h3',0,'Prefix version'));
+      var pw=el('div'); c.prefix.forEach(function(p){var b=el('button','chip',','+p); b.type='button'; b.title='Copy'; b.addEventListener('click',function(){copy(','+p,b)}); pw.appendChild(b)}); det.appendChild(pw);
+    }
+
+    var first=c.name.split(' ')[0], rel=[];
+    data.forEach(function(d,i){ if(d!==c&&(d.name.split(' ')[0]===first&&c.name.indexOf(' ')>-1||d.name.split(' ')[0]===c.name&&d.name.indexOf(' ')>-1)) rel.push(i) });
+    data.forEach(function(d,i){ if(d!==c&&d.category===c.category&&rel.indexOf(i)<0&&rel.length<8) rel.push(i) });
+    if(rel.length){
+      det.appendChild(el('h3',0,'Related')); var rw=el('div','rel');
+      rel.slice(0,8).forEach(function(i){var b=el('button','chip','/'+data[i].name); b.type='button'; b.addEventListener('click',function(){select(i,false)}); rw.appendChild(b)});
+      det.appendChild(rw);
+    }
+
+    var acts=el('div','dacts'), cp=el('button','btn go sm','Copy command'); cp.type='button'; cp.addEventListener('click',function(){copy(build(),cp)});
+    var sh=el('button','btn ghost sm','Copy link'); sh.type='button'; sh.addEventListener('click',function(){copy(location.href,sh)});
+    acts.appendChild(cp); acts.appendChild(sh); det.appendChild(acts);
+  }
+
+  function openSheet(){det.classList.add('open'); scrim.classList.add('on'); document.body.classList.add('lock')}
+  function closeSheet(){det.classList.remove('open'); scrim.classList.remove('on'); document.body.classList.remove('lock')}
+  scrim.addEventListener('click',closeSheet);
+  addEventListener('keydown',function(e){
+    if(e.key==='Escape') closeSheet();
+    if(e.key==='/'&&!/input|textarea/i.test(e.target.tagName||'')){e.preventDefault(); input.focus()}
+  });
+
+  function fromHash(user){
+    var h=''; try{h=decodeURIComponent(location.hash.slice(1))}catch(e){}
+    if(!h) return false;
+    for(var i=0;i<data.length;i++) if(data[i].name===h){select(i,user); return true}
+    return false;
+  }
+  addEventListener('hashchange',function(){fromHash(true)});
+
+  var qs=new URLSearchParams(location.search).get('cat');
+  if(qs&&cats.indexOf(qs)>-1){cat=qs; catsEl.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.n===qs)})}
+  renderList();
+  if(!fromHash(true)){ var v=visible(); if(v.length&&!mobile.matches) select(v[0],false); else if(!v.length) det.appendChild(el('div','empty-d','Nothing to show.')) }
+  else if(mobile.matches&&!location.hash) closeSheet();
+})();
+</script>
+</body>
+</html>
