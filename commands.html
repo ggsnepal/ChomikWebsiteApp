@@ -22,167 +22,130 @@
 <body>
 <header class="top"><div class="wrap in">
 <a class="brand" href="/"><img src="/assets/chomik.webp" alt="" width="40" height="40">Chomik</a>
-<nav class="links" aria-label="Main"><a href="/features.html">Features</a><a href="/commands.html" aria-current="page">Commands</a><a href="/status.html">Status</a></nav>
+<nav class="links" aria-label="Main"><a href="/commands.html" aria-current="page">Commands</a><a href="/status.html">Status</a></nav>
 <span class="sp"></span>
 <a class="btn ghost sm" href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Support</a>
 <a class="btn go sm" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Invite</a>
 </div></header>
 <main class="wrap">
-<div class="ph"><h1>Com<em>mands</em></h1><p>Pick one to see how it works. Fill in the options and Chomik builds the command for you to copy.</p></div>
-<div class="cmdtools">
-  <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search commands" aria-label="Search commands" autocomplete="off" spellcheck="false"><kbd>/</kbd></label>
+<div class="ph"><h1>Com<em>mands</em></h1><p>Chomik works with slash commands. Click one for its usage, options and prefix versions.</p></div>
+<div class="chead">
+  <div class="srow">
+    <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search commands" aria-label="Search commands" autocomplete="off" spellcheck="false"></label>
+    <div class="seg" id="seg" role="group" aria-label="View" data-v="list">
+      <i class="thumb"></i>
+      <button type="button" data-v="list" aria-label="List view" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg></button>
+      <button type="button" data-v="gallery" aria-label="Gallery view" aria-pressed="false"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></button>
+    </div>
+  </div>
   <div class="cats" id="cats" role="group" aria-label="Category"></div>
 </div>
-<div class="split">
-  <div class="list" id="list" role="listbox" aria-label="Commands"></div>
-  <aside class="detail" id="detail" aria-live="polite"></aside>
-</div>
+<ul class="cmds" id="cmds"></ul>
 <p class="count" id="count"></p>
 </main>
-<div class="scrim" id="scrim"></div>
+<dialog id="dlg" class="det" aria-label="Command details"></dialog>
 <footer class="foot"><div class="wrap in">
 <p>Chomik is not affiliated with or endorsed by Discord or Roblox.</p>
-<nav aria-label="Footer"><a href="/features.html">Features</a><a href="/commands.html">Commands</a><a href="/status.html">Status</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener">Support server</a></nav>
+<nav aria-label="Footer"><a href="/commands.html">Commands</a><a href="/status.html">Status</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener">Support server</a></nav>
 </div></footer>
 <script src="/assets/commands-data.js"></script>
 <script src="/assets/site.js"></script>
 <script>
 (function(){
   var CH=window.CH, el=CH.el, $=CH.q, data=CH.data;
-  var list=$('#list'), det=$('#detail'), scrim=$('#scrim'), input=$('#q'), catsEl=$('#cats'), count=$('#count');
-  var mobile=matchMedia('(max-width:900px)'), cat='All', cur=-1;
-  var cats=data.map(function(c){return c.category}).filter(function(v,i,a){return v&&a.indexOf(v)===i}).sort();
+  var input=$('#q'), catsEl=$('#cats'), list=$('#cmds'), count=$('#count'), seg=$('#seg'), dlg=$('#dlg');
+  var cat='All', view='list';
+  try{ if(localStorage.getItem('chomik-view')==='gallery') view='gallery' }catch(e){}
 
-  ['All'].concat(cats).forEach(function(n){
-    var b=el('button'); b.type='button'; b.setAttribute('aria-pressed',n==='All'); b.dataset.n=n;
-    b.appendChild(document.createTextNode(n));
-    b.appendChild(el('em',0,String(n==='All'?data.length:CH.byCat([n]).length)));
+  var names=['All'].concat(data.map(function(c){return c.category}).filter(function(v,i,a){return v&&a.indexOf(v)===i}).sort());
+  var param=new URLSearchParams(location.search).get('cat'); if(param&&names.indexOf(param)>-1) cat=param;
+  names.forEach(function(n){
+    var b=el('button'); b.type='button'; b.textContent=n; b.dataset.n=n; b.setAttribute('aria-pressed',n===cat);
     if(n!=='All') b.style.setProperty('--c',CH.col(n));
-    b.addEventListener('click',function(){setCat(n)});
+    b.addEventListener('click',function(){
+      if(cat===n) return; cat=n;
+      catsEl.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});
+      render(true);
+    });
     catsEl.appendChild(b);
   });
-  function setCat(n){
-    cat=n; catsEl.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.n===n)});
-    renderList(); var v=visible(); if(v.length&&v.indexOf(cur)<0&&!mobile.matches) select(v[0],false);
+
+  function setView(v,anim){
+    view=v; seg.dataset.v=v;
+    seg.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===v)});
+    try{localStorage.setItem('chomik-view',v)}catch(e){}
+    if(anim) render(true);
   }
-  function visible(){
-    var qq=input.value.trim().toLowerCase().replace(/^\//,''), out=[];
-    data.forEach(function(c,i){
+  seg.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){if(view!==b.dataset.v) setView(b.dataset.v,true)})});
+
+  function render(anim){
+    var q=input.value.trim().toLowerCase().replace(/^\//,''), out=document.createDocumentFragment(), n=0;
+    list.textContent=''; list.className='cmds'+(view==='gallery'?' gal':'');
+    data.forEach(function(c,idx){
       if(cat!=='All'&&c.category!==cat) return;
-      if(qq&&(c.name+' '+(c.description||'')).toLowerCase().indexOf(qq)<0) return;
-      out.push(i);
+      if(q&&(c.name+' '+(c.description||'')).toLowerCase().indexOf(q)<0) return;
+      var li=el('li','cmd'); li.tabIndex=0; li.setAttribute('role','button'); li.dataset.i=idx;
+      var np=(c.params||[]).length; li.dataset.n=np?np+(np===1?' option':' options'):'no options';
+      if(anim&&n<16){li.classList.add('enter'); li.style.setProperty('--d',(n*26)+'ms')}
+      li.style.setProperty('--c',CH.col(c.category));
+      li.appendChild(el('small',0,c.category));
+      li.appendChild(el('b',0,'/'+c.name));
+      (c.params||[]).forEach(function(p){li.appendChild(el('em',0,' '+(p.required?'<'+p.name+'>':'['+p.name+']')))});
+      li.appendChild(el('p',0,c.description||''));
+      out.appendChild(li); n++;
     });
-    return out;
+    list.appendChild(out);
+    if(!n) list.appendChild(el('li','empty',data.length?'No commands match that.':'Command list failed to load.'));
+    count.textContent=data.length?n+' of '+data.length+' commands · click one for details':'';
   }
-  function renderList(){
-    var v=visible(), f=document.createDocumentFragment();
-    list.textContent='';
-    v.forEach(function(i){
-      var c=data[i], b=el('button','row'); b.type='button'; b.setAttribute('role','option'); b.dataset.i=i;
-      b.setAttribute('aria-selected',i===cur); b.style.setProperty('--c',CH.col(c.category));
-      b.appendChild(el('b',0,'/'+c.name)); b.appendChild(el('span',0,c.description||'')); f.appendChild(b);
-    });
-    list.appendChild(f);
-    if(!v.length) list.appendChild(el('div','none',data.length?'No commands match that.':'The command list failed to load.'));
-    count.textContent=data.length?v.length+' of '+data.length+' commands':'';
-  }
-  list.addEventListener('click',function(e){var b=e.target.closest('.row'); if(b) select(+b.dataset.i,true)});
-  list.addEventListener('keydown',function(e){
-    if(e.key!=='ArrowDown'&&e.key!=='ArrowUp') return;
-    var b=e.target.closest('.row'); if(!b) return; e.preventDefault();
-    var n=e.key==='ArrowDown'?b.nextElementSibling:b.previousElementSibling;
-    if(n&&n.classList.contains('row')){n.focus(); select(+n.dataset.i,false)}
-  });
-  input.addEventListener('input',function(){
-    renderList(); var v=visible(); if(v.length&&v.indexOf(cur)<0&&!mobile.matches) select(v[0],false);
-  });
+  list.addEventListener('click',function(e){var li=e.target.closest('.cmd'); if(li) openDetails(+li.dataset.i)});
+  list.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('cmd')){e.preventDefault(); openDetails(+e.target.dataset.i)}});
+  input.addEventListener('input',function(){render(false)});
+  addEventListener('keydown',function(e){if(e.key==='/'&&!/input|textarea/i.test(e.target.tagName||'')&&!dlg.open){e.preventDefault(); input.focus()}});
 
-  function copy(text,btn,label,done){
-    var ok=function(){var o=btn.textContent; btn.textContent=done||'Copied!'; btn.classList.add('copied'); setTimeout(function(){btn.textContent=o; btn.classList.remove('copied')},1300)};
-    (navigator.clipboard?navigator.clipboard.writeText(text):Promise.reject()).then(ok,function(){var o=btn.textContent; btn.textContent=text; setTimeout(function(){btn.textContent=o},2000)});
-  }
-
-  function select(i,user){
-    var c=data[i]; if(!c) return;
-    if(visible().indexOf(i)<0){ input.value=''; cat='All'; catsEl.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.n==='All')}); }
-    cur=i; renderList();
-    var row=list.querySelector('.row[data-i="'+i+'"]');
-    if(row&&!mobile.matches){var t=row.offsetTop, h=row.offsetHeight; if(t<list.scrollTop) list.scrollTop=t-8; else if(t+h>list.scrollTop+list.clientHeight) list.scrollTop=t+h-list.clientHeight+8}
-    detail(c);
-    try{history.replaceState(null,'','#'+encodeURIComponent(c.name))}catch(e){}
-    if(mobile.matches&&user) openSheet();
-  }
-
-  function detail(c){
-    var color=CH.col(c.category); det.style.setProperty('--c',color); det.textContent=''; det.scrollTop=0;
-    var x=el('button','x'); x.type='button'; x.setAttribute('aria-label','Close'); x.innerHTML='<svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>'; x.addEventListener('click',closeSheet); det.appendChild(x);
-    det.appendChild(el('span','tag',c.category)); det.appendChild(el('h2',0,'/'+c.name)); det.appendChild(el('p','desc',c.description||''));
-
-    var params=(c.params||[]).slice().sort(function(a,b){return (b.required?1:0)-(a.required?1:0)});
-    det.appendChild(el('h3',0,'Usage'));
-    var use=el('code','use'); det.appendChild(use);
-    var inputs=[];
-    function build(){
-      var s='/'+c.name; params.forEach(function(p,k){var v=inputs[k].value.trim(); if(v) s+=' '+p.name+':'+v}); return s;
-    }
-    function paint(){
-      use.textContent=''; use.appendChild(el('span','n','/'+c.name));
-      params.forEach(function(p,k){
-        var v=inputs[k].value.trim();
-        if(v){use.appendChild(document.createTextNode(' ')); use.appendChild(el('span','k',p.name+':')); use.appendChild(el('span','v',v))}
-        else if(p.required){use.appendChild(document.createTextNode(' ')); use.appendChild(el('span','ph',p.name+':<value>'))}
-      });
-    }
-    det.appendChild(el('h3',0,'Options'));
-    if(!params.length) det.appendChild(el('p','desc','No options. Just run it.'));
-    params.forEach(function(p,k){
-      var o=el('div','opt'), h=el('div','oh'); h.appendChild(el('b',0,p.name)); h.appendChild(el('span','rq'+(p.required?'':' o'),p.required?'required':'optional')); o.appendChild(h);
-      if(p.description) o.appendChild(el('p',0,p.description));
-      var inp=el('input'); inp.type='text'; inp.placeholder='try a value'; inp.setAttribute('aria-label',p.name); inp.autocomplete='off'; inp.spellcheck=false;
-      inp.addEventListener('input',paint); inputs.push(inp); o.appendChild(inp); det.appendChild(o);
-    });
-    paint();
-
+  /* details popup: usage, prefix version, options, copy */
+  function openDetails(i){
+    var c=data[i]; if(!c) return; var color=CH.col(c.category);
+    dlg.textContent=''; dlg.style.setProperty('--c',color);
+    var root=el('div','dbody');
+    var x=el('button','x'); x.type='button'; x.setAttribute('aria-label','Close'); x.innerHTML='<svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>'; x.addEventListener('click',function(){dlg.close()}); root.appendChild(x);
+    root.appendChild(el('h2',0,'/'+c.name));
+    root.appendChild(el('span','pill',c.category));
+    root.appendChild(el('p','desc',c.description||''));
+    root.appendChild(el('h3',0,'Usage'));
+    var use=el('code','use'); use.appendChild(document.createTextNode('/'+c.name));
+    (c.params||[]).forEach(function(p){use.appendChild(document.createTextNode(' ')); use.appendChild(el(p.required?'span':'i',0,p.required?p.name+':<value>':'['+p.name+':<value>]'))});
+    root.appendChild(use);
     if(c.prefix&&c.prefix.length){
-      det.appendChild(el('h3',0,'Prefix version'));
-      var pw=el('div'); c.prefix.forEach(function(p){var b=el('button','chip',','+p); b.type='button'; b.title='Copy'; b.addEventListener('click',function(){copy(','+p,b)}); pw.appendChild(b)}); det.appendChild(pw);
+      root.appendChild(el('h3',0,'Prefix version'));
+      root.appendChild(el('code','use',c.prefix.map(function(p){return ','+p}).join('   ')));
     }
-
-    var first=c.name.split(' ')[0], rel=[];
-    data.forEach(function(d,i){ if(d!==c&&(d.name.split(' ')[0]===first&&c.name.indexOf(' ')>-1||d.name.split(' ')[0]===c.name&&d.name.indexOf(' ')>-1)) rel.push(i) });
-    data.forEach(function(d,i){ if(d!==c&&d.category===c.category&&rel.indexOf(i)<0&&rel.length<8) rel.push(i) });
-    if(rel.length){
-      det.appendChild(el('h3',0,'Related')); var rw=el('div','rel');
-      rel.slice(0,8).forEach(function(i){var b=el('button','chip','/'+data[i].name); b.type='button'; b.addEventListener('click',function(){select(i,false)}); rw.appendChild(b)});
-      det.appendChild(rw);
-    }
-
-    var acts=el('div','dacts'), cp=el('button','btn go sm','Copy command'); cp.type='button'; cp.addEventListener('click',function(){copy(build(),cp)});
-    var sh=el('button','btn ghost sm','Copy link'); sh.type='button'; sh.addEventListener('click',function(){copy(location.href,sh)});
-    acts.appendChild(cp); acts.appendChild(sh); det.appendChild(acts);
+    root.appendChild(el('h3',0,'Options'));
+    if(!(c.params||[]).length) root.appendChild(el('p','desc','No options, just run it.'));
+    (c.params||[]).slice().sort(function(a,b){return (b.required?1:0)-(a.required?1:0)}).forEach(function(p){
+      var d=el('div','prm'); d.appendChild(el('span','rq'+(p.required?'':' o'),p.required?'required':'optional'));
+      d.appendChild(el('b',0,p.name)); if(p.description) d.appendChild(el('p',0,p.description)); root.appendChild(d);
+    });
+    var act=el('div','dacts'), cp=el('button','btn ghost sm'); cp.type='button'; var lab=el('span',0,'Copy command'); cp.appendChild(lab);
+    cp.addEventListener('click',function(){
+      var t='/'+c.name, done=function(m){lab.textContent=m; setTimeout(function(){lab.textContent='Copy command'},1400)};
+      (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){done('Copied!')},function(){done(t)});
+    });
+    act.appendChild(cp); root.appendChild(act); dlg.appendChild(root);
+    if(!dlg.open){ if(dlg.showModal) dlg.showModal(); else dlg.setAttribute('open','') }
+    try{history.replaceState(null,'','?'+(cat!=='All'?'cat='+encodeURIComponent(cat):'')+'#'+encodeURIComponent(c.name))}catch(e){}
   }
+  dlg.addEventListener('click',function(e){if(e.target===dlg) dlg.close()});
+  dlg.addEventListener('close',function(){try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}});
 
-  function openSheet(){det.classList.add('open'); scrim.classList.add('on'); document.body.classList.add('lock')}
-  function closeSheet(){det.classList.remove('open'); scrim.classList.remove('on'); document.body.classList.remove('lock')}
-  scrim.addEventListener('click',closeSheet);
-  addEventListener('keydown',function(e){
-    if(e.key==='Escape') closeSheet();
-    if(e.key==='/'&&!/input|textarea/i.test(e.target.tagName||'')){e.preventDefault(); input.focus()}
-  });
-
-  function fromHash(user){
+  function fromHash(){
     var h=''; try{h=decodeURIComponent(location.hash.slice(1))}catch(e){}
-    if(!h) return false;
-    for(var i=0;i<data.length;i++) if(data[i].name===h){select(i,user); return true}
-    return false;
+    if(!h) return;
+    for(var i=0;i<data.length;i++) if(data[i].name===h){openDetails(i); return}
   }
-  addEventListener('hashchange',function(){fromHash(true)});
-
-  var qs=new URLSearchParams(location.search).get('cat');
-  if(qs&&cats.indexOf(qs)>-1){cat=qs; catsEl.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.n===qs)})}
-  renderList();
-  if(!fromHash(true)){ var v=visible(); if(v.length&&!mobile.matches) select(v[0],false); else if(!v.length) det.appendChild(el('div','empty-d','Nothing to show.')) }
-  else if(mobile.matches&&!location.hash) closeSheet();
+  addEventListener('hashchange',fromHash);
+  setView(view,false); render(true); fromHash();
+  if(!matchMedia('(max-width:900px)').matches) setTimeout(function(){if(!dlg.open) input.focus({preventScroll:true})},60);
 })();
 </script>
 </body>

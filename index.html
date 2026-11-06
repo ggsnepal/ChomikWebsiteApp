@@ -16,21 +16,23 @@
 <meta name="theme-color" content="#171310">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..900,0..100,0..1&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..900,0..100,0..1&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
-<script>if(/^#(commands|features|status|privacy|terms)$/.test(location.hash))location.replace("/"+location.hash.slice(1)+".html")</script>
+<script>if(/^#(commands|status|privacy|terms)$/.test(location.hash))location.replace("/"+location.hash.slice(1)+".html")</script>
 </head>
 <body>
 <header class="top"><div class="wrap in">
 <a class="brand" href="/"><img src="/assets/chomik.webp" alt="" width="40" height="40">Chomik</a>
-<nav class="links" aria-label="Main"><a href="/features.html">Features</a><a href="/commands.html">Commands</a><a href="/status.html">Status</a></nav>
+<nav class="links" aria-label="Main"><a href="/commands.html">Commands</a><a href="/status.html">Status</a></nav>
 <span class="sp"></span>
 <a class="btn ghost sm" href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Support</a>
 <a class="btn go sm" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Invite</a>
 </div></header>
 <main>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="paw" viewBox="0 0 64 64"><ellipse cx="32" cy="42" rx="15" ry="12"/><ellipse cx="13" cy="26" rx="6" ry="8" transform="rotate(-20 13 26)"/><ellipse cx="25" cy="14" rx="6" ry="8.5" transform="rotate(-6 25 14)"/><ellipse cx="39" cy="14" rx="6" ry="8.5" transform="rotate(6 39 14)"/><ellipse cx="51" cy="26" rx="6" ry="8" transform="rotate(20 51 26)"/></symbol></svg>
-<section class="hero">
+<section class="hero" id="hero">
+  <canvas class="rv" id="cvDim" aria-hidden="true"></canvas>
+  <canvas class="rv" id="cvLit" aria-hidden="true"></canvas>
   <div class="paws" aria-hidden="true"><svg style="--i:0;--r:-20deg;left:2%;top:82%"><use href="#paw"/></svg><svg style="--i:1;--r:10deg;left:10%;top:92%"><use href="#paw"/></svg><svg style="--i:2;--r:-15deg;left:19%;top:89%"><use href="#paw"/></svg><svg style="--i:3;--r:12deg;left:28%;top:95%"><use href="#paw"/></svg><svg style="--i:4;--r:-10deg;left:37%;top:89%"><use href="#paw"/></svg><svg style="--i:5;--r:15deg;left:46%;top:95%"><use href="#paw"/></svg><svg style="--i:6;--r:-12deg;left:55%;top:84%"><use href="#paw"/></svg><svg style="--i:7;--r:14deg;left:63%;top:92%"><use href="#paw"/></svg></div>
   <div class="wrap">
     <div>
@@ -41,12 +43,10 @@
         <a class="btn ghost" href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Support server</a>
       </div>
     </div>
-    <div class="sticker" id="sticker">
-      <button class="hit" id="hit" type="button" aria-label="Poke Chomik to pull a random command out of its cheeks"><img class="pic" src="/assets/chomik.webp" alt="Chomik the hamster holding a magnifying glass" width="378" height="378" draggable="false"></button>
+    <figure class="sticker">
+      <img class="pic" src="/assets/chomik.webp" alt="Chomik the hamster holding a magnifying glass" width="378" height="378" draggable="false">
       <span class="tape" aria-hidden="true"></span>
-      <span class="poke" aria-hidden="true">poke me<svg viewBox="0 0 54 40"><path d="M3 6c14-6 30 0 36 20M39 26l-9-6M39 26l3-11"/></svg></span>
-      <div class="bubble" id="bubble" role="status"></div>
-    </div>
+    </figure>
   </div>
 </section>
 
@@ -68,32 +68,107 @@
 </main>
 <footer class="foot"><div class="wrap in">
 <p>Chomik is not affiliated with or endorsed by Discord or Roblox.</p>
-<nav aria-label="Footer"><a href="/features.html">Features</a><a href="/commands.html">Commands</a><a href="/status.html">Status</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener">Support server</a></nav>
+<nav aria-label="Footer"><a href="/commands.html">Commands</a><a href="/status.html">Status</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener">Support server</a></nav>
 </div></footer>
 <script src="/assets/commands-data.js"></script>
 <script src="/assets/site.js"></script>
 <script>
 (function(){
-  var CH=window.CH, data=CH.data, el=CH.el, q=CH.q;
+  var CH=window.CH, data=CH.data, q=CH.q;
   /* live counts for the cheeks sentence (static numbers stay if the list fails to load) */
   if(data.length) document.querySelectorAll('[data-g]').forEach(function(n){
     var g=CH.groups.filter(function(x){return x.id===n.dataset.g})[0]; if(g) n.textContent=CH.byCat(g.cats).length;
   });
-  /* poke the hamster: it spits out a random real command */
-  var stk=q('#sticker'), hit=q('#hit'), bub=q('#bubble'), timer, last=-1;
-  hit.addEventListener('click',function(){
-    stk.classList.remove('squish'); void stk.offsetWidth; stk.classList.add('squish','poked');
-    if(!data.length) return;
-    var i; do{i=Math.floor(Math.random()*data.length)}while(i===last&&data.length>1); last=i;
-    var c=data[i];
-    bub.textContent=''; bub.style.setProperty('--bc','#b85a08');
-    bub.appendChild(el('small',0,'pulled from the cheeks'));
-    bub.appendChild(el('b',0,'/'+c.name));
-    bub.appendChild(el('span',0,c.description||''));
-    var a=el('a',0,'See how it works →'); a.href=CH.link(c.name); bub.appendChild(a);
-    bub.classList.add('on'); clearTimeout(timer); timer=setTimeout(function(){bub.classList.remove('on')},7000);
-  });
-  addEventListener('keydown',function(e){if(e.key==='Escape') bub.classList.remove('on')});
+
+  /* ---- hidden code layer, uncovered by a light that follows the cursor ----
+     Cheap on purpose: the text is drawn ONCE onto offscreen canvases. After that, each frame only
+     repaints one small square around the light (about 450px), never the whole hero. */
+  var hero=q('#hero'), dim=q('#cvDim'), lit=q('#cvLit');
+  if(!hero||!dim||!dim.getContext) return;
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var dctx=dim.getContext('2d'), lctx=lit.getContext('2d');
+  var off=document.createElement('canvas'), octx=off.getContext('2d');
+  var tmp=document.createElement('canvas'), tctx=tmp.getContext('2d');
+  var W=0,H=0,s=1,R=180,x=0,y=0,tx=0,ty=0,lastMove=0,on=false,raf=0,prev=null,seed=11;
+  var PAL=['#f28c28','#5cbb7b','#5ba6ee'], CREAM='#f7ebdc';
+  var rnd=function(){seed=(seed*16807)%2147483647;return seed/2147483647};
+  var pick=function(a){return a[Math.floor(rnd()*a.length)]};
+  var hex=function(n){var o='';while(n--)o+=Math.floor(rnd()*16).toString(16);return o};
+  var num=function(d){var o='';while(d--)o+=Math.floor(rnd()*10);return o};
+  var WORDS=['Uryyb jbeyq','Khoor zruog','SGVsbG8gd29ybGQ=','.... . .-.. .-.. ---','01001000 01101001','aHR0cHM6Ly9leGFtcGxl','Wklv lv d whvw','uijt jt b uftu'];
+  var TOK=[
+    function(){return 'userId:'+(1+Math.floor(rnd()*8))+num(8)},
+    function(){return '0x'+hex(8)},
+    function(){return 'roblox.com/games/'+num(9)},
+    function(){return pick(WORDS)},
+    function(){return 'badge#'+num(9)},
+    function(){return hex(16)},
+    function(){return data.length?'/'+pick(data).name:'/lookup'},
+    function(){return 'ROT'+(1+Math.floor(rnd()*25))},
+    function(){return 'created:'+(2008+Math.floor(rnd()*18))+'-'+('0'+(1+Math.floor(rnd()*12))).slice(-2)}
+  ];
+
+  function build(){
+    var r=hero.getBoundingClientRect(); W=Math.ceil(r.width); H=Math.ceil(r.height);
+    if(!W||!H) return;
+    s=1;   /* 1x on purpose: the text is a soft glow, and 1x keeps every repaint tiny */
+    [dim,lit,off].forEach(function(c){c.width=Math.round(W*s); c.height=Math.round(H*s)});
+    R=Math.round(Math.max(130,Math.min(200,W*.15)));
+    tmp.width=tmp.height=Math.round(2*R*s);
+    octx.setTransform(s,0,0,s,0,0); octx.clearRect(0,0,W,H);
+    octx.font='500 13px "JetBrains Mono",ui-monospace,Menlo,Consolas,monospace'; octx.textBaseline='top';
+    seed=11; var lh=27, rows=Math.ceil(H/lh)+1;
+    for(var i=0;i<rows;i++){
+      var px=-Math.floor(rnd()*140);
+      while(px<W){
+        var t=TOK[Math.floor(rnd()*TOK.length)]();
+        octx.fillStyle=rnd()<.45?pick(PAL):CREAM; octx.fillText(t,px,i*lh+7);
+        px+=octx.measureText(t).width+38;
+      }
+    }
+    dctx.setTransform(1,0,0,1,0,0); dctx.clearRect(0,0,dim.width,dim.height);
+    dctx.globalAlpha=.07; dctx.drawImage(off,0,0); dctx.globalAlpha=1;   /* faint always-visible layer */
+    prev=null;
+    if(!x&&!y){x=tx=W*.68; y=ty=H*.45}
+    draw();
+  }
+
+  function draw(){
+    var d=2*R*s, pad=Math.round(.16*R*s), sx=Math.round((x-R)*s), sy=Math.round((y-R)*s), rw=d+2*pad;
+    lctx.setTransform(1,0,0,1,0,0);
+    if(prev) lctx.clearRect(prev.x,prev.y,prev.w,prev.w);
+    /* the bright text inside a soft circle */
+    tctx.setTransform(1,0,0,1,0,0); tctx.globalCompositeOperation='source-over'; tctx.clearRect(0,0,d,d);
+    tctx.drawImage(off,sx,sy,d,d,0,0,d,d);
+    tctx.globalCompositeOperation='destination-in';
+    var m=tctx.createRadialGradient(d/2,d/2,0,d/2,d/2,d/2);
+    m.addColorStop(0,'rgba(0,0,0,1)'); m.addColorStop(.55,'rgba(0,0,0,.78)'); m.addColorStop(1,'rgba(0,0,0,0)');
+    tctx.fillStyle=m; tctx.fillRect(0,0,d,d);
+    /* the warm light itself */
+    var cx=x*s, cy=y*s, gl=lctx.createRadialGradient(cx,cy,0,cx,cy,R*1.16*s);
+    gl.addColorStop(0,'rgba(242,140,40,.14)'); gl.addColorStop(1,'rgba(242,140,40,0)');
+    lctx.fillStyle=gl; lctx.fillRect(sx-pad,sy-pad,rw,rw);
+    lctx.globalAlpha=.95; lctx.drawImage(tmp,sx,sy); lctx.globalAlpha=1;
+    prev={x:sx-pad,y:sy-pad,w:rw};
+  }
+
+  function frame(now){
+    raf=0; if(!on) return;
+    var idle=!reduce&&now-lastMove>2600;
+    if(idle){ var t=now/1000; tx=W*(.5+.34*Math.sin(t*.42)); ty=H*(.5+.3*Math.sin(t*.67+1.2)) }   /* wander like a searchlight */
+    var moving=Math.abs(tx-x)>.4||Math.abs(ty-y)>.4;
+    if(moving){ x+=(tx-x)*.15; y+=(ty-y)*.15; draw() }
+    if(!reduce||moving) raf=requestAnimationFrame(frame);
+  }
+  function start(){ if(on&&!raf) raf=requestAnimationFrame(frame) }
+
+  hero.addEventListener('pointermove',function(e){
+    var r=hero.getBoundingClientRect(); tx=e.clientX-r.left; ty=e.clientY-r.top; lastMove=performance.now(); start();
+  },{passive:true});
+  new IntersectionObserver(function(en){on=en[0].isIntersecting; if(on) start(); else if(raf){cancelAnimationFrame(raf); raf=0}}).observe(hero);
+  document.addEventListener('visibilitychange',function(){ if(document.hidden){if(raf){cancelAnimationFrame(raf); raf=0}} else start() });
+  var t0; new ResizeObserver(function(){clearTimeout(t0); t0=setTimeout(function(){x=y=0; build()},200)}).observe(hero);
+  if(document.fonts&&document.fonts.load) document.fonts.load('500 13px "JetBrains Mono"').then(build,build); else build();
 })();
 </script>
 </body>
