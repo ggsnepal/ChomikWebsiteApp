@@ -9,6 +9,6 @@
 /assets/status/*
   Cache-Control: public, max-age=2592000
 /assets/site.css
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+  Cache-Control: public, max-age=0, must-revalidate
 /assets/site.js
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+  Cache-Control: public, max-age=0, must-revalidate
