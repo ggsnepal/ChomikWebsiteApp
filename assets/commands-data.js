@@ -45,14 +45,14 @@ window.CHOMIK_COMMANDS = [
     "description": "Attach an image for the AI to look at"
    },
    {
-    "name": "search",
+    "name": "file",
     "required": false,
-    "description": "Allow the AI to search online (ON for Default)"
+    "description": "Attach a text file or PDF for the AI to read"
    },
    {
-    "name": "execute_code",
+    "name": "show-sources",
     "required": false,
-    "description": "Allow the AI to execute code for complex tasks"
+    "description": "List the sources the answer used below it"
    },
    {
     "name": "model",
@@ -106,6 +106,13 @@ window.CHOMIK_COMMANDS = [
   "prefix": []
  },
  {
+  "name": "ai settings",
+  "description": "Manage your AI usage",
+  "category": "AI",
+  "params": [],
+  "prefix": []
+ },
+ {
   "name": "ai transcribe",
   "description": "✨ Turn an audio or video file into text",
   "category": "AI",
@@ -130,23 +137,6 @@ window.CHOMIK_COMMANDS = [
    }
   ],
   "prefix": []
- },
- {
-  "name": "australian",
-  "description": "Check if a Roblox account is Australian",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "user",
-    "required": true,
-    "description": "Roblox username or User ID to check"
-   }
-  ],
-  "prefix": [
-   "aussie",
-   "aus",
-   "au"
-  ]
  },
  {
   "name": "avatar",
@@ -231,23 +221,6 @@ window.CHOMIK_COMMANDS = [
    }
   ],
   "prefix": []
- },
- {
-  "name": "british",
-  "description": "Check if a Roblox account is British",
-  "category": "Roblox",
-  "params": [
-   {
-    "name": "user",
-    "required": true,
-    "description": "Roblox username or User ID to check"
-   }
-  ],
-  "prefix": [
-   "british",
-   "brit",
-   "britcheck"
-  ]
  },
  {
   "name": "bruteforce link",
@@ -441,6 +414,32 @@ window.CHOMIK_COMMANDS = [
   "prefix": []
  },
  {
+  "name": "discord avatar",
+  "description": "Get someone's avatar",
+  "category": "Social",
+  "params": [
+   {
+    "name": "user",
+    "required": false,
+    "description": "Whose avatar (default: yours)"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "discord user",
+  "description": "Get information about a Discord user",
+  "category": "Social",
+  "params": [
+   {
+    "name": "user",
+    "required": false,
+    "description": "Who to look up (default: you)"
+   }
+  ],
+  "prefix": []
+ },
+ {
   "name": "display",
   "description": "Check if a Roblox display name is available",
   "category": "Roblox",
@@ -456,6 +455,19 @@ window.CHOMIK_COMMANDS = [
    "displayname",
    "name"
   ]
+ },
+ {
+  "name": "emoji",
+  "description": "Search emojis by keyword",
+  "category": "Fun",
+  "params": [
+   {
+    "name": "query",
+    "required": true,
+    "description": "What to look for, e.g. cat, heart, pizza"
+   }
+  ],
+  "prefix": []
  },
  {
   "name": "followers",
@@ -1268,29 +1280,9 @@ window.CHOMIK_COMMANDS = [
     "description": "Roblox username or User ID"
    },
    {
-    "name": "target1",
+    "name": "target",
     "required": true,
-    "description": "Roblox username or User ID"
-   },
-   {
-    "name": "target2",
-    "required": false,
-    "description": "Roblox username or User ID (optional)"
-   },
-   {
-    "name": "target3",
-    "required": false,
-    "description": "Roblox username or User ID (optional)"
-   },
-   {
-    "name": "target4",
-    "required": false,
-    "description": "Roblox username or User ID (optional)"
-   },
-   {
-    "name": "target5",
-    "required": false,
-    "description": "Roblox username or User ID (optional)"
+    "description": "Roblox username or User ID. To add more people, separate them with a comma (,)"
    }
   ],
   "prefix": [
@@ -1518,19 +1510,6 @@ window.CHOMIK_COMMANDS = [
   "description": "Manage your Chomik usage.",
   "category": "General",
   "params": [],
-  "prefix": []
- },
- {
-  "name": "subdomain",
-  "description": "Find the known subdomains of a website",
-  "category": "Tools",
-  "params": [
-   {
-    "name": "link",
-    "required": true,
-    "description": "A link or domain, e.g. https://x.com or x.com"
-   }
-  ],
   "prefix": []
  },
  {
@@ -1774,6 +1753,32 @@ window.CHOMIK_COMMANDS = [
   "prefix": []
  },
  {
+  "name": "website lookup",
+  "description": "Everything that can be found out about a website",
+  "category": "Tools",
+  "params": [
+   {
+    "name": "link",
+    "required": true,
+    "description": "A link or domain, e.g. https://x.com or x.com"
+   }
+  ],
+  "prefix": []
+ },
+ {
+  "name": "website subdomain",
+  "description": "Find the known subdomains of a website",
+  "category": "Tools",
+  "params": [
+   {
+    "name": "link",
+    "required": true,
+    "description": "A link or domain, e.g. https://x.com or x.com"
+   }
+  ],
+  "prefix": []
+ },
+ {
   "name": "whitelist",
   "description": "Whitelist yourself to use Chomik",
   "category": "General",
@@ -1824,6 +1829,39 @@ window.CHOMIK_COMMANDS = [
   "prefix": []
  },
  {
+  "name": "wordle play",
+  "description": "Play a Wordle game right here",
+  "category": "Fun",
+  "params": [
+   {
+    "name": "current",
+    "required": false,
+    "description": "The hidden word is NYTimes' Wordle word for today"
+   },
+   {
+    "name": "custom",
+    "required": false,
+    "description": "Put a custom word you'll solve yourself"
+   },
+   {
+    "name": "target",
+    "required": false,
+    "description": "The person who has to play the game (challenge someone)"
+   },
+   {
+    "name": "length",
+    "required": false,
+    "description": "Length of the randomized word (3-10, default 5)"
+   },
+   {
+    "name": "hide",
+    "required": false,
+    "description": "Hide the guessed letters (only the colors are shown)"
+   }
+  ],
+  "prefix": []
+ },
+ {
   "name": "youtube",
   "description": "Look up a YouTube channel",
   "category": "Social",
@@ -1838,5 +1876,49 @@ window.CHOMIK_COMMANDS = [
    "youtube",
    "yt"
   ]
+ },
+ {
+  "name": "british",
+  "description": "Check if a Roblox account is British",
+  "category": "Archived",
+  "params": [
+   {
+    "name": "user",
+    "required": true,
+    "description": "Roblox username or User ID"
+   }
+  ],
+  "prefix": [
+   "british",
+   "brit",
+   "britcheck"
+  ],
+  "archived": true,
+  "language": "python",
+  "filename": "regional_check.py",
+  "run": "python3 regional_check.py <username or user id>",
+  "code": "#!/usr/bin/env python3\n\"\"\"\nregional_check.py -- the old /british and /australian commands of Chomik, as a standalone terminal script.\n\nUsage:\n    python3 regional_check.py <roblox username or user id> [more users ...]\n\nNo packages needed, only Python 3.8+ (standard library).\n\nHow it works\n------------\nBoth commands used one observed (undocumented) quirk of the Roblox web API:\n\n  1. GET friends.roblox.com/v1/users/{id}/friends/find\n     Accounts flagged as British or Australian get an \"invalid or does not exist\" error from this\n     endpoint. Every other account (even one with zero friends) gets a normal, maybe empty, response.\n\n  2. To tell the two apart, read the friends counter from profile-platform-api (UserProfileHeader):\n       - friends list errors, friendsCount > 0 and isFriendsCountEnabled is true   -> Australian\n       - friends list errors, friendsCount > 0 and isFriendsCountEnabled is false  -> British\n       - friends list errors, friendsCount == 0                                    -> British OR Australian\n       - friends list works                                                        -> neither\n\"\"\"\nimport json\nimport sys\nimport urllib.error\nimport urllib.request\n\nHEADERS = {\n    \"User-Agent\": \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36\",\n    \"Accept\": \"application/json\",\n    \"Content-Type\": \"application/json\",\n}\n\n\ndef request(url, payload=None):\n    \"\"\"Returns (status, parsed json or None). Never raises on HTTP errors.\"\"\"\n    data = json.dumps(payload).encode() if payload is not None else None\n    req = urllib.request.Request(url, data=data, headers=HEADERS, method=\"POST\" if payload is not None else \"GET\")\n    try:\n        with urllib.request.urlopen(req, timeout=15) as r:\n            return r.status, json.loads(r.read().decode() or \"null\")\n    except urllib.error.HTTPError as e:\n        try:\n            return e.code, json.loads(e.read().decode() or \"null\")\n        except ValueError:\n            return e.code, None\n    except (urllib.error.URLError, TimeoutError, ValueError):\n        return 0, None\n\n\ndef resolve_user(query):\n    \"\"\"username or id -> (user_id, username), or (None, None).\"\"\"\n    if query.isdigit():\n        status, data = request(f\"https://users.roblox.com/v1/users/{query}\")\n        if status == 200 and data:\n            return int(query), data.get(\"name\") or query\n        return None, None\n    status, data = request(\"https://users.roblox.com/v1/usernames/users\",\n                           {\"usernames\": [query], \"excludeBannedUsers\": False})\n    rows = (data or {}).get(\"data\") or []\n    if status == 200 and rows:\n        return rows[0][\"id\"], rows[0][\"name\"]\n    return None, None\n\n\ndef friends_list_errors(user_id):\n    \"\"\"Step 1: the quirk. True when the friends/find endpoint answers with an error.\"\"\"\n    status, data = request(f\"https://friends.roblox.com/v1/users/{user_id}/friends/find?limit=18&cursor=&userSort=\")\n    return isinstance(data, dict) and \"errors\" in data\n\n\ndef friends_counter(user_id):\n    \"\"\"Step 2: (friendsCount, isFriendsCountEnabled) from the profile header.\"\"\"\n    payload = {\n        \"profileId\": str(user_id),\n        \"profileType\": \"User\",\n        \"includeComponentOrdering\": True,\n        \"components\": [{\"component\": \"About\"}, {\"component\": \"UserProfileHeader\"}],\n    }\n    status, data = request(\"https://apis.roblox.com/profile-platform-api/v1/profiles/get\", payload)\n    if status != 200 or not data:\n        return 0, False\n    header = (data.get(\"components\") or {}).get(\"UserProfileHeader\") or {}\n    counts = header.get(\"counts\") or {}\n    enabled = counts.get(\"isFriendsCountEnabled\", header.get(\"isFriendsCountEnabled\", False))\n    return int(counts.get(\"friendsCount\", 0) or 0), bool(enabled)\n\n\ndef regional_status(user_id):\n    \"\"\"'none' | 'british' | 'australian' | 'either'\"\"\"\n    if not friends_list_errors(user_id):\n        return \"none\"\n    count, enabled = friends_counter(user_id)\n    if count > 0:\n        return \"australian\" if enabled else \"british\"\n    return \"either\"\n\n\nMESSAGES = {\n    \"none\": \"is NOT British or Australian.\",\n    \"british\": \"IS British.\",\n    \"australian\": \"IS Australian.\",\n    \"either\": \"IS British OR Australian (no friends, so it can't be narrowed down).\",\n}\n\n\ndef main():\n    if len(sys.argv) < 2:\n        sys.exit(__doc__)\n    for query in sys.argv[1:]:\n        user_id, name = resolve_user(query)\n        if not user_id:\n            print(f\"{query}: user not found\")\n            continue\n        print(f\"{name} ({user_id}) {MESSAGES[regional_status(user_id)]}\")\n\n\nif __name__ == \"__main__\":\n    main()"
+ },
+ {
+  "name": "australian",
+  "description": "Check if a Roblox account is Australian",
+  "category": "Archived",
+  "params": [
+   {
+    "name": "user",
+    "required": true,
+    "description": "Roblox username or User ID"
+   }
+  ],
+  "prefix": [
+   "aussie",
+   "aus",
+   "au"
+  ],
+  "archived": true,
+  "language": "python",
+  "filename": "regional_check.py",
+  "run": "python3 regional_check.py <username or user id>",
+  "code": "#!/usr/bin/env python3\n\"\"\"\nregional_check.py -- the old /british and /australian commands of Chomik, as a standalone terminal script.\n\nUsage:\n    python3 regional_check.py <roblox username or user id> [more users ...]\n\nNo packages needed, only Python 3.8+ (standard library).\n\nHow it works\n------------\nBoth commands used one observed (undocumented) quirk of the Roblox web API:\n\n  1. GET friends.roblox.com/v1/users/{id}/friends/find\n     Accounts flagged as British or Australian get an \"invalid or does not exist\" error from this\n     endpoint. Every other account (even one with zero friends) gets a normal, maybe empty, response.\n\n  2. To tell the two apart, read the friends counter from profile-platform-api (UserProfileHeader):\n       - friends list errors, friendsCount > 0 and isFriendsCountEnabled is true   -> Australian\n       - friends list errors, friendsCount > 0 and isFriendsCountEnabled is false  -> British\n       - friends list errors, friendsCount == 0                                    -> British OR Australian\n       - friends list works                                                        -> neither\n\"\"\"\nimport json\nimport sys\nimport urllib.error\nimport urllib.request\n\nHEADERS = {\n    \"User-Agent\": \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36\",\n    \"Accept\": \"application/json\",\n    \"Content-Type\": \"application/json\",\n}\n\n\ndef request(url, payload=None):\n    \"\"\"Returns (status, parsed json or None). Never raises on HTTP errors.\"\"\"\n    data = json.dumps(payload).encode() if payload is not None else None\n    req = urllib.request.Request(url, data=data, headers=HEADERS, method=\"POST\" if payload is not None else \"GET\")\n    try:\n        with urllib.request.urlopen(req, timeout=15) as r:\n            return r.status, json.loads(r.read().decode() or \"null\")\n    except urllib.error.HTTPError as e:\n        try:\n            return e.code, json.loads(e.read().decode() or \"null\")\n        except ValueError:\n            return e.code, None\n    except (urllib.error.URLError, TimeoutError, ValueError):\n        return 0, None\n\n\ndef resolve_user(query):\n    \"\"\"username or id -> (user_id, username), or (None, None).\"\"\"\n    if query.isdigit():\n        status, data = request(f\"https://users.roblox.com/v1/users/{query}\")\n        if status == 200 and data:\n            return int(query), data.get(\"name\") or query\n        return None, None\n    status, data = request(\"https://users.roblox.com/v1/usernames/users\",\n                           {\"usernames\": [query], \"excludeBannedUsers\": False})\n    rows = (data or {}).get(\"data\") or []\n    if status == 200 and rows:\n        return rows[0][\"id\"], rows[0][\"name\"]\n    return None, None\n\n\ndef friends_list_errors(user_id):\n    \"\"\"Step 1: the quirk. True when the friends/find endpoint answers with an error.\"\"\"\n    status, data = request(f\"https://friends.roblox.com/v1/users/{user_id}/friends/find?limit=18&cursor=&userSort=\")\n    return isinstance(data, dict) and \"errors\" in data\n\n\ndef friends_counter(user_id):\n    \"\"\"Step 2: (friendsCount, isFriendsCountEnabled) from the profile header.\"\"\"\n    payload = {\n        \"profileId\": str(user_id),\n        \"profileType\": \"User\",\n        \"includeComponentOrdering\": True,\n        \"components\": [{\"component\": \"About\"}, {\"component\": \"UserProfileHeader\"}],\n    }\n    status, data = request(\"https://apis.roblox.com/profile-platform-api/v1/profiles/get\", payload)\n    if status != 200 or not data:\n        return 0, False\n    header = (data.get(\"components\") or {}).get(\"UserProfileHeader\") or {}\n    counts = header.get(\"counts\") or {}\n    enabled = counts.get(\"isFriendsCountEnabled\", header.get(\"isFriendsCountEnabled\", False))\n    return int(counts.get(\"friendsCount\", 0) or 0), bool(enabled)\n\n\ndef regional_status(user_id):\n    \"\"\"'none' | 'british' | 'australian' | 'either'\"\"\"\n    if not friends_list_errors(user_id):\n        return \"none\"\n    count, enabled = friends_counter(user_id)\n    if count > 0:\n        return \"australian\" if enabled else \"british\"\n    return \"either\"\n\n\nMESSAGES = {\n    \"none\": \"is NOT British or Australian.\",\n    \"british\": \"IS British.\",\n    \"australian\": \"IS Australian.\",\n    \"either\": \"IS British OR Australian (no friends, so it can't be narrowed down).\",\n}\n\n\ndef main():\n    if len(sys.argv) < 2:\n        sys.exit(__doc__)\n    for query in sys.argv[1:]:\n        user_id, name = resolve_user(query)\n        if not user_id:\n            print(f\"{query}: user not found\")\n            continue\n        print(f\"{name} ({user_id}) {MESSAGES[regional_status(user_id)]}\")\n\n\nif __name__ == \"__main__\":\n    main()"
  }
 ];

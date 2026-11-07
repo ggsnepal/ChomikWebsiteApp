@@ -17,14 +17,14 @@
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..900,0..100,0..1&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=4">
+<link rel="stylesheet" href="/assets/site.css?v=5">
 </head>
 <body>
 <header class="top"><div class="wrap in">
 <a class="brand" href="/"><img src="/assets/chomik.webp" alt="" width="40" height="40">Chomik</a>
 <nav class="links" aria-label="Main"><a href="/commands.html" aria-current="page">Commands</a><a href="/status.html">Status</a></nav>
 <span class="sp"></span>
-<a class="btn ghost sm" href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Support</a>
+<a class="btn ghost sm" href="https://discord.gg/g7TydDsDjJ" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Support</a>
 <a class="btn go sm" href="https://discord.com/oauth2/authorize?client_id=1493468057983778867" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Invite</a>
 </div></header>
 <main class="wrap">
@@ -46,10 +46,10 @@
 <dialog id="dlg" class="det" aria-label="Command details"></dialog>
 <footer class="foot"><div class="wrap in">
 <p>Chomik is not affiliated with or endorsed by Discord or Roblox.</p>
-<nav aria-label="Footer"><a href="/commands.html">Commands</a><a href="/status.html">Status</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="https://discord.gg/3emjVxAngm" target="_blank" rel="noopener">Support server</a></nav>
+<nav aria-label="Footer"><a href="/commands.html">Commands</a><a href="/status.html">Status</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="https://discord.gg/g7TydDsDjJ" target="_blank" rel="noopener">Support server</a></nav>
 </div></footer>
-<script src="/assets/commands-data.js"></script>
-<script src="/assets/site.js?v=4"></script>
+<script src="/assets/commands-data.js?v=5"></script>
+<script src="/assets/site.js?v=5"></script>
 <script>
 (function(){
   var CH=window.CH, el=CH.el, $=CH.q, data=CH.data;
@@ -57,11 +57,13 @@
   var cat='All', view='list';
   try{ if(localStorage.getItem('chomik-view')==='gallery') view='gallery' }catch(e){}
 
-  var names=['All'].concat(data.map(function(c){return c.category}).filter(function(v,i,a){return v&&a.indexOf(v)===i}).sort());
+  var live=data.filter(function(c){return !c.archived});
+  var names=['All'].concat(data.map(function(c){return c.category}).filter(function(v,i,a){return v&&v!=='Archived'&&a.indexOf(v)===i}).sort());
+  if(live.length<data.length) names.push('Archived');
   var param=new URLSearchParams(location.search).get('cat'); if(param&&names.indexOf(param)>-1) cat=param;
   names.forEach(function(n){
     var b=el('button'); b.type='button'; b.textContent=n; b.dataset.n=n; b.setAttribute('aria-pressed',n===cat);
-    if(n!=='All') b.style.setProperty('--c',CH.col(n));
+    if(n!=='All') b.style.setProperty('--c',n==='Archived'?CH.red:CH.col(n));
     b.addEventListener('click',function(){
       if(cat===n) return; cat=n;
       catsEl.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});
@@ -87,8 +89,9 @@
       var li=el('li','cmd'); li.tabIndex=0; li.setAttribute('role','button'); li.dataset.i=idx;
       var np=(c.params||[]).length; li.dataset.n=np?np+(np===1?' option':' options'):'no options';
       if(anim&&n<16){li.classList.add('enter'); li.style.setProperty('--d',(n*26)+'ms')}
-      li.style.setProperty('--c',CH.col(c.category));
-      li.appendChild(el('small',0,c.category));
+      li.style.setProperty('--c',CH.cmdColor(c));
+      if(c.archived) li.classList.add('arch');
+      li.appendChild(el('small',0,c.archived?'Archived':c.category));
       li.appendChild(el('b',0,'/'+c.name));
       (c.params||[]).forEach(function(p){li.appendChild(el('em',0,' '+(p.required?'<'+p.name+'>':'['+p.name+']')))});
       li.appendChild(el('p',0,c.description||''));
@@ -96,7 +99,8 @@
     });
     list.appendChild(out);
     if(!n) list.appendChild(el('li','empty',data.length?'No commands match that.':'Command list failed to load.'));
-    count.textContent=data.length?n+' of '+data.length+' commands · click one for details':'';
+    var shown=0; data.forEach(function(c){ if(!c.archived&&(cat==='All'||c.category===cat)&&(!q||(c.name+' '+(c.description||'')).toLowerCase().indexOf(q)>-1)) shown++ });
+    count.textContent=data.length?(cat==='Archived'?n+' archived · removed from the bot':shown+' of '+live.length+' commands · click one for details'):'';
   }
   list.addEventListener('click',function(e){var li=e.target.closest('.cmd'); if(li) openDetails(+li.dataset.i)});
   list.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('cmd')){e.preventDefault(); openDetails(+e.target.dataset.i)}});
@@ -105,13 +109,14 @@
 
   /* details popup: usage, prefix version, options, copy */
   function openDetails(i){
-    var c=data[i]; if(!c) return; var color=CH.col(c.category);
+    var c=data[i]; if(!c) return; var color=CH.cmdColor(c);
     dlg.textContent=''; dlg.style.setProperty('--c',color);
     var root=el('div','dbody');
     var x=el('button','x'); x.type='button'; x.setAttribute('aria-label','Close'); x.innerHTML='<svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>'; x.addEventListener('click',function(){dlg.close()}); root.appendChild(x);
     root.appendChild(el('h2',0,'/'+c.name));
-    root.appendChild(el('span','pill',c.category));
+    root.appendChild(el('span','pill',c.archived?'Archived':c.category));
     root.appendChild(el('p','desc',c.description||''));
+    if(c.archived) root.appendChild(el('p','arch-note','This command was removed from Chomik and no longer counts as one. Below is the complete code of how it worked, as a script you can run yourself in a terminal.'));
     root.appendChild(el('h3',0,'Usage'));
     var use=el('code','use'); use.appendChild(document.createTextNode('/'+c.name));
     (c.params||[]).forEach(function(p){use.appendChild(document.createTextNode(' ')); use.appendChild(el(p.required?'span':'i',0,p.required?p.name+':<value>':'['+p.name+':<value>]'))});
@@ -120,13 +125,22 @@
       root.appendChild(el('h3',0,'Prefix version'));
       root.appendChild(el('code','use',c.prefix.map(function(p){return ','+p}).join('   ')));
     }
+    if(c.archived&&c.code){
+      root.appendChild(el('h3',0,'Run it in a terminal'));
+      root.appendChild(el('code','use',c.run||('python3 '+c.filename)));
+      root.appendChild(el('h3',0,'Complete code · '+c.filename));
+      var pre=el('pre','code'), cd=el('code'); cd.textContent=c.code; pre.appendChild(cd); root.appendChild(pre);
+      var cc=el('button','btn ghost sm'); cc.type='button'; var cl=el('span',0,'Copy code'); cc.appendChild(cl);
+      cc.addEventListener('click',function(){var d=function(m){cl.textContent=m; setTimeout(function(){cl.textContent='Copy code'},1400)}; (navigator.clipboard?navigator.clipboard.writeText(c.code):Promise.reject()).then(function(){d('Copied!')},function(){d('Select the code and copy it')})});
+      root.appendChild(cc);
+    }
     root.appendChild(el('h3',0,'Options'));
     if(!(c.params||[]).length) root.appendChild(el('p','desc','No options, just run it.'));
     (c.params||[]).slice().sort(function(a,b){return (b.required?1:0)-(a.required?1:0)}).forEach(function(p){
       var d=el('div','prm'); d.appendChild(el('span','rq'+(p.required?'':' o'),p.required?'required':'optional'));
       d.appendChild(el('b',0,p.name)); if(p.description) d.appendChild(el('p',0,p.description)); root.appendChild(d);
     });
-    var act=el('div','dacts'), cp=el('button','btn ghost sm'); cp.type='button'; var lab=el('span',0,'Copy command'); cp.appendChild(lab);
+    var act=el('div','dacts'), cp=el('button','btn ghost sm'); if(c.archived) act.style.display='none'; cp.type='button'; var lab=el('span',0,'Copy command'); cp.appendChild(lab);
     cp.addEventListener('click',function(){
       var t='/'+c.name, done=function(m){lab.textContent=m; setTimeout(function(){lab.textContent='Copy command'},1400)};
       (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){done('Copied!')},function(){done(t)});

@@ -228,3 +228,10 @@ dialog.det[open]{animation:dpop .28s var(--spring)}
   .hero h1 .sq path{stroke-dashoffset:0}
   .paws svg{opacity:.16}
 }
+
+/* archived commands */
+.cmd.arch{border-style:dashed;background:rgba(238,90,79,.06)}
+.cmd.arch b{text-decoration:line-through;text-decoration-thickness:2px}
+.dbody .arch-note{margin-top:10px;padding:10px 13px;border-radius:12px;border:2px dashed #ee5a4f;color:var(--soft);font-size:14px}
+.dbody pre.code{max-height:340px;overflow:auto;padding:13px 15px;border-radius:12px;background:#0f0c0a;border:2px solid var(--line2);font:500 12.5px/1.55 var(--mono);color:var(--ink);tab-size:4;margin-bottom:12px}
+.dbody pre.code code{white-space:pre;display:block;min-width:max-content}
