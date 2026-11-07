@@ -1,17 +1,11 @@
-/* shared helpers: category colors (orange / green / blue only) + command groups */
+/* shared helpers: one color per category + command groups */
 (function(){
-  var CAT={Roblox:'var(--orange)',Fun:'var(--orange)',Tools:'var(--green)',Games:'var(--green)',Social:'var(--green)',Image:'var(--blue)',AI:'var(--blue)',General:'var(--blue)'};
+  var CAT={Roblox:'#f58f2b',Fun:'#ff6fa5',Tools:'#4cc98a',Games:'#c8d94a',Social:'#2fc9c0',Image:'#5aa7ff',AI:'#a78bfa',General:'#9fb0c8',Archived:'#ee5a4f'};
   window.CH={
     data:window.CHOMIK_COMMANDS||[],
     col:function(c){return CAT[c]||'var(--ink)'},
     red:'#ee5a4f',
-    /* every command gets its own color: hues walk round the wheel by the golden angle, lightness alternates */
-    cmdColor:function(c){
-      if(c.archived) return CH.red;
-      var live=CH.data.filter(function(x){return !x.archived}), i=live.indexOf(c); if(i<0) i=0;
-      var h=Math.round((i*137.508+18)%360), l=[62,70,56][i%3], s=[78,68,84][(i>>1)%3];
-      return 'hsl('+h+' '+s+'% '+l+'%)';
-    },
+    cmdColor:function(c){return c.archived?CH.red:CH.col(c.category)},
     el:function(t,cls,txt){var e=document.createElement(t); if(cls)e.className=cls; if(txt!=null)e.textContent=txt; return e},
     q:function(s,r){return (r||document).querySelector(s)},
     byCat:function(cs){return CH.data.filter(function(x){return !x.archived&&cs.indexOf(x.category)>-1})},
